@@ -25,11 +25,11 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 
 	ui.comboBox->addItems(QStringList()
 		<< LStr("全部")
+		<< LStr("信息")
 		<< LStr("调试")
 		<< LStr("警告")
 		<< LStr("危险")
-		<< LStr("错误")
-		<< LStr("信息"));
+		<< LStr("错误"));
 }
 
 ConsoleWidget::~ConsoleWidget()

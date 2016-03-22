@@ -14,8 +14,11 @@ win2010+Qt5.5.1+vs2013
 附加库目录 $(SolutionDir)bin\$(Configuration)\
 附加包含目录 $(SolutionDir)xxx
 
-3、目录说明
-conf 配置文件
-plugin 插件
-log 日志文件
-data 数据文件
+3、目录说明：
+bin/conf 配置文件
+bin/log 日志文件
+bin/data 数据文件
+bin/$(Configuration)/plugin 插件目录
+
+4、运行环境：
+第三方依赖库放在./lib下，需要拷贝到对应应用程序目录
