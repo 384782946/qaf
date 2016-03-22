@@ -1,21 +1,21 @@
-1¡¢±àÒë»·¾³
-win2010+Qt5.5.1+vs2013
+1ã€ç¼–è¯‘ç¯å¢ƒ
+win10+Qt5.5.1+vs2013
 
-2¡¢VS2013¹¤³ÌÅäÖÃ
-Ä¬ÈÏÖµ£º
-Êä³öÄ¿Â¼ $(SolutionDir)$(Platform)\$(Configuration)\
-ÖĞ¼äÄ¿Â¼ $(Configuration)\
-Êä³öÎÄ¼ş $(OutDir)\$(ProjectName).dll
+2ã€VS2013å·¥ç¨‹é…ç½®
+é»˜è®¤å€¼ï¼š
+è¾“å‡ºç›®å½• $(SolutionDir)$(Platform)\$(Configuration)\
+ä¸­é—´ç›®å½• $(Configuration)\
+è¾“å‡ºæ–‡ä»¶ $(OutDir)\$(ProjectName).dll
 
-ÇëÅäÖÃÎª£º
-Êä³öÄ¿Â¼ $(SolutionDir)bin\$(Configuration)\
-ÖĞ¼äÄ¿Â¼ $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
-Êä³öÎÄ¼ş $(OutDir)\$(ProjectName).dll
-¸½¼Ó¿âÄ¿Â¼ $(SolutionDir)bin\$(Configuration)\
-¸½¼Ó°üº¬Ä¿Â¼ $(SolutionDir)xxx
+è¯·é…ç½®ä¸ºï¼š
+è¾“å‡ºç›®å½• $(SolutionDir)bin\$(Configuration)\
+ä¸­é—´ç›®å½• $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
+è¾“å‡ºæ–‡ä»¶ $(OutDir)\$(ProjectName).dll
+é™„åŠ åº“ç›®å½• $(SolutionDir)bin\$(Configuration)\
+é™„åŠ åŒ…å«ç›®å½• $(SolutionDir)xxx
 
-3¡¢Ä¿Â¼ËµÃ÷
-conf ÅäÖÃÎÄ¼ş
-plugin ²å¼ş
-log ÈÕÖ¾ÎÄ¼ş
-data Êı¾İÎÄ¼ş
+3ã€ç›®å½•è¯´æ˜
+conf é…ç½®æ–‡ä»¶
+plugin æ’ä»¶
+log æ—¥å¿—æ–‡ä»¶
+data æ•°æ®æ–‡ä»¶
