@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config active="true" type="group">
+    <plugins active="true" type="group">
+        <subitem active="true" regx="" type="item" value="test1"/>
+        <subitem active="true" regx="" type="item" value="test2"/>
+        <tests active="true" type="group">
+            <task active="true" regx="" type="item" value="test3"/>
+        </tests>
+    </plugins>
+</config>
