@@ -14,6 +14,9 @@
 
 #pragma once
 
+//#include <QMutex>
+//#include <QMutexLocker>
+
 template<typename T>
 class Singleton
 {
@@ -22,17 +25,18 @@ public:
 
 	static T* getSingleton()
 	{
+		//QMutexLocker locker(&mMutex);
 		static T singleton;
 		return &singleton;
 	}
 
 protected:
 	//不能实例化
-	Singleton(){} 
+	Singleton(){}
+	//static QMutex mMutex;
 
 private:
 	//单实例对象不应该存在拷贝
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
 };
-

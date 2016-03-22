@@ -131,6 +131,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_QAFCore.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LogModel.cpp" />
     <ClCompile Include="ModelItem.cpp" />
     <ClCompile Include="MySortFilterProxyModel.cpp" />
@@ -165,6 +166,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="LogModel.h" />
     <ClInclude Include="ModelItem.h" />
     <ClInclude Include="MySortFilterProxyModel.h" />

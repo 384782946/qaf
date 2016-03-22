@@ -1,7 +1,6 @@
 #pragma once
 
 #include "QAFGlobal.h"
-#include <QString>
 
 namespace QAF
 {
@@ -11,8 +10,8 @@ namespace QAF
 		static QString path(DirType type);
 
 	private:
-		QAFDirs();
-		~QAFDirs();
+		QAFDirs(){}
+		~QAFDirs(){}
 		Q_DISABLE_COPY(QAFDirs)
 	};
 }

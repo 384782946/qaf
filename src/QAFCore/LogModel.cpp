@@ -45,17 +45,17 @@ namespace QAF
 			default:
 				break;
 			}
-		}
-		else if (role == Qt::TextColorRole){
+		}else if (role == Qt::TextColorRole){
 			if (mType == QtWarningMsg || mType == QtCriticalMsg)
 				return QColor(Qt::red);
 			else
 				return QColor(Qt::black);
-		}
-		else if (role == Qt::DecorationRole){
-		}
-		else if (role == Qt::CheckStateRole){
+		}else if (role == Qt::DecorationRole){
+		
+		}else if (role == Qt::CheckStateRole){
 			return QVariant();
+		} else if (role == Qt::TextAlignmentRole){
+			return int(Qt::AlignLeft | Qt::AlignVCenter);
 		}
 
 		return ModelItem::data(index, role);

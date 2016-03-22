@@ -1,66 +1,22 @@
 #include "qafcore.h"
+#include <QDockWidget>
+#include <QDebug>
 #include "ObjectSystem.h"
 #include "PluginSystem.h"
 #include "AbstractObject.h"
 #include "ConfigSystem.h"
 #include "UIInterface.h"
 #include "QAFDirs.h"
+#include "Logger.h"
 #include "LogModel.h"
-
-#include <QDockWidget>
-#include <QTime>
-#include <QDir>
-#include <QDebug>
-
-#include <stdio.h>
-#include <stdlib.h>
-
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-#ifndef QT_DEBUG //release下不输出调试信息
-	if(type == QtDebugMsg)
-		return;
-#endif
-
-	QByteArray localMsg = msg.toLocal8Bit();
-	switch (type) {
-	case QtDebugMsg:
-		fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-		break;
-	case QtInfoMsg:
-		fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-		break;
-	case QtWarningMsg:
-		fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-		break;
-	case QtCriticalMsg:
-		fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-		break;
-	case QtFatalMsg:
-		fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-		abort();
-	}
-
-	if (QAFCorePtr)
-	{
-		QAF::LogModel* logModel = QAFCorePtr->getLogModel();
-		if (logModel)
-		{
-			QString timeStr = QTime::currentTime().toString("hh:mm:ss");
-			QAF::LogItem* item = new QAF::LogItem(type, timeStr, msg);
-			logModel->addItem(item);
-		}
-	}
-}
 
 namespace QAF
 {
 	QAFCore::QAFCore()
 		:mMessageCallback(NULL)
 		, mUIInterface(NULL)
-		, mLogModel(NULL)
+		, mLogModel(new QAF::LogModel(this))
 	{
-		mLogModel = new QAF::LogModel(this);
 		mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
 	}
 
@@ -93,7 +49,7 @@ namespace QAF
 		if (!init)
 		{
 			init = true;
-			qInstallMessageHandler(myMessageOutput);
+			qInstallMessageHandler(Logger::messageHandler);
 			mMessageCallback = fun;
 			if (mMessageCallback)
 				(*mMessageCallback)(LStr("正在初始化..."));
