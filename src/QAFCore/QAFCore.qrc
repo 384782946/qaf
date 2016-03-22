@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/QAFCore">
+        <file>Resources/folder.png</file>
+        <file>Resources/gear.png</file>
+    </qresource>
+</RCC>
