@@ -1,24 +1,28 @@
-1¡¢¿ª·¢»·¾³
-win10+Qt5.5.1+vs2013
+åŸºäºQtåº”ç”¨ç¨‹åºå¼€å‘çš„é€šç”¨è½¯ä»¶å®ä¾‹ã€æä¾›æ—¥å¿—ç®¡ç†ã€å¯¹è±¡ç®¡ç†ã€å±æ€§ç¼–è¾‘ã€è¿è¡Œé…ç½®ç­‰å¸¸ç”¨åŠŸèƒ½
+ï¼Œæ¡†æ¶é‡‡ç”¨æ’ä»¶å¼å¼€å‘ï¼Œé™ä½æ¨¡å—é—´è€¦åˆæ€§ï¼Œæœªæ¥è¿˜ä¼šåŠ å…¥pythonè„šæœ¬çš„æ”¯æŒï¼Œä»¥æ–¹ä¾¿åº”ç”¨çµæ´»æ‹“å±•ï¼Œ
+æœ¬äººç»éªŒæœ‰é™ï¼Œæ¬¢è¿æ‰¹è¯„æŒ‡æ­£ã€‚
 
-2¡¢VS2013¹¤³ÌÅäÖÃ
-Ä¬ÈÏÖµ£º
-Êä³öÄ¿Â¼ $(SolutionDir)$(Platform)\$(Configuration)\
-ÖĞ¼äÄ¿Â¼ $(Configuration)\
-Êä³öÎÄ¼ş $(OutDir)\$(ProjectName).dll
+1ã€ç¼–è¯‘ç¯å¢ƒ
+Qt5.5.1+vs2013
 
-ÇëÅäÖÃÎª£º
-Êä³öÄ¿Â¼ $(SolutionDir)bin\$(Configuration)\
-ÖĞ¼äÄ¿Â¼ $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
-Êä³öÎÄ¼ş $(OutDir)\$(ProjectName).dll
-¸½¼Ó¿âÄ¿Â¼ $(SolutionDir)bin\$(Configuration)\
-¸½¼Ó°üº¬Ä¿Â¼ $(SolutionDir)xxx
+2ã€VS2013å·¥ç¨‹é…ç½®
+é»˜è®¤å€¼ï¼š
+è¾“å‡ºç›®å½• $(SolutionDir)$(Platform)\$(Configuration)\
+ä¸­é—´ç›®å½• $(Configuration)\
+è¾“å‡ºæ–‡ä»¶ $(OutDir)\$(ProjectName).dll
 
-3¡¢Ä¿Â¼ËµÃ÷£º
-bin/conf ÅäÖÃÎÄ¼ş
-bin/log ÈÕÖ¾ÎÄ¼ş
-bin/data Êı¾İÎÄ¼ş
-bin/$(Configuration)/plugin ²å¼şÄ¿Â¼
+è¯·é…ç½®ä¸ºï¼š
+è¾“å‡ºç›®å½• $(SolutionDir)bin\$(Configuration)\
+ä¸­é—´ç›®å½• $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
+è¾“å‡ºæ–‡ä»¶ $(OutDir)\$(ProjectName).dll
+é™„åŠ åº“ç›®å½• $(SolutionDir)bin\$(Configuration)\
+é™„åŠ åŒ…å«ç›®å½• $(SolutionDir)xxx
 
-4¡¢ÔËĞĞ»·¾³£º
-µÚÈı·½ÒÀÀµ¿â·ÅÔÚ./libÏÂ£¬ĞèÒª¿½±´µ½¶ÔÓ¦Ó¦ÓÃ³ÌĞòÄ¿Â¼
+3ã€ç›®å½•è¯´æ˜ï¼š
+bin/conf é…ç½®æ–‡ä»¶
+bin/log æ—¥å¿—æ–‡ä»¶
+bin/data æ•°æ®æ–‡ä»¶
+bin/$(Configuration)/plugin æ’ä»¶ç›®å½•
+
+4ã€è¿è¡Œç¯å¢ƒï¼š
+ç¬¬ä¸‰æ–¹ä¾èµ–åº“æ”¾åœ¨./libä¸‹ï¼Œéœ€è¦æ‹·è´åˆ°å¯¹åº”åº”ç”¨ç¨‹åºç›®å½•
