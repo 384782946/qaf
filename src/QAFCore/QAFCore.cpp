@@ -3,18 +3,16 @@
 #include <QDebug>
 #include "ObjectSystem.h"
 #include "PluginSystem.h"
-#include "AbstractObject.h"
 #include "ConfigSystem.h"
 #include "UIInterface.h"
-#include "QAFDirs.h"
 #include "Logger.h"
 #include "LogModel.h"
 
 namespace QAF
 {
 	QAFCore::QAFCore()
-		:mMessageCallback(NULL)
-		, mUIInterface(NULL)
+		:mMessageCallback(nullptr)
+		, mUIInterface(nullptr)
 		, mLogModel(new QAF::LogModel(this))
 	{
 		mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
