@@ -26,3 +26,7 @@ bin/$(Configuration)/plugin 插件目录
 
 4、运行环境：
 第三方依赖库放在./lib下，需要拷贝到对应应用程序目录
+
+5、预处理器
+SINGLETON_APPLICTION		应用程序单实例
+WITHOUT_LOG					消除日志
