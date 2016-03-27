@@ -55,8 +55,12 @@ namespace QAF
 								library->deleteLater();
 							}
 						}
+					}else{
+						qCritical() << LStr("²å¼þ¼ÓÔØÊ§°Ü:") << plugin;
 					}
 				}
+			} else{
+				qCritical() << LStr("Î´ÕÒµ½²å¼þÄ¿Â¼");
 			}
 		}
 	}

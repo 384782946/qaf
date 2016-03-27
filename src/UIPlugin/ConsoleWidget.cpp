@@ -18,6 +18,8 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 	mModel->setFilterRole(Qt::DisplayRole);
 	ui.tableView->setModel(mModel);
 	ui.tableView->verticalHeader()->hide();
+	ui.tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+	ui.tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	//ui.tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 	//ui.tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 	ui.tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -25,11 +27,11 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 
 	ui.comboBox->addItems(QStringList()
 		<< LStr("全部")
+		<< LStr("信息")
 		<< LStr("调试")
 		<< LStr("警告")
 		<< LStr("危险")
-		<< LStr("错误")
-		<< LStr("信息"));
+		<< LStr("错误"));
 }
 
 ConsoleWidget::~ConsoleWidget()
