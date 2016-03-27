@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 
 	MainWindow w;
 	app.initialize();
-	w.show();
 	w.showMaximized();
 	app.finishSplash(&w);
 	return app.exec();

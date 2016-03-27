@@ -11,12 +11,13 @@ QAFApplication* QAFApplication::sThis = NULL;
 
 QAFApplication::QAFApplication(int & argc, char ** argv)
 	:QApplication(argc,argv)
-	,mSplashScreen(NULL)
+	,mSplashScreen(nullptr)
 	, mSplashAlign(Qt::AlignRight | Qt::AlignBottom)
 	, mSplashColor(Qt::white)
 {
 	sThis = this;
 
+	//install qss
 	QFile f(":qdarkstyle/style.qss");
 	if (!f.exists())
 	{
@@ -29,29 +30,25 @@ QAFApplication::QAFApplication(int & argc, char ** argv)
 		qApp->setStyleSheet(ts.readAll());
 	}
 
-	QPixmap pixmap(":/QAF/Resources/startup.png");
-	mSplashScreen = new QSplashScreen(pixmap);
-
+	//set propertys of application
 	setApplicationName("QAF");
 	setOrganizationName("shawkin");
 	setOrganizationDomain("shawkin.com");
 	setApplicationVersion("1.0.0");
 
+	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);
-	QTranslator translator;
-	if (translator.load("qaf-" + lang,"./"))
-	{
-		installTranslator(&translator);
-	}
-
 	QString trPath = QAFDirs::path(QAF::DT_TRANSTOR);
-
+	QString trName = "qaf_" + lang;
 	QTranslator tr;
-	if (tr.load(trPath))
+	if (tr.load(trName, trPath))
 	{
 		installTranslator(&tr);
 	}
 
+	//initialize splash window
+	QPixmap pixmap(":/QAF/Resources/startup.png");
+	mSplashScreen = new QSplashScreen(pixmap);
 	startSplash();
 }
 
