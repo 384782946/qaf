@@ -65,7 +65,7 @@ namespace QAF
 			{
 				return true;
 			}else{
-				return false
+				return false;
 			}
 		}
 
@@ -80,6 +80,6 @@ namespace QAF
 			mObjectSystem = sys;
 		}
 
-		ASSERT_CONVERTIBLE_TYPE(T, AbstractObject);
+//		ASSERT_CONVERTIBLE_TYPE(T, AbstractObject);
 	};
 }

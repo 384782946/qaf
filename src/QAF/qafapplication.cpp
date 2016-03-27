@@ -17,6 +17,18 @@ QAFApplication::QAFApplication(int & argc, char ** argv)
 {
 	sThis = this;
 
+	QFile f(":qdarkstyle/style.qss");
+	if (!f.exists())
+	{
+		printf("Unable to set stylesheet, file not found\n");
+	}
+	else
+	{
+		f.open(QFile::ReadOnly | QFile::Text);
+		QTextStream ts(&f);
+		qApp->setStyleSheet(ts.readAll());
+	}
+
 	QPixmap pixmap(":/QAF/Resources/startup.png");
 	mSplashScreen = new QSplashScreen(pixmap);
 
