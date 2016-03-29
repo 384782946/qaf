@@ -2,10 +2,10 @@
 ，框架采用插件式开发，降低模块间耦合性，未来还会加入python脚本的支持，以方便应用灵活拓展，
 本人经验有限，欢迎批评指正。
 
-1、编译环境
+#1、编译环境
 Qt5.5.1+vs2013
 
-2、VS2013工程配置
+#2、VS2013工程配置
 默认值：
 输出目录 $(SolutionDir)$(Platform)\$(Configuration)\
 中间目录 $(Configuration)\
@@ -18,15 +18,17 @@ Qt5.5.1+vs2013
 附加库目录 $(SolutionDir)bin\$(Configuration)\
 附加包含目录 $(SolutionDir)xxx
 
-3、目录说明：
+#3、目录说明：
 bin/conf 配置文件
 bin/log 日志文件
 bin/data 数据文件
 bin/$(Configuration)/plugin 插件目录
 
-4、运行环境：
+#4、运行环境：
 第三方依赖库放在./lib下，需要拷贝到对应应用程序目录
 
-5、预处理器
+#5、预处理器
 SINGLETON_APPLICTION		应用程序单实例
 WITHOUT_LOG					消除日志
+
+#6、更新日志
