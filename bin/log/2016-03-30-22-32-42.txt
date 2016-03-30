@@ -1,0 +1,2 @@
+2016-03-30 22:32:42	Type:Debug	File:QAFCore.cpp	Line:62	Function:void __thiscall QAF::QAFCore::initCore(void)
+	BackTrace

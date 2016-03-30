@@ -173,7 +173,7 @@ namespace QAF{
 		QList<NodeType> tmpList;
 
 		QDomElement root = doc.documentElement();
-		tmpList.append(NodeType(root, NULL));
+		tmpList.append(NodeType(root, nullptr));
 
 		while (tmpList.size() > 0)
 		{
@@ -269,7 +269,7 @@ namespace QAF{
 
 			if (!match)
 			{
-				return NULL;
+				return nullptr;
 			}
 		}
 
@@ -332,7 +332,7 @@ namespace QAF{
 
 	bool ConfigModel::isExist(const QString& path) const
 	{
-		return query(path) != NULL;
+		return query(path) != nullptr;
 	}
 
 }

@@ -4,7 +4,7 @@
 namespace QAF
 {
 	AbstractObject::AbstractObject(ObjectId parent/* = INVALID_OBJECT_ID*/)
-		:QObject(NULL)
+		:QObject(nullptr)
 		, mParentId(parent)
 	{
 		//由于有对象系统接管，因此不再为父类

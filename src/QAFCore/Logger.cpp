@@ -53,24 +53,24 @@ namespace QAF
 		gLogStream << stamp << msg <<"\n";
 		gLogStream.flush();
 		
-		/*QByteArray localMsg = msg.toLocal8Bit();
+		QByteArray localMsg = msg.toLocal8Bit();
 		switch (type) {
 		case QtDebugMsg:
-		fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		fprintf(stdout, "Debug: %s\n", localMsg.constData());
 		break;
 		case QtInfoMsg:
-		fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		fprintf(stdout, "Info: %s\n", localMsg.constData());
 		break;
 		case QtWarningMsg:
-		fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		fprintf(stdout, "Warning: %s\n", localMsg.constData());
 		break;
 		case QtCriticalMsg:
-		fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		fprintf(stderr, "Critical: %s\n", localMsg.constData());
 		break;
 		case QtFatalMsg:
-		fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		fprintf(stderr, "Fatal: %s\n", localMsg.constData());
 		abort();
-		}*/
+		}
 
 		static LogModel* logModel = nullptr;
 		if (!logModel && QAFCorePtr)
@@ -92,8 +92,8 @@ namespace QAF
 #ifdef Q_OS_WIN
 		void ** stack = new void*[ traceNum ];
 		HANDLE process = GetCurrentProcess();
-		SymInitialize(process, NULL, TRUE);
-		unsigned short frames = CaptureStackBackTrace(0, traceNum, stack, NULL);
+		SymInitialize(process, nullptr, TRUE);
+		unsigned short frames = CaptureStackBackTrace(0, traceNum, stack, nullptr);
 		SYMBOL_INFO  * symbol = (SYMBOL_INFO *)calloc(sizeof(SYMBOL_INFO) + 256 * sizeof(char), 1);
 		symbol->MaxNameLen = 255;
 		symbol->SizeOfStruct = sizeof(SYMBOL_INFO);

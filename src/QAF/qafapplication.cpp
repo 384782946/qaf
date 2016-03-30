@@ -1,40 +1,55 @@
 #include "stdafx.h"
 #include "qafapplication.h"
+#include <QtWidgets/QSplashScreen>
+#include <QTranslator>
+
 #include "qafcore.h"
 #include "QAFDirs.h"
-
-#include <QTranslator>
+#include "mainwindow.h"
 
 using QAF::QAFDirs;
 
-QAFApplication* QAFApplication::sThis = NULL;
-
 QAFApplication::QAFApplication(int & argc, char ** argv)
 	:QApplication(argc,argv)
-	,mSplashScreen(nullptr)
-	, mSplashAlign(Qt::AlignRight | Qt::AlignBottom)
-	, mSplashColor(Qt::white)
 {
-	sThis = this;
+	
+}
 
-	//install qss
-	QFile f(":qdarkstyle/style.qss");
-	if (!f.exists())
-	{
-		printf("Unable to set stylesheet, file not found\n");
-	}
-	else
-	{
-		f.open(QFile::ReadOnly | QFile::Text);
-		QTextStream ts(&f);
-		qApp->setStyleSheet(ts.readAll());
-	}
+QAFApplication::~QAFApplication()
+{
 
+}
+
+void QAFApplication::splashMessage(const QString& msg)
+{
+	QAFApplication* app = static_cast<QAFApplication*>(instance());
+	if (app)
+	{
+		app->mSplashScreen->showMessage(msg, Qt::AlignRight | Qt::AlignBottom, Qt::white);
+		processEvents();
+	}	
+}
+
+void QAFApplication::initialize()
+{
 	//set propertys of application
 	setApplicationName("QAF");
 	setOrganizationName("shawkin");
 	setOrganizationDomain("shawkin.com");
-	setApplicationVersion("1.0.0");
+	setApplicationVersion(QAF_VERSION_STR);
+
+	//install qss
+	/*QFile f(":qdarkstyle/style.qss");
+	if (!f.exists())
+	{
+	printf("Unable to set stylesheet, file not found\n");
+	}
+	else
+	{
+	f.open(QFile::ReadOnly | QFile::Text);
+	QTextStream ts(&f);
+	qApp->setStyleSheet(ts.readAll());
+	}*/
 
 	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);
@@ -49,47 +64,23 @@ QAFApplication::QAFApplication(int & argc, char ** argv)
 	//initialize splash window
 	QPixmap pixmap(":/QAF/Resources/startup.png");
 	mSplashScreen = new QSplashScreen(pixmap);
-	startSplash();
-}
-
-QAFApplication::~QAFApplication()
-{
-
-}
-
-void QAFApplication::splashMessage(const QString& msg)
-{
-	sThis->mSplashScreen->showMessage(msg, sThis->mSplashAlign, sThis->mSplashColor);
-	processEvents();
-}
-
-void QAFApplication::setSplashAlign(int align)
-{
-	mSplashAlign = align;
-}
-
-void QAFApplication::setSplashColor(const QColor& color)
-{
-	mSplashColor = color;
-}
-
-QSplashScreen* QAFApplication::splash()
-{
-	return mSplashScreen;
-}
-
-void QAFApplication::startSplash()
-{
 	mSplashScreen->show();
 	processEvents();
-}
 
-void QAFApplication::finishSplash(QWidget* widget)
-{
-	mSplashScreen->finish(widget);
-}
-
-void QAFApplication::initialize()
-{
+	mMainWindow = new MainWindow();
 	QAFCorePtr->initialize(QAFApplication::splashMessage);
+}
+
+int QAFApplication::run()
+{
+	initialize();
+
+	int ret = 0;
+	mMainWindow->showMaximized();
+	mSplashScreen->finish(mMainWindow);
+	mSplashScreen->deleteLater();
+	ret = exec();
+	mMainWindow->deleteLater();
+	QAFCorePtr->release();
+	return ret;
 }

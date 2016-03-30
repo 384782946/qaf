@@ -1,11 +1,8 @@
 #include "stdafx.h"
-#include "mainwindow.h"
 #include "qafapplication.h"
 
 int main(int argc, char *argv[])
 {
-	QAFApplication app(argc, argv);
-	
 #ifdef SINGLETON_APPLICATION
 	QSharedMemory shared_memory;
 	shared_memory.setKey(QString("account"));
@@ -22,9 +19,6 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-	MainWindow w;
-	app.initialize();
-	w.showMaximized();
-	app.finishSplash(&w);
-	return app.exec();
+	QAFApplication app(argc, argv);
+	return app.run();
 }

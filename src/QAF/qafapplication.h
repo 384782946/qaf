@@ -2,7 +2,6 @@
 #define QAFAPPLICATION_H
 
 #include <QApplication>
-#include <QtWidgets/QSplashScreen>
 
 class QAFApplication : public QApplication
 {
@@ -14,21 +13,14 @@ public:
 
 	static void splashMessage(const QString&);
 
-	void setSplashAlign(int align);
-	void setSplashColor(const QColor&);
-	QSplashScreen* splash();
+	int run();
 
-	void startSplash();
-	void finishSplash(QWidget* widget = NULL);
-
+protected:
 	void initialize();
 
 private:
-	static QAFApplication* sThis;
-
-	QSplashScreen* mSplashScreen;
-	int mSplashAlign;
-	QColor mSplashColor;
+	QSplashScreen* mSplashScreen = nullptr;
+	QWidget* mMainWindow = nullptr;
 };
 
 #endif // QAFAPPLICATION_H

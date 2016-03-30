@@ -7,7 +7,7 @@
 
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QWidget(parent)
-	, mModel(NULL)
+	, mModel(nullptr)
 {
 	ui.setupUi(this);
 

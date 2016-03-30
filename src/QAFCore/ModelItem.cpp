@@ -42,7 +42,7 @@ ModelItem* ModelItem::child( int index)
     if(index >=0 && index<mChildren.size())
         return mChildren.at(index);
     else 
-        return NULL;
+		return nullptr;
 }
 
 QString ModelItem::className()
@@ -105,7 +105,7 @@ void ModelItem::removeChild(ModelItem* item)
 {
 	if (item){
 		mChildren.removeOne(item);
-		item->mParent = NULL;
+		item->mParent = nullptr;
 	}
 }
 

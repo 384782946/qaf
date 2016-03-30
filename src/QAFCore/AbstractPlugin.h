@@ -53,7 +53,7 @@ namespace QAF
 		}
 
 	private:
-		AbstractPluginFactory* mFactory = NULL;
+		AbstractPluginFactory* mFactory = nullptr;
 		bool mIsInstalled = false;
 	};
 

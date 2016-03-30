@@ -34,13 +34,13 @@ namespace QAF
 					if (op)
 					{
 						op->mObjectId = 0;
-						op->mObjectSystem = NULL;
+						op->mObjectSystem = nullptr;
 					}
 				}
 
 				delete info->mObject;
 				delete info;
-				info = NULL;
+				info = nullptr;
 			}
 		}
 
@@ -117,7 +117,7 @@ namespace QAF
 			return mObjects.value(id)->mObject;
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	void ObjectSystem::addObjectProxy(ObjectProxy* op)

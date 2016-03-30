@@ -79,7 +79,7 @@ namespace QAF
 
 			ObjectInfo()
 			{
-				mObject = NULL;
+				mObject = nullptr;
 			}
 		};
 

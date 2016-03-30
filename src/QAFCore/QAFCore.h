@@ -31,7 +31,7 @@ namespace QAF
 		~QAFCore();
 
 		//≥ı ºªØ
-		void initialize(MessageCallback fun = NULL);
+		void initialize(MessageCallback fun = nullptr);
 
 		void addSystem(AbstractSystem*);
 		void removeSystem(SystemType);

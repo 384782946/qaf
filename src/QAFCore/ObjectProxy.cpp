@@ -17,7 +17,7 @@ namespace QAF
 	ObjectProxy::ObjectProxy(const ObjectProxy& other)
 	{
 		mObjectId = 0;
-		mObjectSystem = NULL;
+		mObjectSystem = nullptr;
 
 		if (other.isNull())
 		{
@@ -35,7 +35,7 @@ namespace QAF
 		}
 
 		mObjectId = 0;
-		mObjectSystem = NULL;
+		mObjectSystem = nullptr;
 	}
 
 	bool ObjectProxy::isNull() const
@@ -44,7 +44,7 @@ namespace QAF
 			return false;
 
 		if (mObjectId != 0)
-			return (mObjectSystem->query(mObjectId) != NULL);
+			return (mObjectSystem->query(mObjectId) != nullptr);
 		else
 			return false;
 	}
@@ -57,7 +57,7 @@ namespace QAF
 		}
 
 		mObjectId = 0;
-		mObjectSystem = NULL;
+		mObjectSystem = nullptr;
 
 		if (other.isNull())
 		{

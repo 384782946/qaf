@@ -13,7 +13,7 @@ namespace QAF
 	QAFCore::QAFCore()
 		:mMessageCallback(nullptr)
 		, mUIInterface(nullptr)
-		, mLogModel(new QAF::LogModel(this))
+		, mLogModel(new QAF::LogModel())
 	{
 		mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
 	}
@@ -21,7 +21,7 @@ namespace QAF
 	QAFCore::~QAFCore()
 	{
 		foreach(int key, mSystems.keys()){
-			AbstractSystem* system = mSystems.value(key, NULL);
+			AbstractSystem* system = mSystems.value(key, nullptr);
 			if (system){
 				QString msg;
 				if (key > ST_NONE && key < ST_CORE){
@@ -64,7 +64,7 @@ namespace QAF
 
 		foreach(int key, mSystems.keys()){
 			if (key > ST_NONE && key < ST_CORE){
-				AbstractSystem* system = mSystems.value(key, NULL);
+				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
 					QString msg = QString("%1%2").arg(LStr("正在加载核心模块：")).arg(system->name());
 					qDebug() << msg;
@@ -84,7 +84,7 @@ namespace QAF
 
 		foreach(int key, mSystems.keys()){
 			if (key > ST_CORE){
-				AbstractSystem* system = mSystems.value(key, NULL);
+				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
 					QString msg = QString("%1%2").arg(LStr("正在加载扩展模块：")).arg(system->name());
 					qDebug() << msg;

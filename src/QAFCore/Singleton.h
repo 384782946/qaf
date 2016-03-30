@@ -14,29 +14,48 @@
 
 #pragma once
 
-//#include <QMutex>
-//#include <QMutexLocker>
+#include <QMutex>
+#include <QMutexLocker>
 
 template<typename T>
 class Singleton
 {
 public:
-	virtual ~Singleton(){}
-
 	static T* getSingleton()
 	{
-		//QMutexLocker locker(&mMutex);
-		static T singleton;
-		return &singleton;
+		if (!sInstance.get())
+		{
+			QMutexLocker locker(&mMutex);
+			if (!sInstance.get())
+			{
+				sInstance.reset(new T());
+			}
+			
+		}
+		return sInstance.get();
+	}
+
+	static void release()
+	{
+		QMutexLocker locker(&mMutex);
+		sInstance.release();
 	}
 
 protected:
 	//不能实例化
 	Singleton(){}
-	//static QMutex mMutex;
+	virtual ~Singleton(){}
 
 private:
 	//单实例对象不应该存在拷贝
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
+	static std::auto_ptr<T> sInstance;
+	static QMutex mMutex;
 };
+
+template<typename T>
+std::auto_ptr<T> Singleton<T>::sInstance;
+
+template<typename T>
+QMutex Singleton<T>::mMutex;

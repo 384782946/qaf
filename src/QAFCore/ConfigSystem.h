@@ -49,7 +49,7 @@ namespace QAF
 	protected:
 		
 	private:
-		ConfigModel* mConfigModel = NULL;
+		ConfigModel* mConfigModel = nullptr;
 		bool mIsDirty = false;
 	};
 }

@@ -25,7 +25,7 @@ class ModelItem;
 class AbstractTreeModel : public QAbstractItemModel
 {
 public:
-	AbstractTreeModel(QObject *parent = NULL);
+	AbstractTreeModel(QObject *parent = nullptr);
 	virtual ~AbstractTreeModel();
 
 	virtual int	rowCount(const QModelIndex & parent = QModelIndex()) const;
@@ -38,9 +38,9 @@ public:
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
 	void setHeaders(QStringList headers);
-	void addItem(ModelItem* item, ModelItem* parent = NULL);
-	void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = NULL);
-	void removeItem(ModelItem* item,ModelItem* parent = NULL);
+	void addItem(ModelItem* item, ModelItem* parent = nullptr);
+	void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = nullptr);
+	void removeItem(ModelItem* item,ModelItem* parent = nullptr);
 
 	QModelIndex indexForItem(ModelItem* item) const;
 	ModelItem* itemForIndex(const QModelIndex& index) const;
@@ -48,7 +48,7 @@ public:
 private:
 	//QMap<ModelItem*, ModelItem*> mItems;
 	QStringList mHeaders;
-	ModelItem* mRootItem = NULL;
+	ModelItem* mRootItem = nullptr;
 };
 
 #endif // ABSTRACTTREEMODEL_H

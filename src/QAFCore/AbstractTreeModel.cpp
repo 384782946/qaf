@@ -71,7 +71,7 @@ QModelIndex	AbstractTreeModel::index(int row, int column, const QModelIndex & pa
 		return QModelIndex();
 
 	ModelItem* parentItem = itemForIndex(parent);
-	if (parentItem == NULL)
+	if (parentItem == nullptr)
 		parentItem = mRootItem;
 
 	ModelItem* childItem = parentItem->child(row);
@@ -106,7 +106,7 @@ ModelItem* AbstractTreeModel::itemForIndex(const QModelIndex& index) const
 	if (index.isValid())
 		return static_cast<ModelItem*>(index.internalPointer());
 	else
-		return NULL;
+		return nullptr;
 }
 
 void AbstractTreeModel::setHeaders(QStringList headers)
@@ -114,12 +114,12 @@ void AbstractTreeModel::setHeaders(QStringList headers)
 	mHeaders = headers;
 }
 
-void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= NULL*/)
+void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= nullptr*/)
 {
-	if (item == NULL)
+	if (item == nullptr)
 		return;
 
-	if (parent == NULL)
+	if (parent == nullptr)
 		parent = getRootItem();
 
 	QModelIndex parentIndex = indexForItem(parent);
@@ -129,12 +129,12 @@ void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= NULL*/)
 	endInsertRows();
 }
 
-void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= NULL*/)
+void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= nullptr*/)
 {
-	if (item == NULL)
+	if (item == nullptr)
 		return;
 
-	if (parent == NULL)
+	if (parent == nullptr)
 		parent = getRootItem();
 
 	QModelIndex parentIndex = indexForItem(parent);
@@ -151,7 +151,7 @@ void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem*
 
 void AbstractTreeModel::removeItem(ModelItem* item, ModelItem* parent)
 {
-	if (item == NULL)
+	if (item == nullptr)
 		return;
 
 	QModelIndex index = indexForItem(item);
@@ -170,7 +170,7 @@ ModelItem* AbstractTreeModel::getRootItem() const
 
 QModelIndex AbstractTreeModel::indexForItem(ModelItem* item) const
 {
-	if (item == NULL || item->parent() == NULL)
+	if (item == nullptr || item->parent() == nullptr)
 		return QModelIndex();
 	
 	ModelItem* parent = item->parent();

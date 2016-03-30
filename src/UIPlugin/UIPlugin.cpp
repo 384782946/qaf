@@ -9,7 +9,7 @@
 
 #include <QMenu>
 
-QAFCore* g_QAFCore = NULL;
+QAFCore* g_QAFCore = nullptr;
 
 ObjectPtr<AbstractPlugin> UIPluginFactory::create(QAFCore* core)
 {

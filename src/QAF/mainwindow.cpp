@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 	QAFApplication::splashMessage(LStr("正在创建菜单..."));
 	createMenu();
 	createAction();
+
 	QAFCorePtr->setUIInterface(this);
-	this->showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -56,22 +56,22 @@ QWidget* MainWindow::getMainWindow()
 
 QMenu* MainWindow::getMenu(int id)
 {
-	return mMenus.value(id, NULL);
+	return mMenus.value(id, nullptr);
 }
 
 QAction* MainWindow::getAction(int id)
 {
-	return mActions.value(id, NULL);
+	return mActions.value(id, nullptr);
 }
 
 QWidget* MainWindow::getWidget(int id)
 {
-	return mWidgets.value(id, NULL);
+	return mWidgets.value(id, nullptr);
 }
 
 QDockWidget* MainWindow::getDockWidget(int id)
 {
-	return mDockWidgets.value(id, NULL);
+	return mDockWidgets.value(id, nullptr);
 }
 
 void MainWindow::setMenu(int id, QMenu* menu)
@@ -104,7 +104,7 @@ void MainWindow::setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos
 	{
 		//寻找具有相同挂载位置的dock
 		dock->setProperty("dockPos", (int)pos);
-		QDockWidget* lastDock = NULL;
+		QDockWidget* lastDock = nullptr;
 		foreach(QDockWidget* widget, mDockWidgets){
 			if (widget && widget->property("dockPos").toInt() == pos){
 				lastDock = widget;
