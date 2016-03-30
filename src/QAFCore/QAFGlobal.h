@@ -8,6 +8,11 @@
 /************************************************************************/
 /*   预处理                                                             */
 /************************************************************************/
+#define _VERSON_0_0 0
+#define _VERSON_0_1 1
+
+#define QAF_VERSION _VERSON_0_0
+#define QAF_VERSION_STR "v0.0"
 
 #define QAFCorePtr QAF::QAFCore::getSingleton()
 #define LStr(strings) QString::fromLocal8Bit(strings)
@@ -44,7 +49,7 @@ public:
 #define ASSERT_CONVERTIBLE_TYPE(classname1,classname2) static_assert(CanConvert<classname1,classname2>::ret,#classname1##" can not convert to "###classname2)
 
 /************************************************************************/
-/*   类型定义                                                           */
+/*   全局定义                                                           */
 /************************************************************************/
 
 namespace QAF

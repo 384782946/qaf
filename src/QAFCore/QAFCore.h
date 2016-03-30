@@ -36,14 +36,17 @@ namespace QAF
 		void addSystem(AbstractSystem*);
 		void removeSystem(SystemType);
 		AbstractSystem* getSystem(int type /*SystemType*/) const;
-
 		ConfigSystem* getConfigSystem() const;
 		ObjectSystem* getObjectSystem(int sysId = ST_OBJECT) const;
 		PluginSystem* getPluginSystem() const;
 
 		void setUIInterface(UIInterface*);
 		UIInterface* getUIInterface() const;
-		inline LogModel* getLogModel();
+		inline LogModel* getLogModel() const;
+
+		inline int getVersion() const;
+		inline QString getVersionStr() const;
+		inline bool isSupported(int version) const;
 
 	protected:
 		void initCore();

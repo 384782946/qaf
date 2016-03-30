@@ -24,6 +24,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testPlugin", "src\testPlugin\testPlugin.vcxproj", "{FDC8E4B0-1597-40EA-A80D-69D0FDDBB9F9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UIPlugin", "src\UIPlugin\UIPlugin.vcxproj", "{1D79057F-4A32-4644-821F-36AC31160A4F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7F398B9-6C5C-4053-BFAC-01B4802FFD7A} = {F7F398B9-6C5C-4053-BFAC-01B4802FFD7A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "界面层", "界面层", "{8BE0C4C6-1D3A-4B95-8FB1-8D2B58649338}"
 EndProject

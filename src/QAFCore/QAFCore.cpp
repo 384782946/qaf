@@ -154,9 +154,24 @@ namespace QAF
 		return static_cast<PluginSystem*>(getSystem(ST_PLUGIN));
 	}
 
-	LogModel* QAFCore::getLogModel()
+	LogModel* QAFCore::getLogModel() const
 	{
 		return mLogModel;
+	}
+
+	int QAFCore::getVersion() const
+	{
+		return QAF_VERSION;
+	}
+
+	QString QAFCore::getVersionStr() const
+	{
+		return QAF_VERSION_STR;
+	}
+
+	bool QAFCore::isSupported(int version) const
+	{
+		return getVersion() >= version;
 	}
 
 }
