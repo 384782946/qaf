@@ -3,12 +3,16 @@
 #include "QAFGlobal.h"
 #include "qafcore.h"
 #include "qafapplication.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	ui.mainToolBar->setWindowTitle(LStr("工具栏"));
+
+	setWindowFlags(Qt::CustomizeWindowHint);
+	setWindowFlags(Qt::FramelessWindowHint);
 
 	//设置嵌入窗口优先级
 	setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -120,4 +124,17 @@ void MainWindow::setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos
 			this->tabifyDockWidget(lastDock, dock);
 		}
 	}
+}
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+	event->ignore();
+	return;
+	QRect rct = this->rect();
+	qDebug() << "rct:"<< rct;
+	QPoint topLeft = rct.topLeft();
+	QPoint newTopLeft = QPoint(topLeft.x(), topLeft.y() + 100);
+	qDebug() << "newTopLeft:" << newTopLeft;
+	QPaintEvent other(QRect(newTopLeft, rct.bottomRight()));
+	//QMainWindow::paintEvent(&other);
 }

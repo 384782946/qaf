@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <QAtomicPointer>
+
 #include <QMutex>
 #include <QMutexLocker>
 
@@ -23,22 +25,29 @@ class Singleton
 public:
 	static T* getSingleton()
 	{
-		if (!sInstance.get())
+#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	                                          
+		if (!sInstancePtr.loadAcquire())
 		{
-			QMutexLocker locker(&mMutex);
-			if (!sInstance.get())
+			T* ptr = new T();
+			if (!sInstancePtr.testAndSetOrdered(0, ptr))
 			{
-				sInstance.reset(new T());
+				delete ptr;
 			}
-			
 		}
-		return sInstance.get();
+		return sInstancePtr.loadAcquire();
+#endif
 	}
 
 	static void release()
 	{
-		QMutexLocker locker(&mMutex);
-		sInstance.release();
+		T* ptr = sInstancePtr.loadAcquire();
+		if (ptr)
+		{
+			if (sInstancePtr.testAndSetOrdered(ptr, 0))
+			{
+				delete ptr;
+			}
+		}
 	}
 
 protected:
@@ -50,12 +59,13 @@ private:
 	//单实例对象不应该存在拷贝
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
-	static std::auto_ptr<T> sInstance;
-	static QMutex mMutex;
+	
+#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	 
+	static QBasicAtomicPointer<T> sInstancePtr;
+#endif
 };
 
+#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	 
 template<typename T>
-std::auto_ptr<T> Singleton<T>::sInstance;
-
-template<typename T>
-QMutex Singleton<T>::mMutex;
+QBasicAtomicPointer<T> Singleton<T>::sInstancePtr = Q_BASIC_ATOMIC_INITIALIZER(0);
+#endif
