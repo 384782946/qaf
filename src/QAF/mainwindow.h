@@ -28,7 +28,6 @@ public:
 	inline virtual void setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos = QAF::DWP_BOTTOM);
 
 protected:
-	void paintEvent(QPaintEvent *) override;
 	void createMenu();
 	void createAction();
 
