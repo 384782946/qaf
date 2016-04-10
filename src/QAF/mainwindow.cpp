@@ -11,9 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	ui.mainToolBar->setWindowTitle(LStr("工具栏"));
 
-	//setWindowFlags(Qt::CustomizeWindowHint);
-	//setWindowFlags(Qt::FramelessWindowHint);
-
 	//设置嵌入窗口优先级
 	setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
 	setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
