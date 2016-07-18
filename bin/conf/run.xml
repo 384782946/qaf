@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config active="true" type="group">
-    <plugins active="true" type="group">
-        <subitem active="true" regx="" type="item" value="test1"/>
-        <subitem active="true" regx="" type="item" value="test2"/>
-        <tests active="true" type="group">
-            <task active="true" regx="" type="item" value="test3"/>
-        </tests>
+<config>
+	<debug>true</debug>
+    <plugins>
+		<plugin lib="testPlugin.dll" name="testPlugin"></plugin>
+        <plugin lib="uixx.dll" name="uixx"></plugin>
+        <plugin lib="server.dll" name="server"></plugin>
     </plugins>
 </config>

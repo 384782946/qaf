@@ -15,6 +15,7 @@
 #pragma once
 
 #include "AbstractSystem.h"
+#include <QMap>
 
 namespace QAF
 {
@@ -34,13 +35,10 @@ namespace QAF
 		
 		void setDirty(bool dirty);
 		bool isDirty() const;
-		inline ConfigModel* getModel() const { return mConfigModel; }
+		ConfigModel* getModel(const QString& key) const;
 
 		//model≤È—Ø
 		bool isExist(const QString& path) const;
-		bool isGroup(const QString& path) const;
-		int groupCount(const QString& path) const;
-		QString groupItemValue(const QString& path, int index) const;
 		QString configValue(const QString& path) const;
 
 	signals:
@@ -50,6 +48,7 @@ namespace QAF
 		
 	private:
 		ConfigModel* mConfigModel = nullptr;
+		QMap<QString, ConfigModel*> mModels;
 		bool mIsDirty = false;
 	};
 }

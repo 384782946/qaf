@@ -1,0 +1,12 @@
+2016-07-16 14:51:00	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
+	"正在加载核心模块：QAF::ConfigSystem"
+2016-07-16 14:51:00	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
+	"正在加载核心模块：QAF::ObjectSystem"
+2016-07-16 14:51:00	Type:Debug	File:QAFCore.cpp	Line:90	Function:void __thiscall QAF::QAFCore::initExtent(void)
+	"正在加载扩展模块：QAF::PluginSystem"
+2016-07-16 14:51:00	Type:Debug	File:PluginSystem.cpp	Line:42	Function:void __thiscall QAF::PluginSystem::install(void)
+	"正在加载插件:" "zxj" "test for plugin" 1 "1.0"
+2016-07-16 14:51:00	Type:Debug	File:PluginSystem.cpp	Line:42	Function:void __thiscall QAF::PluginSystem::install(void)
+	"正在加载插件:" "zxj" "UI plugins" 1 "1.0"
+2016-07-16 14:51:00	Type:Fatal	File:global\qglobal.cpp	Line:3063	Function:void __cdecl qt_assert(const char *,const char *,int) throw()
+	ASSERT: "visual != -1" in file itemviews\qheaderview.cpp, line 1253

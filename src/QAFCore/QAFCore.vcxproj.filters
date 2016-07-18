@@ -89,9 +89,6 @@
     <ClCompile Include="ModelItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MySortFilterProxyModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ConfigModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -161,9 +158,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModelItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MySortFilterProxyModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AbstractTreeModel.h">

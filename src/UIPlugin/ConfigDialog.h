@@ -8,8 +8,6 @@ class QSortFilterProxyModel;
 
 namespace QAF
 {
-	class ConfigDialog;
-
 	class ConfigDialog : public QDialog
 	{
 		Q_OBJECT

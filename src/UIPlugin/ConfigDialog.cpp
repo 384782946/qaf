@@ -1,12 +1,10 @@
 #include "ConfigDialog.h"
 #include "ConfigSystem.h"
 #include "QAFCore.h"
-#include "MySortFilterProxyModel.h"
 #include "ConfigModel.h"
 
 namespace QAF
 {
-
 	ConfigDialog::ConfigDialog(QWidget *parent)
 		: QDialog(parent)
 		, mModel(0)
@@ -14,14 +12,14 @@ namespace QAF
 		ui.setupUi(this);
 		mModel = new MySortFilterProxyModel(this);
 		using namespace QAF;
-		ConfigModel* configModel = QAFCorePtr->getConfigSystem()->getModel();
+		ConfigModel* configModel = QAFCorePtr->getConfigSystem()->getModel("run");
 		mModel->setSourceModel(configModel);
 		mModel->setFilterRole(Qt::DisplayRole);
 		mModel->setFilterKeyColumn(0);
 		mModel->setDynamicSortFilter(false);
 		mModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 		ui.treeView->setModel(mModel);
-		ui.treeView->header()->setSectionResizeMode(2, QHeaderView::Stretch);
+		ui.treeView->header()->setStretchLastSection(true);
 	}
 
 	ConfigDialog::~ConfigDialog()
@@ -47,7 +45,9 @@ namespace QAF
 	void ConfigDialog::on_pushButtonFilter_clicked(bool)
 	{
 		QString regx = ui.lineEdit->text();
-		mModel->setFilterRegExp(regx);
+		QString value = QAFCorePtr->getConfigSystem()->configValue(regx);
+		ui.lineEditPath->setText(value);
+		//mModel->setFilterRegExp(regx);
 	}
 
 	void ConfigDialog::on_treeView_clicked(const QModelIndex &index)

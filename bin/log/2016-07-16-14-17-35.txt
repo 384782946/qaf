@@ -1,0 +1,2 @@
+2016-07-16 14:17:35	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
+	"正在加载核心模块：QAF::ConfigSystem"

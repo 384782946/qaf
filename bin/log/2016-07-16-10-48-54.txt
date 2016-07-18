@@ -1,0 +1,10 @@
+2016-07-16 10:48:54	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
+	"正在加载核心模块：QAF::ConfigSystem"
+2016-07-16 10:48:54	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
+	"正在加载核心模块：QAF::ObjectSystem"
+2016-07-16 10:48:54	Type:Debug	File:QAFCore.cpp	Line:90	Function:void __thiscall QAF::QAFCore::initExtent(void)
+	"正在加载扩展模块：QAF::PluginSystem"
+2016-07-16 10:48:55	Type:Debug	File:PluginSystem.cpp	Line:42	Function:void __thiscall QAF::PluginSystem::install(void)
+	"正在加载插件:" "zxj" "test for plugin" 1 "1.0"
+2016-07-16 10:48:55	Type:Debug	File:PluginSystem.cpp	Line:42	Function:void __thiscall QAF::PluginSystem::install(void)
+	"正在加载插件:" "zxj" "UI plugins" 1 "1.0"

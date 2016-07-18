@@ -15,6 +15,8 @@ public:
 
 	int run();
 
+	bool onlyOne();
+
 protected:
 	void initialize();
 

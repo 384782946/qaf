@@ -4,7 +4,7 @@
 #include "UIInterface.h"
 #include "ObjectSystem.h"
 #include "ConfigModel.h"
-
+#include <QFileInfo>
 #include <QDebug>
 #include <QAction>
 
@@ -18,25 +18,28 @@ namespace QAF
 
 	ConfigSystem::~ConfigSystem()
 	{
-		
 	}
 
 	void ConfigSystem::install()
 	{
 		AbstractSystem::install();
 
-		mConfigModel = new ConfigModel(this);
+		ConfigModel* configModel = new ConfigModel(this);
 		//转发信号
-		connect(mConfigModel, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
-		mConfigModel->setHeaders(QStringList() << LStr("名称") << LStr("状态") << LStr("值"));
-		mConfigModel->loadConfig();
+		connect(configModel, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
+		configModel->setHeaders(QStringList() << LStr("名称") << LStr("值"));
+		QString path = QAFDirs::path(DT_CONFIG) + "/run.xml";
+		configModel->loadConfig(path);
+		QFileInfo fInfo(path);
+		QString key = fInfo.baseName();
+		mModels.insert(key, configModel);
 	}
 
 	void ConfigSystem::uninstall()
 	{
 		AbstractSystem::uninstall();
 
-		if (mIsDirty)
+		//if (mIsDirty)
 		{
 			mConfigModel->saveConfig();
 		}
@@ -52,7 +55,7 @@ namespace QAF
 		if (path.isEmpty())
 			return "";
 
-		return mConfigModel->configValue(path);
+		return mConfigModel->getConfigValue(path);
 	}
 
 	void ConfigSystem::setDirty(bool dirty)
@@ -65,19 +68,9 @@ namespace QAF
 		return mIsDirty;
 	}
 
-	bool ConfigSystem::isGroup(const QString& path) const
+	ConfigModel* ConfigSystem::getModel(const QString& key) const
 	{
-		return mConfigModel->isGroup(path);
-	}
-
-	int ConfigSystem::groupCount(const QString& path) const
-	{
-		return mConfigModel->groupCount(path);
-	}
-
-	QString ConfigSystem::groupItemValue(const QString& path, int index) const
-	{
-		return mConfigModel->groupItemValue(path, index);
+		return mModels.value(key,nullptr);
 	}
 
 }

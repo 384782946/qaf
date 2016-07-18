@@ -1,179 +1,183 @@
 #include "AbstractTreeModel.h"
 #include "ModelItem.h"
 
-AbstractTreeModel::AbstractTreeModel(QObject *parent)
-	: QAbstractItemModel(parent)
-	, mRootItem(new ModelItem())
+namespace QAF
 {
+	AbstractTreeModel::AbstractTreeModel(QObject *parent)
+		: QAbstractItemModel(parent)
+		, mRootItem(new ModelItem())
+	{
 
-}
+	}
 
-AbstractTreeModel::~AbstractTreeModel()
-{
-	delete mRootItem;
-}
-QModelIndex	AbstractTreeModel::parent(const QModelIndex & index) const
-{
-	ModelItem* item = itemForIndex(index);
-	if (!item)
-		return QModelIndex();
+	AbstractTreeModel::~AbstractTreeModel()
+	{
+		delete mRootItem;
+	}
 
-	ModelItem* parent = item->parent();
-	if (!parent)
-		return QModelIndex();
+	QModelIndex	AbstractTreeModel::parent(const QModelIndex & index) const
+	{
+		ModelItem* item = itemForIndex(index);
+		if (!item)
+			return QModelIndex();
 
-	ModelItem* grandparent = parent->parent();
-	if (!grandparent)
-		return QModelIndex();
+		ModelItem* parent = item->parent();
+		if (!parent)
+			return QModelIndex();
 
-	int row = grandparent->indexOf(parent);
-	return createIndex(row, 0, parent);
-}
+		ModelItem* grandparent = parent->parent();
+		if (!grandparent)
+			return QModelIndex();
 
-int AbstractTreeModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
-{
-	if (!parent.isValid() && parent.column() > 0)
-		return 0;
+		int row = grandparent->indexOf(parent);
+		return createIndex(row, 0, parent);
+	}
 
-	ModelItem* item = itemForIndex(parent);
-	if (item)
-		return item->childCount();
-	else
-		return mRootItem->childCount();
-}
+	int AbstractTreeModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
+	{
+		if (!parent.isValid() && parent.column() > 0)
+			return 0;
 
-int AbstractTreeModel::columnCount(const QModelIndex & parent /*= QModelIndex() */) const
-{
-	return mHeaders.size();
-}
+		ModelItem* item = itemForIndex(parent);
+		if (item)
+			return item->childCount();
+		else
+			return mRootItem->childCount();
+	}
 
-QVariant AbstractTreeModel::data(const QModelIndex & index, int role /*= Qt::DisplayRole */) const
-{
-	ModelItem* modelItem = itemForIndex(index);
-	if (!modelItem)
-		return QVariant();
-	else
-		return modelItem->data(index.column(), role);
-}
+	int AbstractTreeModel::columnCount(const QModelIndex & parent /*= QModelIndex() */) const
+	{
+		return mHeaders.size();
+	}
 
-bool AbstractTreeModel::setData(const QModelIndex &index, const QVariant &value, int role /*= Qt::EditRole*/)
-{
-	ModelItem* modelItem = itemForIndex(index);
-	if (modelItem && modelItem->setData(value,index.column(),role))
-		return true;
-	else
-		return QAbstractItemModel::setData(index, value, role);
-}
+	QVariant AbstractTreeModel::data(const QModelIndex & index, int role /*= Qt::DisplayRole */) const
+	{
+		ModelItem* modelItem = itemForIndex(index);
+		if (!modelItem)
+			return QVariant();
+		else
+			return modelItem->data(index.column(), role);
+	}
 
-QModelIndex	AbstractTreeModel::index(int row, int column, const QModelIndex & parent /*= QModelIndex()*/) const
-{
-	if (!hasIndex(row, column, parent))
-		return QModelIndex();
+	bool AbstractTreeModel::setData(const QModelIndex &index, const QVariant &value, int role /*= Qt::EditRole*/)
+	{
+		ModelItem* modelItem = itemForIndex(index);
+		if (modelItem && modelItem->setData(value, index.column(), role))
+			return true;
+		else
+			return QAbstractItemModel::setData(index, value, role);
+	}
 
-	ModelItem* parentItem = itemForIndex(parent);
-	if (parentItem == nullptr)
-		parentItem = mRootItem;
+	QModelIndex	AbstractTreeModel::index(int row, int column, const QModelIndex & parent /*= QModelIndex()*/) const
+	{
+		if (!hasIndex(row, column, parent))
+			return QModelIndex();
 
-	ModelItem* childItem = parentItem->child(row);
-	if (!childItem)
-		return QModelIndex();
-	else
-		return createIndex(row, column, childItem);
-}
+		ModelItem* parentItem = itemForIndex(parent);
+		if (parentItem == nullptr)
+			parentItem = mRootItem;
 
-Qt::ItemFlags AbstractTreeModel::flags(const QModelIndex &index) const
-{
-	if (!index.isValid())
-		return Qt::NoItemFlags;
+		ModelItem* childItem = parentItem->child(row);
+		if (!childItem)
+			return QModelIndex();
+		else
+			return createIndex(row, column, childItem);
+	}
 
-	ModelItem* item = itemForIndex(index);
-	if (item)
-		return item->itemFlags(index.column());
-	else
-		return Qt::NoItemFlags;
-}
+	Qt::ItemFlags AbstractTreeModel::flags(const QModelIndex &index) const
+	{
+		if (!index.isValid())
+			return Qt::NoItemFlags;
 
-QVariant AbstractTreeModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole */) const
-{
-	if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
-		return mHeaders.at(section);
-	else
-		return QAbstractItemModel::headerData(section, orientation, role);
-}
+		ModelItem* item = itemForIndex(index);
+		if (item)
+			return item->itemFlags(index.column());
+		else
+			return Qt::NoItemFlags;
+	}
 
-ModelItem* AbstractTreeModel::itemForIndex(const QModelIndex& index) const
-{
-	if (index.isValid())
-		return static_cast<ModelItem*>(index.internalPointer());
-	else
-		return nullptr;
-}
+	QVariant AbstractTreeModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole */) const
+	{
+		if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
+			return mHeaders.at(section);
+		else
+			return QAbstractItemModel::headerData(section, orientation, role);
+	}
 
-void AbstractTreeModel::setHeaders(QStringList headers)
-{
-	mHeaders = headers;
-}
+	ModelItem* AbstractTreeModel::itemForIndex(const QModelIndex& index) const
+	{
+		if (index.isValid())
+			return static_cast<ModelItem*>(index.internalPointer());
+		else
+			return nullptr;
+	}
 
-void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= nullptr*/)
-{
-	if (item == nullptr)
-		return;
+	void AbstractTreeModel::setHeaders(QStringList headers)
+	{
+		mHeaders = headers;
+	}
 
-	if (parent == nullptr)
-		parent = getRootItem();
+	void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= nullptr*/)
+	{
+		if (item == nullptr)
+			return;
 
-	QModelIndex parentIndex = indexForItem(parent);
-	int index = parent->childCount();
-	beginInsertRows(parentIndex, index, index);
-	parent->addChild(item);
-	endInsertRows();
-}
+		if (parent == nullptr)
+			parent = getRootItem();
 
-void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= nullptr*/)
-{
-	if (item == nullptr)
-		return;
+		QModelIndex parentIndex = indexForItem(parent);
+		int index = parent->childCount();
+		beginInsertRows(parentIndex, index, index);
+		parent->addChild(item);
+		endInsertRows();
+	}
 
-	if (parent == nullptr)
-		parent = getRootItem();
+	void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= nullptr*/)
+	{
+		if (item == nullptr)
+			return;
 
-	QModelIndex parentIndex = indexForItem(parent);
-	int index = parent->indexOf(befor);
-	if (index < 0)
-		index = parent->childCount();
-	else
-		index++;
+		if (parent == nullptr)
+			parent = getRootItem();
 
-	beginInsertRows(parentIndex, index, index);
-	parent->insertChild(befor, item);
-	endInsertRows();
-}
+		QModelIndex parentIndex = indexForItem(parent);
+		int index = parent->indexOf(befor);
+		if (index < 0)
+			index = parent->childCount();
+		else
+			index++;
 
-void AbstractTreeModel::removeItem(ModelItem* item, ModelItem* parent)
-{
-	if (item == nullptr)
-		return;
+		beginInsertRows(parentIndex, index, index);
+		parent->insertChild(befor, item);
+		endInsertRows();
+	}
 
-	QModelIndex index = indexForItem(item);
-	beginRemoveRows(index, 0, 0);
-	if (parent)
-		parent->removeChild(item);
-	else
-		mRootItem->removeChild(item);
-	endRemoveRows();
-}
+	void AbstractTreeModel::removeItem(ModelItem* item, ModelItem* parent)
+	{
+		if (item == nullptr)
+			return;
 
-ModelItem* AbstractTreeModel::getRootItem() const
-{
-	return mRootItem;
-}
+		QModelIndex index = indexForItem(item);
+		beginRemoveRows(index, 0, 0);
+		if (parent)
+			parent->removeChild(item);
+		else
+			mRootItem->removeChild(item);
+		endRemoveRows();
+	}
 
-QModelIndex AbstractTreeModel::indexForItem(ModelItem* item) const
-{
-	if (item == nullptr || item->parent() == nullptr)
-		return QModelIndex();
-	
-	ModelItem* parent = item->parent();
-	int row = parent->indexOf(item);
-	return createIndex(row, 0, item);
+	ModelItem* AbstractTreeModel::getRootItem() const
+	{
+		return mRootItem;
+	}
+
+	QModelIndex AbstractTreeModel::indexForItem(ModelItem* item) const
+	{
+		if (item == nullptr || item->parent() == nullptr)
+			return QModelIndex();
+
+		ModelItem* parent = item->parent();
+		int row = parent->indexOf(item);
+		return createIndex(row, 0, item);
+	}
 }

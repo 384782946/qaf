@@ -15,12 +15,11 @@
 #ifndef CONFIGMODEL_H
 #define CONFIGMODEL_H
 
+#include <QSortFilterProxyModel>
 #include "QAFGlobal.h"
 #include "ModelItem.h"
 #include "AbstractTreeModel.h"
-
-class QDomElement;
-class QDomDocument;
+#include "qafcore_global.h"
 
 namespace QAF
 {
@@ -29,14 +28,13 @@ namespace QAF
 		friend class ConfigModel;
 		
 	public:
-		ConfigItem()
-			:mActive(true)
-		{
-		}
+		ConfigItem():mType(CT_NODE){}
 
 		virtual QVariant data(int index, int role = Qt::DisplayRole);
 		virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
 		virtual int itemFlags(int);
+
+		ConfigItem* getChildByName(const QString& name);
 
 		void setName(QString name){ mName = name; }
 		QString getName() const{ return mName; }
@@ -47,15 +45,6 @@ namespace QAF
 		void setType(ConfigType type){ mType = type; }
 		ConfigType getType() const{ return mType; }
 
-		void setActive(bool active){ mActive = active; }
-		bool getActive() const{ return mActive; }
-
-		void setRegx(QString regx){ mRegx = regx; }
-		QString getRegx() const{ return mRegx; }
-
-		void toXml(QDomElement* elm);
-		void fromXml(QDomElement* elm);
-
 		QString typeToString(ConfigType ct);
 		ConfigType stringToType(QString st);
 
@@ -65,29 +54,30 @@ namespace QAF
 		void setPath(QString path);
 
 	private:
-		bool mActive;
+
 		ConfigType mType;
 		QString mName;
-		QString mRegx;
 		QString mValue;
 		QString mPath;
 	};
 
-	class ConfigModel : public AbstractTreeModel
+	class QAFCORE_EXPORT ConfigModel : public AbstractTreeModel
 	{
 		Q_OBJECT
 	public:
 		ConfigModel(QObject *parent);
 		~ConfigModel();
 
-		void loadConfig();
-		void saveConfig();
+		bool loadConfig(const QString& path);
+		bool saveConfig();
 
-		QString configValue(const QString& path) const;
+		QString getConfigPath() const{ return mConfigFilePath; }
+
+		QString getConfigValue(const QString& path) const;
+		const ConfigItem* getConfig(const QString& path) const;
 		bool isExist(const QString& path) const;
-		bool isGroup(const QString& path) const;
-		int groupCount(const QString& path) const;
-		QString groupItemValue(const QString& path, int idnex) const;
+		bool setConfigValue(const QString& path, const QString& value);
+		void update(ConfigItem* item);
 
 	signals:
 		void valueChanged(QString path);
@@ -96,7 +86,18 @@ namespace QAF
 		ConfigItem* query(const QString path) const;
 
 	private:
+		QString mConfigFilePath;
+	};
 
+	class QAFCORE_EXPORT MySortFilterProxyModel : public QSortFilterProxyModel
+	{
+	public:
+		MySortFilterProxyModel(QObject *parent)
+			:QSortFilterProxyModel(parent){}
+		~MySortFilterProxyModel(){}
+
+	protected:
+		virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
 	};
 }
 

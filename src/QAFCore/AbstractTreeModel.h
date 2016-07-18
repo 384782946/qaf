@@ -17,38 +17,41 @@
 #define ABSTRACTTREEMODEL_H
 
 #include <QAbstractItemModel>
-//#include <QMap>
 #include <QStringList>
 
-class ModelItem;
+#include "qafcore_global.h"
 
-class AbstractTreeModel : public QAbstractItemModel
+namespace QAF
 {
-public:
-	AbstractTreeModel(QObject *parent = nullptr);
-	virtual ~AbstractTreeModel();
+	class ModelItem;
 
-	virtual int	rowCount(const QModelIndex & parent = QModelIndex()) const;
-	virtual int	columnCount(const QModelIndex & parent = QModelIndex()) const;
-	virtual QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-	virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-	virtual QModelIndex	index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
-	virtual QModelIndex	parent(const QModelIndex & index) const;
-	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+	class QAFCORE_EXPORT AbstractTreeModel : public QAbstractItemModel
+	{
+	public:
+		AbstractTreeModel(QObject *parent = nullptr);
+		virtual ~AbstractTreeModel();
 
-	void setHeaders(QStringList headers);
-	void addItem(ModelItem* item, ModelItem* parent = nullptr);
-	void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = nullptr);
-	void removeItem(ModelItem* item,ModelItem* parent = nullptr);
+		virtual int	rowCount(const QModelIndex & parent = QModelIndex()) const;
+		virtual int	columnCount(const QModelIndex & parent = QModelIndex()) const;
+		virtual QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+		virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+		virtual QModelIndex	index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
+		virtual QModelIndex	parent(const QModelIndex & index) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
-	QModelIndex indexForItem(ModelItem* item) const;
-	ModelItem* itemForIndex(const QModelIndex& index) const;
-	ModelItem* getRootItem() const;
-private:
-	//QMap<ModelItem*, ModelItem*> mItems;
-	QStringList mHeaders;
-	ModelItem* mRootItem = nullptr;
-};
+		void setHeaders(QStringList headers);
+		void addItem(ModelItem* item, ModelItem* parent = nullptr);
+		void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = nullptr);
+		void removeItem(ModelItem* item, ModelItem* parent = nullptr);
+
+		QModelIndex indexForItem(ModelItem* item) const;
+		ModelItem* itemForIndex(const QModelIndex& index) const;
+		ModelItem* getRootItem() const;
+	private:
+		QStringList mHeaders;
+		ModelItem* mRootItem = nullptr;
+	};
+}
 
 #endif // ABSTRACTTREEMODEL_H

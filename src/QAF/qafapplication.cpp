@@ -34,22 +34,22 @@ void QAFApplication::initialize()
 {
 	//set propertys of application
 	setApplicationName("QAF");
-	setOrganizationName("shawkin");
-	setOrganizationDomain("shawkin.com");
+	setOrganizationName("xiaojian");
+	setOrganizationDomain("xiaojian.site");
 	setApplicationVersion(QAF_VERSION_STR);
 
 	//install qss
-	QFile f(":qdarkstyle/style.qss");
-	if (!f.exists())
-	{
-		printf("Unable to set stylesheet, file not found\n");
-	}
-	else
-	{
-		f.open(QFile::ReadOnly | QFile::Text);
-		QTextStream ts(&f);
-		qApp->setStyleSheet(ts.readAll());
-	}
+	//QFile f(":qdarkstyle/style.qss");
+	//if (!f.exists())
+	//{
+	//	printf("Unable to set stylesheet, file not found\n");
+	//}
+	//else
+	//{
+	//	f.open(QFile::ReadOnly | QFile::Text);
+	//	QTextStream ts(&f);
+	//	qApp->setStyleSheet(ts.readAll());
+	//}
 
 	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);
@@ -83,4 +83,18 @@ int QAFApplication::run()
 	mMainWindow->deleteLater();
 	QAFCorePtr->release();
 	return ret;
+}
+
+bool QAFApplication::onlyOne()
+{
+	static QSharedMemory shared_memory;
+	shared_memory.setKey(qApp->applicationName());
+
+	if (shared_memory.attach()) {
+		return false;
+	}else{
+		shared_memory.create(1);
+	}
+	
+	return true;
 }

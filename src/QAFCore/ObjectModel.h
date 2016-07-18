@@ -3,17 +3,19 @@
 
 #include "AbstractTreeModel.h"
 
-
-class ObjectModel : public AbstractTreeModel
+namespace QAF
 {
-	Q_OBJECT
+	class ObjectModel : public AbstractTreeModel
+	{
+		Q_OBJECT
 
-public:
-	ObjectModel(QObject *parent);
-	~ObjectModel();
+	public:
+		ObjectModel(QObject *parent);
+		~ObjectModel();
 
-private:
-	
-};
+	private:
+
+	};
+}
 
 #endif // OBJECTMODEL_H

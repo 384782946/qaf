@@ -1,118 +1,121 @@
 #include "ModelItem.h"
 
-ModelItem::ModelItem()
-    :mParent(0)
-    ,mStatus(0)
+namespace QAF
 {
-   
-}
+	ModelItem::ModelItem()
+		:mParent(0)
+		, mStatus(0)
+	{
 
-ModelItem::~ModelItem(void)
-{
-    qDeleteAll(mChildren);
-}
+	}
 
-ModelItem* ModelItem::parent()
-{
-    return mParent;
-}
+	ModelItem::~ModelItem(void)
+	{
+		qDeleteAll(mChildren);
+	}
 
-int ModelItem::childCount()
-{
-    return mChildren.size();
-}
+	ModelItem* ModelItem::parent()
+	{
+		return mParent;
+	}
 
-void ModelItem::setStatus( int status)
-{
-    mStatus = status;
-}
+	int ModelItem::childCount()
+	{
+		return mChildren.size();
+	}
 
-int ModelItem::status()
-{
-    return mStatus;
-}
+	void ModelItem::setStatus(int status)
+	{
+		mStatus = status;
+	}
 
-int ModelItem::indexOf( ModelItem* child)
-{
-    return mChildren.indexOf(child);
-}
-
-ModelItem* ModelItem::child( int index)
-{
-    if(index >=0 && index<mChildren.size())
-        return mChildren.at(index);
-    else 
-		return nullptr;
-}
-
-QString ModelItem::className()
-{
-    return "ModelItem";
-}
-
-QList<QAction*> ModelItem::actions()
-{
-    return QList<QAction*>();
-}
-
-QVariant ModelItem::data(int index, int role)
-{
-	if (role == Qt::CheckStateRole)
+	int ModelItem::status()
+	{
 		return mStatus;
-	else
-		return QVariant();
-}
-
-bool ModelItem::setData(const QVariant &value,int index, int role)
-{
-	if (role == Qt::CheckStateRole)
-	{
-		setStatus(value.toInt());
-		return true;
 	}
-	return false;
-}
 
-void ModelItem::addChild(ModelItem* item)
-{
-	if (item){
-		mChildren.append(item);
-		item->mParent = this;
-	}
-}
-
-void ModelItem::insertChild(ModelItem* befor, ModelItem* item)
-{
-	if (befor && item)
+	int ModelItem::indexOf(ModelItem* child)
 	{
-		int beforeIndex = mChildren.indexOf(befor);
-		if (beforeIndex != -1)
-			mChildren.insert(beforeIndex, item);
+		return mChildren.indexOf(child);
+	}
+
+	ModelItem* ModelItem::child(int index)
+	{
+		if (index >= 0 && index < mChildren.size())
+			return mChildren.at(index);
 		else
+			return nullptr;
+	}
+
+	QString ModelItem::className()
+	{
+		return "ModelItem";
+	}
+
+	QList<QAction*> ModelItem::actions()
+	{
+		return QList<QAction*>();
+	}
+
+	QVariant ModelItem::data(int index, int role)
+	{
+		if (role == Qt::CheckStateRole)
+			return mStatus;
+		else
+			return QVariant();
+	}
+
+	bool ModelItem::setData(const QVariant &value, int index, int role)
+	{
+		if (role == Qt::CheckStateRole)
+		{
+			setStatus(value.toInt());
+			return true;
+		}
+		return false;
+	}
+
+	void ModelItem::addChild(ModelItem* item)
+	{
+		if (item){
+			mChildren.append(item);
+			item->mParent = this;
+		}
+	}
+
+	void ModelItem::insertChild(ModelItem* befor, ModelItem* item)
+	{
+		if (befor && item)
+		{
+			int beforeIndex = mChildren.indexOf(befor);
+			if (beforeIndex != -1)
+				mChildren.insert(beforeIndex, item);
+			else
+				mChildren.append(item);
+
+			item->mParent = this;
+		}
+		else if (item)
+		{
 			mChildren.append(item);
 
-		item->mParent = this;
+			item->mParent = this;
+		}
 	}
-	else if (item)
+
+	void ModelItem::removeChild(ModelItem* item)
 	{
-		mChildren.append(item);
-
-		item->mParent = this;
+		if (item){
+			mChildren.removeOne(item);
+			item->mParent = nullptr;
+		}
 	}
-}
 
-void ModelItem::removeChild(ModelItem* item)
-{
-	if (item){
-		mChildren.removeOne(item);
-		item->mParent = nullptr;
+	int ModelItem::itemFlags(int)
+	{
+		return Qt::ItemIsEnabled |
+			Qt::ItemIsSelectable |
+			Qt::ItemIsEditable |
+			Qt::ItemIsTristate;
 	}
-}
-
-int ModelItem::itemFlags(int)
-{
-	return Qt::ItemIsEnabled | 
-		Qt::ItemIsSelectable | 
-		Qt::ItemIsEditable | 
-		Qt::ItemIsTristate;
 }

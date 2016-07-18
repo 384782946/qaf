@@ -142,7 +142,7 @@ namespace QAF
 
 	enum ConfigType
 	{
-		CT_GROUP,
-		CT_ITEM
+		CT_NODE,
+		CT_ATTR
 	};
 }

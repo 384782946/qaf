@@ -25,7 +25,7 @@ namespace QAF
 {
 	class ObjectMemory;
 
-	typedef int ObjectId;
+	typedef unsigned int ObjectId;
 
 	/************************************************************************/
 	/* 由于使用了Qt实现的运行时类型识别机制		*/

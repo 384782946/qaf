@@ -2,5 +2,7 @@
     <qresource prefix="/QAFCore">
         <file>Resources/folder.png</file>
         <file>Resources/gear.png</file>
+        <file>Resources/xml_attr.png</file>
+        <file>Resources/xml_text.png</file>
     </qresource>
 </RCC>

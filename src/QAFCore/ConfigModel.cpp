@@ -9,62 +9,6 @@
 
 namespace QAF{
 
-	void ConfigItem::toXml(QDomElement* childElm)
-	{
-		if (!childElm)
-			return;
-
-		childElm->setAttribute("type", typeToString(mType));
-		childElm->setAttribute("active", mActive ? "true" : "false");
-
-		if (mType == CT_ITEM)
-		{
-			childElm->setAttribute("regx", mRegx);
-			childElm->setAttribute("value", mValue);
-		}
-	}
-
-	void ConfigItem::fromXml(QDomElement* elm)
-	{
-		if (!elm)
-			return;
-
-		mName = elm->tagName().trimmed();
-		mType = stringToType(elm->attribute("type").trimmed());
-		setActive(elm->attribute("active").trimmed() == "true");
-		
-		if (mType == CT_ITEM)
-		{
-			mRegx = elm->attribute("regx").trimmed();
-			mValue = elm->attribute("value").trimmed();
-		}
-	}
-
-	QString ConfigItem::typeToString(ConfigType ct)
-	{
-		switch (ct)
-		{
-		case QAF::CT_GROUP:
-			return "group";
-		case QAF::CT_ITEM:
-			return "item";
-		default:
-			break;
-		}
-
-		return QString();
-	}
-
-	ConfigType ConfigItem::stringToType(QString st)
-	{
-		if (st == "group")
-			return CT_GROUP;
-		else if (st == "item")
-			return CT_ITEM;
-		else
-			return CT_GROUP;
-	}
-
 	QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/)
 	{
 		if (role == Qt::DisplayRole || role == Qt::EditRole){
@@ -74,8 +18,6 @@ namespace QAF{
 			case 0:
 				return getName();
 			case 1:
-				return getActive();
-			case 2:
 				return getValue();
 			default:
 				break;
@@ -83,11 +25,10 @@ namespace QAF{
 		}
 		else if (role == Qt::DecorationRole){
 			if (index == 0){
-				if (getType() == CT_GROUP){
-					return QIcon(":/QAFCore/Resources/folder.png");
-				}
-				else if (getType() == CT_ITEM){
-					return QIcon(":/QAFCore/Resources/gear.png");
+				if (getType() == CT_ATTR){
+					return QIcon(":/QAFCore/Resources/xml_attr.png");
+				}else{
+					return QIcon(":/QAFCore/Resources/xml_text.png");
 				}
 			}
 		}
@@ -107,12 +48,6 @@ namespace QAF{
 			switch (index)
 			{
 			case 1:
-				if (value.toBool() != getActive())
-				{
-					setActive(value.toBool());
-				}
-				break;
-			case 2:
 				if (value.toString() != getValue()){
 					setValue(value.toString());
 				}
@@ -126,7 +61,7 @@ namespace QAF{
 
 	int ConfigItem::itemFlags(int index)
 	{
-		if(index == 0 || (index == 2 && getType() == CT_GROUP))
+		if(index == 0 || (index == 2))
 			return Qt::ItemIsEnabled |
 			Qt::ItemIsSelectable |
 			Qt::ItemIsTristate;
@@ -144,6 +79,19 @@ namespace QAF{
 		mPath = path;
 	}
 
+	ConfigItem* ConfigItem::getChildByName(const QString& name)
+	{
+		for (int i = 0; i < childCount(); i++)
+		{
+			ConfigItem* child = (ConfigItem*)this->child(i);
+			if (child && child->getName() == name)
+			{
+				return child;
+			}
+		}
+		return nullptr;
+	}
+
 	//////////////////////////////////////////////////////////////////////////
 
 	ConfigModel::ConfigModel(QObject *parent)
@@ -157,18 +105,20 @@ namespace QAF{
 
 	}
 
-	void ConfigModel::loadConfig()
+	bool ConfigModel::loadConfig(const QString& path)
 	{
-		QString confDir = QAFDirs::path(DT_CONFIG) + "/run.xml";
-		QFile file(confDir);
+		QFile file(path);
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-			return;
+			return false;
 
+		mConfigFilePath = path;
 		QDomDocument doc;
 		if (!doc.setContent(&file))
-			return;
+			return false;
 
 		file.close();
+
+		//深度遍历xml
 		typedef QPair<QDomElement, ConfigItem*> NodeType;
 		QList<NodeType> tmpList;
 
@@ -180,34 +130,65 @@ namespace QAF{
 			NodeType node = tmpList.takeLast();
 			QDomElement elm = node.first;
 
+			if (elm.isNull()||!elm.isElement())
+				continue;
+
 			ConfigItem* configItem = new ConfigItem();
 			if (configItem)
 			{
-				configItem->fromXml(&elm);
+				configItem->setType(CT_NODE);
+				configItem->setName(elm.tagName());
 				if (node.second){
-					node.second->addChild(configItem);
 					configItem->setPath(node.second->getPath() + "/" + configItem->getName());
-				}else{
-					addItem(configItem);
+					addItem(configItem, node.second);
+				}
+				else{
 					configItem->setPath(configItem->getName());
+					addItem(configItem);
 				}
 
-				if (elm.isElement() && elm.hasChildNodes())
+				//遍历属性
+				QDomNamedNodeMap attrNodes = elm.attributes();
+				for (int i = 0; i < attrNodes.count(); ++i){
+					QDomAttr attr = attrNodes.item(i).toAttr();
+					if (!attr.isNull()){
+						QString attrName = attr.name();
+						QString attrValue = attr.value();
+						ConfigItem* attrItem = new ConfigItem();
+						attrItem->setType(CT_ATTR);
+						attrItem->setName(attrName);
+						attrItem->setValue(attrValue);
+						attrItem->setPath(configItem->getPath() + "<" + attrName + ">");
+						addItem(attrItem, configItem);
+					}
+				}
+
+				//遍历子节点
+				for (QDomNode child = elm.lastChild(); !child.isNull(); child = child.previousSibling())
 				{
-					QDomElement child = elm.lastChildElement();
-					for (; !child.isNull(); child = child.previousSiblingElement())
-					{
-						tmpList.append(NodeType(child, configItem));
+					if (child.isText()){
+						QDomText t = child.toText();
+						if (!t.isNull())
+							configItem->setValue(t.data());
+					}else if (child.isElement()){
+						tmpList.append(NodeType(child.toElement(), configItem));
 					}
 				}
 			}
 		}
+
+		return true;
 	}
 
-	void ConfigModel::saveConfig()
+	bool ConfigModel::saveConfig()
 	{
+		QFile file(mConfigFilePath);
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+			return false;
+
 		QDomDocument doc;
-		QDomProcessingInstruction pi = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
+		QDomProcessingInstruction pi 
+			= doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
 		doc.appendChild(pi);
 
 		typedef QPair<QDomElement, ConfigItem*> NodeType;
@@ -222,44 +203,62 @@ namespace QAF{
 			if (item)
 			{
 				QDomElement elm = doc.createElement(item->getName());
+				QDomText domText = doc.createTextNode(item->getValue());
+				elm.appendChild(domText);
+
+				for (int i = item->childCount() - 1; i >= 0; --i)
+				{
+					ConfigItem* child = (ConfigItem*)item->child(i);
+					if (child->getType() == CT_ATTR){
+						elm.setAttribute(child->getName(), child->getValue());
+					}else{
+						tmpList.append(NodeType(elm, (ConfigItem*)item->child(i)));
+					}
+				}
+
 				if (node.first.isElement())
 					node.first.appendChild(elm);
 				else
 					doc.appendChild(elm);
-
-				item->toXml(&elm);
-
-				for (int i = item->childCount() - 1; i >= 0; --i)
-				{
-					tmpList.append(NodeType(elm, (ConfigItem*)item->child(i)));
-				}
 			}
 		}
-
-		QString confDir = QAFDirs::path(DT_CONFIG) + "/run.xml";
-		QFile file(confDir);
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-			return;
 
 		QTextStream out(&file);
 		out.setCodec("UTF-8");
 		doc.save(out, 4, QDomNode::EncodingFromTextStream);
 		file.close();
+
+		return true;
 	}
 
 	ConfigItem* ConfigModel::query(const QString path) const
 	{
-		QStringList keys = path.split('/');
+		int numOfTag = path.count("<");
+		Q_ASSERT_X(numOfTag <= 1, "config query", "error syntax:only one attribute is allowed in path.");
+
+		QStringList keys = path.trimmed().split('/');
+		if (keys.size() == 0)
+			return nullptr;
+
+		QString attrKey;
+		if (numOfTag == 1){
+			int lastIndex = keys.size() - 1;
+			QString tmp = keys[lastIndex];
+			int index = tmp.indexOf("<");
+			keys[lastIndex] = tmp.left(index);
+			attrKey = tmp.mid(index + 1, tmp.length() - index - 2);
+		}
 
 		ModelItem* item = getRootItem();
-
-		foreach(QString key, keys)
+		for (int i = 0; i < keys.size();++i)
 		{
+			QString key = keys.at(i);
 			bool match = false;
+			
 			for (int i = 0; i < item->childCount(); i++)
 			{
 				ConfigItem* child = (ConfigItem*)item->child(i);
-				if (child && child->getActive() && child->getName() == key)
+				if (child && child->getName() == key)
 				{
 					item = child;
 					match = true;
@@ -273,61 +272,38 @@ namespace QAF{
 			}
 		}
 
+		if (!attrKey.isEmpty()){
+			for (int i = 0; i < item->childCount(); i++)
+			{
+				ConfigItem* child = (ConfigItem*)item->child(i);
+				if (child && child->getType() == CT_ATTR
+					&& child->getName() == attrKey)
+				{
+					item = child;
+					break;
+				}
+			}
+		}
+
 		return (ConfigItem*)item;
 	}
 
-	QString ConfigModel::configValue(const QString& path) const
+	QString ConfigModel::getConfigValue(const QString& path) const
 	{
-		if (path.isEmpty())
-			return "";
-
-		ConfigItem* item = query(path);
-		if (item && item->getType() == CT_ITEM)
-		{
+		const ConfigItem* item = getConfig(path);
+		if (item)
 			return item->getValue();
-		}
-
-		return "";
-	}
-
-	bool ConfigModel::isGroup(const QString& path) const
-	{
-		if (path.isEmpty())
-			return true;
-
-		ConfigItem* item = query(path);
-		if (item)
-			return item->getType() == CT_GROUP;
 		else
-			return true;
-	}
-
-	int ConfigModel::groupCount(const QString& path) const
-	{
-		if (path.isEmpty())
-			return 0;
-
-		ConfigItem* item = query(path);
-		if (item)
-			return item->childCount();
-		else
-			return 0;
-	}
-
-	QString ConfigModel::groupItemValue(const QString& path, int index) const
-	{
-		if (path.isEmpty())
 			return "";
+	}
+
+	const ConfigItem* ConfigModel::getConfig(const QString& path) const
+	{
+		if (path.isEmpty())
+			return nullptr;
 
 		ConfigItem* item = query(path);
-		if (item && item->getType() == CT_GROUP)
-		{
-			ConfigItem* child = (ConfigItem*)item->child(index);
-			if (child)
-				return child->getValue();
-		}
-	
-		return "";
+		return item;
 	}
 
 	bool ConfigModel::isExist(const QString& path) const
@@ -335,4 +311,51 @@ namespace QAF{
 		return query(path) != nullptr;
 	}
 
+	bool ConfigModel::setConfigValue(const QString& path, const QString& value)
+	{
+		ConfigItem* item = query(path);
+		if (item){
+			update(item);
+			return true;
+		}
+		return false;
+	}
+
+	void ConfigModel::update(ConfigItem* item)
+	{
+		if (item){
+			QString path = item->getPath();
+			emit valueChanged(path);
+		}
+	}
+
+	bool MySortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+	{
+		if (!source_parent.isValid())
+			return true;
+
+		if (!filterRegExp().isValid() || filterRegExp().isEmpty())
+			return true;
+
+		bool filter = true;
+		QModelIndex source_index = sourceModel()->index(source_row, 0, source_parent);
+		ModelItem* item = static_cast<ModelItem*>(source_index.internalPointer());
+		filter = QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+		if (filter)
+		{
+			return true;
+		}
+		else
+		{
+			for (int k = 0; k < sourceModel()->rowCount(source_index); k++)
+			{
+				if (filterAcceptsRow(k, source_index))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

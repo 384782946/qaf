@@ -3,22 +3,10 @@
 
 int main(int argc, char *argv[])
 {
-#ifdef SINGLETON_APPLICATION
-	QSharedMemory shared_memory;
-	shared_memory.setKey(QString("account"));
-
-	if (shared_memory.attach())
-	{
-		QMessageBox::information(nullptr, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("程序正在运行中"), 0);
-		return 1;
-	}
-
-	if (!shared_memory.create(1))
-	{
-		return 1;
-	}
-#endif
-
 	QAFApplication app(argc, argv);
+
+	if (!app.onlyOne())
+		return 1;
+
 	return app.run();
 }
