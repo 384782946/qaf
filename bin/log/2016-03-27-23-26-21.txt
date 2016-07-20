@@ -1,6 +1,0 @@
-2016-03-27 23:26:21	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
-	"正在加载核心模块：QAF::ConfigSystem"
-2016-03-27 23:26:22	Type:Debug	File:QAFCore.cpp	Line:70	Function:void __thiscall QAF::QAFCore::initCore(void)
-	"正在加载核心模块：QAF::ObjectSystem"
-2016-03-27 23:26:22	Type:Debug	File:QAFCore.cpp	Line:90	Function:void __thiscall QAF::QAFCore::initExtent(void)
-	"正在加载扩展模块：QAF::PluginSystem"
