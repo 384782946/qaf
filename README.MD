@@ -14,9 +14,14 @@ Qt5.5.1+vs2013
 请配置为：
 输出目录 $(SolutionDir)bin\$(Configuration)\
 中间目录 $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
-输出文件 $(OutDir)\$(ProjectName).dll
-附加库目录 $(SolutionDir)bin\$(Configuration)\
+目标文件名 $(ProjectName)d
+目标文件扩展名 .dll
+输出文件 $(OutDir)\$(TargetName)$(TargetExt)
+附加库目录 $(SolutionDir)lib
 附加包含目录 $(SolutionDir)xxx
+
+某些项目需添加生成后事件：
+copy $(TargetPath) $(SolutionDir)bin\$(Configuration)
 
 ###3、目录说明：
 bin/conf 配置文件

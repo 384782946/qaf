@@ -33,13 +33,12 @@ namespace QAF
 		virtual void install();
 		virtual void uninstall();
 		
-		void setDirty(bool dirty);
-		bool isDirty() const;
 		ConfigModel* getModel(const QString& key) const;
+		bool loadModel(const QString& path);
 
-		//model≤È—Ø
-		bool isExist(const QString& path) const;
-		QString configValue(const QString& path) const;
+		bool isExist(const QString& confName , const QString& path) const;
+		QString getConfigValue(const QString& confName , const QString& path) const;
+		bool setConfigValue(const QString& confName, const QString& path, const QString& value);
 
 	signals:
 		void configValueChanged(QString path);
@@ -47,8 +46,7 @@ namespace QAF
 	protected:
 		
 	private:
-		ConfigModel* mConfigModel = nullptr;
+		ConfigModel* mRunConfig = nullptr;
 		QMap<QString, ConfigModel*> mModels;
-		bool mIsDirty = false;
 	};
 }

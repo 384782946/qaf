@@ -65,14 +65,14 @@ namespace QAF
 	{
 		Q_OBJECT
 	public:
-		ConfigModel(QObject *parent);
+		ConfigModel(QObject *parent = nullptr);
 		~ConfigModel();
 
-		bool loadConfig(const QString& path);
+		static ConfigModel* loadConfig(const QString& path);
+
 		bool saveConfig();
-
+		bool isModified() const { return mIsModified; }
 		QString getConfigPath() const{ return mConfigFilePath; }
-
 		QString getConfigValue(const QString& path) const;
 		const ConfigItem* getConfig(const QString& path) const;
 		bool isExist(const QString& path) const;
@@ -87,14 +87,15 @@ namespace QAF
 
 	private:
 		QString mConfigFilePath;
+		bool mIsModified;
 	};
 
-	class QAFCORE_EXPORT MySortFilterProxyModel : public QSortFilterProxyModel
+	class QAFCORE_EXPORT ConfigProxyModel : public QSortFilterProxyModel
 	{
 	public:
-		MySortFilterProxyModel(QObject *parent)
+		ConfigProxyModel(QObject *parent)
 			:QSortFilterProxyModel(parent){}
-		~MySortFilterProxyModel(){}
+		~ConfigProxyModel(){}
 
 	protected:
 		virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;

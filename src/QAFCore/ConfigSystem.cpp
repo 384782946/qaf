@@ -6,7 +6,6 @@
 #include "ConfigModel.h"
 #include <QFileInfo>
 #include <QDebug>
-#include <QAction>
 
 namespace QAF
 {
@@ -18,59 +17,80 @@ namespace QAF
 
 	ConfigSystem::~ConfigSystem()
 	{
+		qDeleteAll(mModels);
 	}
 
 	void ConfigSystem::install()
 	{
 		AbstractSystem::install();
 
-		ConfigModel* configModel = new ConfigModel(this);
-		//转发信号
-		connect(configModel, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
-		configModel->setHeaders(QStringList() << LStr("名称") << LStr("值"));
-		QString path = QAFDirs::path(DT_CONFIG) + "/run.xml";
-		configModel->loadConfig(path);
-		QFileInfo fInfo(path);
-		QString key = fInfo.baseName();
-		mModels.insert(key, configModel);
+		Q_ASSERT_X(loadModel(QAFDirs::path(DT_CONFIG) + "/run.xml"),
+			"ConfigSystem::install",
+			"run configuration cann't be loaded.");
 	}
 
 	void ConfigSystem::uninstall()
 	{
 		AbstractSystem::uninstall();
+	}
 
-		//if (mIsDirty)
-		{
-			mConfigModel->saveConfig();
+	bool ConfigSystem::isExist(const QString& confName , const QString& path) const
+	{
+		ConfigModel* cm = getModel(confName);
+		if (cm){
+			return !path.isEmpty() && cm->isExist(path);
+		}else{
+			return false;
 		}
 	}
 
-	bool ConfigSystem::isExist(const QString& path) const
+	QString ConfigSystem::getConfigValue(const QString& confName,const QString& path) const
 	{
-		return !path.isEmpty() && mConfigModel->isExist(path);
-	}
-
-	QString ConfigSystem::configValue(const QString& path) const
-	{
-		if (path.isEmpty())
+		if (confName.isEmpty() || path.isEmpty())
 			return "";
 
-		return mConfigModel->getConfigValue(path);
+		ConfigModel* cm = getModel(confName);
+		if (cm){
+			return cm->getConfigValue(path);
+		}else{
+			return "";
+		}
 	}
 
-	void ConfigSystem::setDirty(bool dirty)
+	bool ConfigSystem::setConfigValue(const QString& confName, const QString& path, const QString& value)
 	{
-		mIsDirty = dirty;
-	}
+		if (confName.isEmpty() || path.isEmpty())
+			return "";
 
-	bool ConfigSystem::isDirty() const
-	{
-		return mIsDirty;
+		ConfigModel* cm = getModel(confName);
+		if (cm){
+			return cm->setConfigValue(path,value);
+		}else{
+			return "";
+		}
 	}
 
 	ConfigModel* ConfigSystem::getModel(const QString& key) const
 	{
 		return mModels.value(key,nullptr);
+	}
+
+	bool ConfigSystem::loadModel(const QString& path)
+	{
+		QFileInfo fInfo(path);
+		if (!fInfo.exists())
+			return false;
+
+		ConfigModel* cm = ConfigModel::loadConfig(path);
+		if (cm){
+			connect(cm, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
+			cm->setHeaders(QStringList() << LStr("名称") << LStr("值"));
+			QString key = fInfo.baseName();
+			mModels.insert(key, mRunConfig);
+			return true;
+		}
+		
+		return false;
 	}
 
 }

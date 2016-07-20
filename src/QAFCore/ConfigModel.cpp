@@ -95,23 +95,27 @@ namespace QAF{
 	//////////////////////////////////////////////////////////////////////////
 
 	ConfigModel::ConfigModel(QObject *parent)
-		: AbstractTreeModel(parent)
+		: AbstractTreeModel(parent),
+		mIsModified(false)
 	{
 
 	}
 
 	ConfigModel::~ConfigModel()
 	{
-
+		if (mIsModified){
+			saveConfig();
+		}
 	}
 
-	bool ConfigModel::loadConfig(const QString& path)
+	ConfigModel* ConfigModel::loadConfig(const QString& path)
 	{
 		QFile file(path);
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-			return false;
+			return nullptr;
 
-		mConfigFilePath = path;
+		ConfigModel* model = new ConfigModel();
+		model->mConfigFilePath = path;
 		QDomDocument doc;
 		if (!doc.setContent(&file))
 			return false;
@@ -140,11 +144,11 @@ namespace QAF{
 				configItem->setName(elm.tagName());
 				if (node.second){
 					configItem->setPath(node.second->getPath() + "/" + configItem->getName());
-					addItem(configItem, node.second);
+					model->addItem(configItem, node.second);
 				}
 				else{
 					configItem->setPath(configItem->getName());
-					addItem(configItem);
+					model->addItem(configItem);
 				}
 
 				//±éÀúÊôÐÔ
@@ -159,7 +163,7 @@ namespace QAF{
 						attrItem->setName(attrName);
 						attrItem->setValue(attrValue);
 						attrItem->setPath(configItem->getPath() + "<" + attrName + ">");
-						addItem(attrItem, configItem);
+						model->addItem(attrItem, configItem);
 					}
 				}
 
@@ -177,7 +181,7 @@ namespace QAF{
 			}
 		}
 
-		return true;
+		return model;
 	}
 
 	bool ConfigModel::saveConfig()
@@ -266,10 +270,8 @@ namespace QAF{
 				}
 			}
 
-			if (!match)
-			{
+			if (!match) 
 				return nullptr;
-			}
 		}
 
 		if (!attrKey.isEmpty()){
@@ -325,11 +327,12 @@ namespace QAF{
 	{
 		if (item){
 			QString path = item->getPath();
+			mIsModified = true;
 			emit valueChanged(path);
 		}
 	}
 
-	bool MySortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+	bool ConfigProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 	{
 		if (!source_parent.isValid())
 			return true;
@@ -342,17 +345,13 @@ namespace QAF{
 		ModelItem* item = static_cast<ModelItem*>(source_index.internalPointer());
 		filter = QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 		if (filter)
-		{
 			return true;
-		}
-		else
+		
+		for (int k = 0; k < sourceModel()->rowCount(source_index); k++)
 		{
-			for (int k = 0; k < sourceModel()->rowCount(source_index); k++)
+			if (filterAcceptsRow(k, source_index))
 			{
-				if (filterAcceptsRow(k, source_index))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 

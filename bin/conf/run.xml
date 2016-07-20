@@ -2,8 +2,7 @@
 <config>
 	<debug>true</debug>
     <plugins>
-		<plugin lib="testPlugin.dll" name="testPlugin"></plugin>
-        <plugin lib="uixx.dll" name="uixx"></plugin>
-        <plugin lib="server.dll" name="server"></plugin>
+		<plugin lib="testPlugin" name="A test plugin item"></plugin>
+        <plugin lib="UIPlugin" name="UI component"></plugin>
     </plugins>
 </config>

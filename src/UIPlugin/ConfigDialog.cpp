@@ -10,14 +10,17 @@ namespace QAF
 		, mModel(0)
 	{
 		ui.setupUi(this);
-		mModel = new MySortFilterProxyModel(this);
+		mModel = new ConfigProxyModel(this);
 		using namespace QAF;
 		ConfigModel* configModel = QAFCorePtr->getConfigSystem()->getModel("run");
-		mModel->setSourceModel(configModel);
-		mModel->setFilterRole(Qt::DisplayRole);
-		mModel->setFilterKeyColumn(0);
-		mModel->setDynamicSortFilter(false);
-		mModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+		if (configModel){
+			mModel->setSourceModel(configModel);
+			mModel->setFilterRole(Qt::DisplayRole);
+			mModel->setFilterKeyColumn(0);
+			mModel->setDynamicSortFilter(false);
+			mModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+		}
+		
 		ui.treeView->setModel(mModel);
 		ui.treeView->header()->setStretchLastSection(true);
 	}
@@ -39,15 +42,13 @@ namespace QAF
 
 	void ConfigDialog::on_pushButtonApply_clicked(bool)
 	{
-		QAFCorePtr->getConfigSystem()->setDirty(true);
+		
 	}
 
 	void ConfigDialog::on_pushButtonFilter_clicked(bool)
 	{
 		QString regx = ui.lineEdit->text();
-		QString value = QAFCorePtr->getConfigSystem()->configValue(regx);
-		ui.lineEditPath->setText(value);
-		//mModel->setFilterRegExp(regx);
+		mModel->setFilterRegExp(regx);
 	}
 
 	void ConfigDialog::on_treeView_clicked(const QModelIndex &index)
