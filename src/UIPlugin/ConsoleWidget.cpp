@@ -1,9 +1,10 @@
 #include "ConsoleWidget.h"
-#include "qafcore.h"
-#include "LogModel.h"
-
+#include <LogModel.h>
+#include <QAFContext.h>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+
+using QAF::QAFContext;
 
 ConsoleWidget::ConsoleWidget(QWidget *parent)
 	: QWidget(parent)
@@ -12,7 +13,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 	ui.setupUi(this);
 
 	mModel = new QSortFilterProxyModel(this);
-	mModel->setSourceModel(QAFCorePtr->getLogModel());
+	mModel->setSourceModel(QAFContext::getSingleton()->getLogModel());
 	mModel->setFilterKeyColumn(0);
 	//mModel->setFilterRole(Qt::UserRole);
 	mModel->setFilterRole(Qt::DisplayRole);
@@ -26,12 +27,12 @@ ConsoleWidget::ConsoleWidget(QWidget *parent)
 	ui.tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
 	ui.comboBox->addItems(QStringList()
-		<< LStr("全部")
-		<< LStr("信息")
-		<< LStr("调试")
-		<< LStr("警告")
-		<< LStr("危险")
-		<< LStr("错误"));
+		<< QString::fromLocal8Bit("全部")
+		<< QString::fromLocal8Bit("信息")
+		<< QString::fromLocal8Bit("调试")
+		<< QString::fromLocal8Bit("警告")
+		<< QString::fromLocal8Bit("危险")
+		<< QString::fromLocal8Bit("错误"));
 }
 
 ConsoleWidget::~ConsoleWidget()

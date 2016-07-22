@@ -20,13 +20,21 @@ namespace QAF
 
 	QAFCore::~QAFCore()
 	{
+		if (mIsInit){
+			destory();
+		}
+	}
+
+	void QAFCore::destory()
+	{
 		foreach(int key, mSystems.keys()){
 			AbstractSystem* system = mSystems.value(key, nullptr);
 			if (system){
 				QString msg;
 				if (key > ST_NONE && key < ST_CORE){
 					msg = QString("%1%2").arg(LStr("正在卸载核心模块：")).arg(system->name());
-				} else if (key > ST_CORE){
+				}
+				else if (key > ST_CORE){
 					msg = QString("%1%2").arg(LStr("正在卸载扩展模块：")).arg(system->name());
 				}
 
@@ -34,7 +42,7 @@ namespace QAF
 				system->uninstall();
 			}
 		}
-		
+
 		qDeleteAll(mSystems);
 
 		//取消消息处理
@@ -43,10 +51,9 @@ namespace QAF
 
 	void QAFCore::initialize(MessageCallback fun)
 	{
-		static bool init = false;
-		if (!init)
+		if (!mIsInit)
 		{
-			init = true;
+			mIsInit = true;
 			qInstallMessageHandler(Logger::messageHandler);
 			mMessageCallback = fun;
 			if (mMessageCallback)
@@ -123,7 +130,7 @@ namespace QAF
 		}
 	}
 
-	AbstractSystem* QAFCore::getSystem(int type) const
+	AbstractSystem* QAFCore::getSystem(SystemType type) const
 	{
 		return mSystems.value(type, nullptr);
 	}
@@ -146,7 +153,7 @@ namespace QAF
 
 	ObjectSystem* QAFCore::getObjectSystem(int sysId) const
 	{
-		return static_cast<ObjectSystem*>(getSystem(sysId));
+		return static_cast<ObjectSystem*>(getSystem(ST_OBJECT));
 	}
 
 	PluginSystem* QAFCore::getPluginSystem() const

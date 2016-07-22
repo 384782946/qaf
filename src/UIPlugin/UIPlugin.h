@@ -9,7 +9,7 @@ using namespace QAF;
 class UIPLUGIN_EXPORT UIPluginFactory :public AbstractPluginFactory
 {
 public:
-	virtual ObjectPtr<AbstractPlugin> create(QAFCore* core);
+	virtual ObjectPtr<AbstractPlugin> create();
 	virtual PluginType getType();
 	virtual QString getVersion();
 	virtual QString getDesc();

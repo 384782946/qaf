@@ -45,9 +45,10 @@ namespace QAF
 									<< apf->getVersion();
 								
 								if (apf->isAutoLoad()){
-									ObjectPtr<AbstractPlugin> apPtr = apf->create(QAFCorePtr);
-									if (apPtr.isValid()){
+									ObjectPtr<AbstractPlugin> apPtr = apf->create();
+									if (apPtr.isValid() && !apPtr->isInstalled()){
 										apPtr->install();
+										apPtr->setInstalled(true);
 									}
 								}
 							}else{

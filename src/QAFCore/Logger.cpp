@@ -33,7 +33,7 @@ namespace QAF
 		if (!gLogFile){
 			QString logName = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss")+".txt";
 			QString logPath = QAFDirs::path(DT_LOG) + "/" + logName;
-			gLogFile = new QFile(logPath,QAFCorePtr);
+			gLogFile = new QFile(logPath,QAFCore::getSingleton());
 			if (gLogFile->open(QIODevice::WriteOnly)){
 				gLogStream.setDevice(gLogFile);
 				gLogStream.setCodec("UTF-8");
@@ -73,9 +73,9 @@ namespace QAF
 		}
 
 		static LogModel* logModel = nullptr;
-		if (!logModel && QAFCorePtr)
+		if (!logModel && QAFCore::getSingleton())
 		{
-			logModel = QAFCorePtr->getLogModel();
+			logModel = QAFCore::getSingleton()->getLogModel();
 		}
 		
 		if (logModel)

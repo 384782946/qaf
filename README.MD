@@ -22,6 +22,8 @@ Qt5.5.1+vs2013
 
 某些项目需添加生成后事件：
 copy $(TargetPath) $(SolutionDir)bin\$(Configuration)
+copy $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
+copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)
 
 ###3、目录说明：
 bin/conf 配置文件

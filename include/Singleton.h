@@ -1,13 +1,13 @@
 /*!
  * \file Singleton.h
- * \date 2016/01/16 14:18
+ * \date 2016/07/21 22:30
  *
  * \author zxj
  * Contact: user@company.com
  *
  * \brief 
  *
- *	实现了单例模式的抽象模板类,只需继承该类便拥有了单实例的特性
+ * single pattern implement
  *
  * \note
 */
@@ -16,26 +16,25 @@
 
 #include <QAtomicPointer>
 
-#include <QMutex>
-#include <QMutexLocker>
-
 template<typename T>
 class Singleton
 {
 public:
 	static T* getSingleton()
 	{
-#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	                                          
+		//test is object has been constructed
 		if (!sInstancePtr.loadAcquire())
 		{
 			T* ptr = new T();
+			//atomic operator
 			if (!sInstancePtr.testAndSetOrdered(0, ptr))
 			{
+				//the object has been constructed
+				//destruct the object you just apply 
 				delete ptr;
 			}
 		}
 		return sInstancePtr.loadAcquire();
-#endif
 	}
 
 	static void release()
@@ -51,21 +50,17 @@ public:
 	}
 
 protected:
-	//不能实例化
+	//limit object construct and destruct
 	Singleton(){}
 	virtual ~Singleton(){}
 
 private:
-	//单实例对象不应该存在拷贝
+	//single object refused to copy
 	Singleton(const Singleton&);
 	Singleton& operator=(const Singleton&);
-	
-#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	 
+	 
 	static QBasicAtomicPointer<T> sInstancePtr;
-#endif
 };
 
-#if QT_VERSION > QT_VERSION_CHECK(5, 0, 0)	 
 template<typename T>
 QBasicAtomicPointer<T> Singleton<T>::sInstancePtr = Q_BASIC_ATOMIC_INITIALIZER(0);
-#endif

@@ -1,7 +1,7 @@
 #include "ConfigDialog.h"
-#include "ConfigSystem.h"
-#include "QAFCore.h"
-#include "ConfigModel.h"
+#include <ConfigSystem.h>
+#include <ConfigModel.h>
+#include <QAFContext.h>
 
 namespace QAF
 {
@@ -12,7 +12,7 @@ namespace QAF
 		ui.setupUi(this);
 		mModel = new ConfigProxyModel(this);
 		using namespace QAF;
-		ConfigModel* configModel = QAFCorePtr->getConfigSystem()->getModel("run");
+		ConfigModel* configModel = static_cast<ConfigSystem*>(QAFContext::getSingleton()->getSystem(ST_CONFIG))->getModel("run");
 		if (configModel){
 			mModel->setSourceModel(configModel);
 			mModel->setFilterRole(Qt::DisplayRole);

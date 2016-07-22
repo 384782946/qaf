@@ -2,9 +2,8 @@
 #include "qafapplication.h"
 #include <QtWidgets/QSplashScreen>
 #include <QTranslator>
-
-#include "qafcore.h"
-#include "QAFDirs.h"
+#include <QAFContext.h>
+#include <QAFDirs.h>
 #include "mainwindow.h"
 
 using QAF::QAFDirs;
@@ -68,12 +67,13 @@ void QAFApplication::initialize()
 	processEvents();
 
 	mMainWindow = new MainWindow();
-	QAFCorePtr->initialize(QAFApplication::splashMessage);
 }
 
 int QAFApplication::run()
 {
 	initialize();
+
+	QAF::QAFContext::getSingleton()->construct();
 
 	int ret = 0;
 	mMainWindow->showMaximized();
@@ -81,7 +81,8 @@ int QAFApplication::run()
 	mSplashScreen->deleteLater();
 	ret = exec();
 	mMainWindow->deleteLater();
-	QAFCorePtr->release();
+
+	QAF::QAFContext::getSingleton()->destruct();
 	return ret;
 }
 

@@ -2,8 +2,8 @@
 #define QAF_H
 
 #include <QtWidgets/QMainWindow>
+#include "QAFCore/UIInterface.h"
 #include "ui_mainwindow.h"
-#include "UIInterface.h"
 
 using QAF::UIInterface;
 

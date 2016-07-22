@@ -1,20 +1,19 @@
 #include "UIPlugin.h"
-#include "QAFCore.h"
-#include "ObjectSystem.h"
 #include <QDockWidget>
-#include "UIInterface.h"
+#include <QMenu>
+#include <QAFContext.h>
+#include <ObjectSystem.h>
+#include <UIInterface.h>
 #include "ConsoleWidget.h"
 #include "ConfigDialog.h"
 #include "PropertyEditerWidget.h"
 
-#include <QMenu>
+UIInterface* g_UIInterface = nullptr;
 
-QAFCore* g_QAFCore = nullptr;
-
-ObjectPtr<AbstractPlugin> UIPluginFactory::create(QAFCore* core)
+ObjectPtr<AbstractPlugin> UIPluginFactory::create()
 {
-	g_QAFCore = core;
-	return QAFCorePtr->getObjectSystem()->create<UIPlugin>();
+	g_UIInterface = QAFContext::getSingleton()->getUIInterface();
+	return static_cast<ObjectSystem*>(QAFContext::getSingleton()->getSystem(ST_OBJECT))->create<UIPlugin>();
 }
 
 QAF::PluginType UIPluginFactory::getType()
@@ -56,27 +55,17 @@ UIPlugin::~UIPlugin()
 
 void UIPlugin::install()
 {
-	if (isInstalled())
-		return;
-
 	QDockWidget* consoleDock = new QDockWidget(LStr("控制台"));
 	consoleDock->setWidget(new ConsoleWidget(consoleDock));
-	g_QAFCore->getUIInterface()->setDockWidget(DI_CONSOLE, consoleDock, DWP_BOTTOM);
+	g_UIInterface->setDockWidget(DI_CONSOLE, consoleDock, DWP_BOTTOM);
 
 	QDockWidget* propertyDock = new QDockWidget(LStr("属性编辑器"));
 	propertyDock->setWidget(new PropertyEditerWidget(propertyDock));
-	g_QAFCore->getUIInterface()->setDockWidget(DI_PROPERTY, propertyDock, DWP_RIGHT);
+	g_UIInterface->setDockWidget(DI_PROPERTY, propertyDock, DWP_RIGHT);
 
-	ConfigDialog* confDlg = new ConfigDialog(g_QAFCore->getUIInterface()->getMainWindow());
-	QAction* act = g_QAFCore->getUIInterface()->getAction(AI_RUNCONFIG);
+	ConfigDialog* confDlg = new ConfigDialog(g_UIInterface->getMainWindow());
+	QAction* act = g_UIInterface->getAction(AI_RUNCONFIG);
 	connect(act, SIGNAL(triggered(bool)), confDlg, SLOT(show()));
-
-	setInstalled(false);
-	// 	QWidget* widget = new TestUI();
-	// 	QDockWidget* dock = new QDockWidget(LStr("测试插件"));
-	// 	dock->setWidget(widget);
-	// 	core->getUIInterface()->setDockWidget(DI_CUSTOM+1, dock,QAF::DWP_BOTTOM);
-	// 	core->getUIInterface()->getMenu(QAF::MI_ACTION)->addAction(LStr("测试插件动作"));
 }
 
 void UIPlugin::uninstall()

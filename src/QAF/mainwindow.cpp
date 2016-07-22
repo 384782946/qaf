@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "mainwindow.h"
-#include "QAFGlobal.h"
-#include "qafcore.h"
+#include <QAFGlobal.h>
+#include <QAFContext.h>
 #include "qafapplication.h"
 #include <QDebug>
 
@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 	createMenu();
 	createAction();
 
-	QAFCorePtr->setUIInterface(this);
+	QAF::QAFContext::getSingleton()->setUIInterface(this);
 }
 
 MainWindow::~MainWindow()

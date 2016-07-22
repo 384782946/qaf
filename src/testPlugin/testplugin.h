@@ -2,14 +2,14 @@
 #define TESTPLUGIN_H
 
 #include "testplugin_global.h"
-#include "AbstractPlugin.h"
+#include "QAFCore/AbstractPlugin.h"
 
 using namespace QAF;
 
 class TESTPLUGIN_EXPORT testPluginFactory :public AbstractPluginFactory
 {
 public:
-	virtual ObjectPtr<AbstractPlugin> create(QAFCore* core);
+	virtual ObjectPtr<AbstractPlugin> create();
 	virtual PluginType getType();
 	virtual QString getVersion();
 	virtual QString getDesc();
