@@ -56,10 +56,10 @@
     <ClCompile Include="GeneratedFiles\qrc_QtAwesome.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debug\moc_QtAwesomeAnim.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_QtAwesomeAnim.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Release\moc_QtAwesomeAnim.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_QtAwesomeAnim.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>

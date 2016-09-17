@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;..\Utils;release;$(QTDIR)\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories);E:\Projects\VS2013\QAF\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;.\..\Utils;.\release;$(QTDIR)\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories);E:\Projects\VS2013\QAF\include;.\GeneratedFiles\$(ConfigurationName)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -96,7 +96,7 @@ xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;..\Utils;debug;$(QTDIR)\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories);E:\Projects\VS2013\QAF\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;$(QTDIR)\include;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtCore;.\..\Utils;.\debug;$(QTDIR)\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories);E:\Projects\VS2013\QAF\include;.\GeneratedFiles\$(ConfigurationName)</AdditionalIncludeDirectories>
       <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -137,7 +137,7 @@ xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Debug\moc_QtAwesomeAnim.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_QtAwesomeAnim.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_QtAwesome.cpp">
@@ -146,11 +146,11 @@ xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="QtAwesome.cpp" />
-    <ClCompile Include="QtAwesomeAnim.cpp" />
-    <ClCompile Include="Release\moc_QtAwesomeAnim.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_QtAwesomeAnim.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="QtAwesome.cpp" />
+    <ClCompile Include="QtAwesomeAnim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QtAwesome.h">
@@ -168,12 +168,12 @@ xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
       </Outputs>
     </CustomBuild>
     <CustomBuild Include="QtAwesomeAnim.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQTAWESONME_LIB -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\..\Utils" "-I.\release" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I$(INHERIT)\." "-IE:\Projects\VS2013\QAF\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQTAWESONME_LIB -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\..\Utils" "-I.\release" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I$(INHERIT)\." "-IE:\Projects\VS2013\QAF\include" "-I.\GeneratedFiles\$(ConfigurationName)\."</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing QtAwesomeAnim.h...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQTAWESONME_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\..\Utils" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I$(INHERIT)\." "-IE:\Projects\VS2013\QAF\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQTAWESONME_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtANGLE" "-I$(QTDIR)\include\QtCore" "-I.\..\Utils" "-I.\debug" "-I$(QTDIR)\mkspecs\win32-msvc2013" "-I$(INHERIT)\." "-IE:\Projects\VS2013\QAF\include" "-I.\GeneratedFiles\$(ConfigurationName)\."</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing QtAwesomeAnim.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
@@ -202,7 +202,7 @@ xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
   <ImportGroup Label="ExtensionTargets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" Qt5Version_x0020_Win32="Qt5.7.0" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" Qt5Version_x0020_Win32="Qt5.7.0" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
