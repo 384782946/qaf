@@ -1,8 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define LStr(strings) QString::fromLocal8Bit(strings)
-
 template<typename T1, typename T2>
 class CanConvert
 {

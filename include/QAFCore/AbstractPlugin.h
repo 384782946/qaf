@@ -1,9 +1,8 @@
 /*!
  * \file AbstractPlugin.h
- * \date 2016/01/16 14:24
+ * \date 2016/01/16
  *
  * \author zxj
- * Contact: user@company.com
  *
  * \brief 
  *
@@ -28,7 +27,7 @@ namespace QAF
 		AbstractPlugin(){}
 		virtual ~AbstractPlugin(){}
 
-		virtual void install() = 0{ 
+		virtual void install(const QMap<QString,QString>& params) = 0{ 
 			mIsInstalled = true; 
 		}
 

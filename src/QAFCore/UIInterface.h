@@ -10,6 +10,7 @@ class QSplashScreen;
 
 namespace QAF
 {
+	//主框架与模块之间UI交互接口
 	class UIInterface
 	{
 	public:

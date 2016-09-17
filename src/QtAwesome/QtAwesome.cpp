@@ -121,9 +121,9 @@ private:
 //---------------------------------------------------------------------------------------
 
 /// The default icon colors
-QtAwesome::QtAwesome( QObject* parent )
-    : QObject( parent )
-    , namedCodepoints_()
+QtAwesome::QtAwesome( /*QObject* parent*/ )
+	: /*QObject(parent),*/
+	namedCodepoints_()
 {
     // initialize the default options
     setDefaultOption( "color", QColor(50,50,50) );
@@ -138,7 +138,6 @@ QtAwesome::QtAwesome( QObject* parent )
     setDefaultOption( "text-selected", QVariant() );
 
     fontIconPainter_ = new QtAwesomeCharIconPainter();
-
 }
 
 

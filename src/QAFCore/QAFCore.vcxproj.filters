@@ -68,19 +68,10 @@
     <ClCompile Include="QAFCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_QAFCore.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_QAFCore.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="ModelItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConfigModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractTreeModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LogModel.cpp">
@@ -116,13 +107,10 @@
     <ClCompile Include="GeneratedFiles\Release\moc_PluginSystem.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_AbstractObject.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_AbstractObject.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="QAFContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonTreeModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -160,9 +148,6 @@
     <ClInclude Include="ModelItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractTreeModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LogModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -170,6 +155,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QAFContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonTreeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

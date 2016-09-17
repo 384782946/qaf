@@ -56,12 +56,6 @@
     <ClCompile Include="GeneratedFiles\qrc_QtAwesome.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debug\moc_QtAwesome.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_QtAwesome.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Debug\moc_QtAwesomeAnim.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>

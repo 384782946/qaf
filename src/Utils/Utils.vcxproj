@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseException.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="utils_global.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
@@ -67,9 +69,9 @@
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(TargetPath) $(SolutionDir)bin\$(Configuration)
-copy $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
-copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
+      <Command>xcopy /I /Y $(TargetPath) $(SolutionDir)bin\$(Configuration)
+xcopy /I /Y $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
+xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,9 +90,9 @@ copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(TargetPath) $(SolutionDir)bin\$(Configuration)
-copy $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
-copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
+      <Command>xcopy /I /Y $(TargetPath) $(SolutionDir)bin\$(Configuration)
+xcopy /I /Y $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
+xcopy /I /Y $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

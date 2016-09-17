@@ -2,7 +2,7 @@
 #define QAF_H
 
 #include <QtWidgets/QMainWindow>
-#include "QAFCore/UIInterface.h"
+#include "UIInterface.h"
 #include "ui_mainwindow.h"
 
 using QAF::UIInterface;

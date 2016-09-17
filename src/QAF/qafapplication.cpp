@@ -5,8 +5,7 @@
 #include <QAFContext.h>
 #include <QAFDirs.h>
 #include "mainwindow.h"
-
-using QAF::QAFDirs;
+#include <QtAwesome.h>
 
 QAFApplication::QAFApplication(int & argc, char ** argv)
 	:QApplication(argc,argv)
@@ -19,10 +18,10 @@ QAFApplication::~QAFApplication()
 
 }
 
-void QAFApplication::splashMessage(const QString& msg)
+void QAFApplication::splashMessage(QString msg)
 {
 	QAFApplication* app = static_cast<QAFApplication*>(instance());
-	if (app)
+	if (app && app->mSplashScreen)
 	{
 		app->mSplashScreen->showMessage(msg, Qt::AlignRight | Qt::AlignBottom, Qt::white);
 		processEvents();
@@ -31,6 +30,14 @@ void QAFApplication::splashMessage(const QString& msg)
 
 void QAFApplication::initialize()
 {
+
+	QtAwesome::getSingleton()->initFontAwesome();
+	QVariantMap options;
+	//options.insert("color-active", QColor(205,0,0 ) );
+	//options.insert("anim", qVariantFromValue(new QtAwesomeAnimation(beerButton, 10, 2)));
+	QIcon icon = QtAwesome::getSingleton()->icon(fa::locationarrow, options);
+	setWindowIcon(icon);
+	
 	//set propertys of application
 	setApplicationName("QAF");
 	setOrganizationName("xiaojian");
@@ -52,7 +59,7 @@ void QAFApplication::initialize()
 
 	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);
-	QString trPath = QAFDirs::path(QAF::DT_TRANSTOR);
+	QString trPath = QAF::QAFContext::wellKnownPath(QAF::DT_TRANSTOR);
 	QString trName = "qaf_" + lang;
 	QTranslator tr;
 	if (tr.load(trName, trPath))
@@ -79,8 +86,10 @@ int QAFApplication::run()
 	mMainWindow->showMaximized();
 	mSplashScreen->finish(mMainWindow);
 	mSplashScreen->deleteLater();
+	mSplashScreen = nullptr;
 	ret = exec();
 	mMainWindow->deleteLater();
+	mMainWindow = nullptr;
 
 	QAF::QAFContext::getSingleton()->destruct();
 	return ret;

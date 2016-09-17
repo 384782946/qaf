@@ -13,7 +13,7 @@
 */
 
 #pragma once
-#include "AbstractTreeModel.h"
+#include "CommonTreeModel.h"
 #include "ModelItem.h"
 
 namespace QAF
@@ -35,7 +35,7 @@ namespace QAF
 	};
 
 	class LogModel :
-		public AbstractTreeModel
+		public CommonTreeModel
 	{
 	public:
 		LogModel(QObject *parent = nullptr);

@@ -18,23 +18,25 @@
 #include <QSortFilterProxyModel>
 #include "QAFGlobal.h"
 #include "ModelItem.h"
-#include "AbstractTreeModel.h"
+#include "CommonTreeModel.h"
 #include "qafcore_global.h"
 
 namespace QAF
 {
-	class ConfigItem :public ModelItem
+	class QAFCORE_EXPORT ConfigItem :public ModelItem
 	{
 		friend class ConfigModel;
-		
+		friend class ConfigIterator;
+
 	public:
-		ConfigItem():mType(CT_NODE){}
+		ConfigItem() :mType(CT_NODE){}
 
 		virtual QVariant data(int index, int role = Qt::DisplayRole);
 		virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
 		virtual int itemFlags(int);
 
 		ConfigItem* getChildByName(const QString& name);
+		ConfigItem* child(int);
 
 		void setName(QString name){ mName = name; }
 		QString getName() const{ return mName; }
@@ -54,14 +56,53 @@ namespace QAF
 		void setPath(QString path);
 
 	private:
-
 		ConfigType mType;
 		QString mName;
 		QString mValue;
 		QString mPath;
 	};
 
-	class QAFCORE_EXPORT ConfigModel : public AbstractTreeModel
+	class QAFCORE_EXPORT ConfigIterator
+	{
+	public:
+		ConfigIterator() :ptr(nullptr){}
+		ConfigIterator(ConfigItem* item) :ptr(item){}
+		ConfigIterator(const ConfigIterator& other) :ptr(other.ptr){}
+
+		QString getPath();
+
+		bool isValid() const { return ptr != nullptr; }
+		
+		QString& operator*();
+		
+		ConfigIterator& operator++()
+		{
+			return move(1);
+		}
+
+		ConfigIterator& operator--()
+		{
+			return move(-1);
+		}
+
+		ConfigIterator& operator+(int step)
+		{
+			return move(step);
+		}
+
+		ConfigIterator& operator-(int step)
+		{
+			return move(-step);
+		}
+
+	protected:
+		ConfigIterator& move(int step);
+
+	private:
+		ConfigItem* ptr;
+	};
+
+	class QAFCORE_EXPORT ConfigModel : public CommonTreeModel
 	{
 		Q_OBJECT
 	public:
@@ -72,9 +113,10 @@ namespace QAF
 
 		bool saveConfig();
 		bool isModified() const { return mIsModified; }
-		QString getConfigPath() const{ return mConfigFilePath; }
-		QString getConfigValue(const QString& path) const;
-		const ConfigItem* getConfig(const QString& path) const;
+		QString getPath() const{ return mConfigFilePath; }
+		QString getValue(const QString& path) const;
+		//ConfigIterator getChild(const QString& parent_path);
+		ConfigItem* getItem(const QString& path);
 		bool isExist(const QString& path) const;
 		bool setConfigValue(const QString& path, const QString& value);
 		void update(ConfigItem* item);

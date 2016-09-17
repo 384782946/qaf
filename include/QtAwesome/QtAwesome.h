@@ -19,6 +19,7 @@
 #include <QRect>
 #include <QVariantMap>
 
+#include "Singleton.h"
 
 /// A list of all icon-names with the codepoint (unicode-value) on the right
 /// You can use the names on the page  http://fortawesome.github.io/Font-Awesome/design.html
@@ -754,13 +755,13 @@ class QtAwesomeIconPainter;
 
 /// The main class for managing icons
 /// This class requires a 2-phase construction. You must first create the class and then initialize it via an init* method
-class QTAWESONME_EXPORT QtAwesome : public QObject
+class QTAWESONME_EXPORT QtAwesome :public Singleton<QtAwesome>/*: public QObject*/
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 public:
 
-    QtAwesome(QObject *parent = 0);
+    QtAwesome(/*QObject *parent = 0*/);
     virtual ~QtAwesome();
 
     void init( const QString& fontname );
@@ -804,7 +805,5 @@ public:
     virtual ~QtAwesomeIconPainter() {}
     virtual void paint( QtAwesome* awesome, QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state, const QVariantMap& options ) = 0;
 };
-
-
 
 #endif // QTAWESOME_H

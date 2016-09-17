@@ -12,7 +12,7 @@ namespace QAF{
 	QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/)
 	{
 		if (role == Qt::DisplayRole || role == Qt::EditRole){
-			
+
 			switch (index)
 			{
 			case 0:
@@ -27,7 +27,8 @@ namespace QAF{
 			if (index == 0){
 				if (getType() == CT_ATTR){
 					return QIcon(":/QAFCore/Resources/xml_attr.png");
-				}else{
+				}
+				else{
 					return QIcon(":/QAFCore/Resources/xml_text.png");
 				}
 			}
@@ -38,7 +39,7 @@ namespace QAF{
 		else if (role == Qt::StatusTipRole){
 			return getPath();
 		}
-		
+
 		return ModelItem::data(index, role);
 	}
 
@@ -61,7 +62,7 @@ namespace QAF{
 
 	int ConfigItem::itemFlags(int index)
 	{
-		if(index == 0 || (index == 2))
+		if (index == 0 || (index == 2))
 			return Qt::ItemIsEnabled |
 			Qt::ItemIsSelectable |
 			Qt::ItemIsTristate;
@@ -92,10 +93,52 @@ namespace QAF{
 		return nullptr;
 	}
 
-	//////////////////////////////////////////////////////////////////////////
+	ConfigItem* ConfigItem::child(int pos)
+	{
+		return static_cast<ConfigItem*>(ModelItem::child(pos));
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	QString ConfigIterator::getPath()
+	{
+		Q_ASSERT(ptr);
+		return ptr->getPath();
+	}
+
+	QString& ConfigIterator::operator*()
+	{
+		Q_ASSERT(ptr);
+		return ptr->mValue;
+	}
+
+	ConfigIterator& ConfigIterator::move(int step)
+	{
+		if (ptr == nullptr)
+			return ConfigIterator();
+
+		ModelItem* parentItem = ptr->parent();
+		if (parentItem == nullptr)
+			return ConfigIterator();
+
+		int index = parentItem->indexOf(ptr);
+		index += step;
+
+		if (index < step || index >= parentItem->childCount())
+		{
+			return ConfigIterator();
+		}
+		else
+		{
+			ConfigItem* curItem = static_cast<ConfigItem*>(parentItem->child(index));
+			return ConfigIterator();
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	ConfigModel::ConfigModel(QObject *parent)
-		: AbstractTreeModel(parent),
+		: CommonTreeModel(parent),
 		mIsModified(false)
 	{
 
@@ -290,22 +333,13 @@ namespace QAF{
 		return (ConfigItem*)item;
 	}
 
-	QString ConfigModel::getConfigValue(const QString& path) const
+	QString ConfigModel::getValue(const QString& path) const
 	{
-		const ConfigItem* item = getConfig(path);
+		const ConfigItem* item = query(path);
 		if (item)
 			return item->getValue();
 		else
 			return "";
-	}
-
-	const ConfigItem* ConfigModel::getConfig(const QString& path) const
-	{
-		if (path.isEmpty())
-			return nullptr;
-
-		ConfigItem* item = query(path);
-		return item;
 	}
 
 	bool ConfigModel::isExist(const QString& path) const
@@ -332,6 +366,29 @@ namespace QAF{
 		}
 	}
 
+	/*ConfigIterator ConfigModel::getChild(const QString& parent_path)
+	{
+	ConfigItem* parentItem = query(parent_path);
+	if (parent_path == nullptr)
+	return ConfigIterator();
+
+	if (parentItem->childCount() <= 0)
+	return ConfigIterator();
+
+	ConfigItem* firstItem = static_cast<ConfigItem*>(parentItem->child(0));
+	return ConfigIterator(firstItem);
+	}*/
+
+	ConfigItem* ConfigModel::getItem(const QString& path)
+	{
+		if (path.isEmpty())
+			return nullptr;
+
+		return query(path);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
 	bool ConfigProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 	{
 		if (!source_parent.isValid())
@@ -357,4 +414,5 @@ namespace QAF{
 
 		return false;
 	}
+
 }

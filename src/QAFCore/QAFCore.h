@@ -1,11 +1,11 @@
 #ifndef QAFCORE_H
 #define QAFCORE_H
 
-#include <Singleton.h>
-#include "QAFGlobal.h"
-
 #include <QMap>
 #include <QObject>
+
+#include "Singleton.h"
+#include "QAFGlobal.h"
 
 class QAbstractItemModel;
 
@@ -19,18 +19,14 @@ namespace QAF
 	class ObjectSystem;
 	class LogModel;
 
-	//开机启动界面的消息回调
-	typedef void(*MessageCallback)(const QString&);
-
 	class QAFCore:public QObject,public Singleton<QAFCore>
 	{
-		Q_OBJECT
 
 	public:
 		QAFCore();
 		~QAFCore();
 
-		void initialize(MessageCallback fun = nullptr);
+		void initialize();
 
 		void addSystem(AbstractSystem*);
 		void removeSystem(SystemType);
@@ -54,7 +50,6 @@ namespace QAF
 
 	private:
 		QMap<int, AbstractSystem*> mSystems;
-		MessageCallback mMessageCallback;
 		UIInterface* mUIInterface;
 		LogModel* mLogModel;
 		bool mIsInit = false;

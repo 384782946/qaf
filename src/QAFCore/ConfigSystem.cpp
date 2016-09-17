@@ -24,7 +24,7 @@ namespace QAF
 	{
 		AbstractSystem::install();
 
-		Q_ASSERT_X(loadModel(QAFDirs::path(DT_CONFIG) + "/run.xml"),
+		Q_ASSERT_X(loadConfig(QAFDirs::path(DT_CONFIG) + "/run.xml"),
 			"ConfigSystem::install",
 			"run configuration cann't be loaded.");
 	}
@@ -36,7 +36,7 @@ namespace QAF
 
 	bool ConfigSystem::isExist(const QString& confName , const QString& path) const
 	{
-		ConfigModel* cm = getModel(confName);
+		ConfigModel* cm = getConfig(confName);
 		if (cm){
 			return !path.isEmpty() && cm->isExist(path);
 		}else{
@@ -49,9 +49,9 @@ namespace QAF
 		if (confName.isEmpty() || path.isEmpty())
 			return "";
 
-		ConfigModel* cm = getModel(confName);
+		ConfigModel* cm = getConfig(confName);
 		if (cm){
-			return cm->getConfigValue(path);
+			return cm->getValue(path);
 		}else{
 			return "";
 		}
@@ -62,7 +62,7 @@ namespace QAF
 		if (confName.isEmpty() || path.isEmpty())
 			return "";
 
-		ConfigModel* cm = getModel(confName);
+		ConfigModel* cm = getConfig(confName);
 		if (cm){
 			return cm->setConfigValue(path,value);
 		}else{
@@ -70,12 +70,12 @@ namespace QAF
 		}
 	}
 
-	ConfigModel* ConfigSystem::getModel(const QString& key) const
+	ConfigModel* ConfigSystem::getConfig(const QString& key) const
 	{
 		return mModels.value(key,nullptr);
 	}
 
-	bool ConfigSystem::loadModel(const QString& path)
+	bool ConfigSystem::loadConfig(const QString& path)
 	{
 		QFileInfo fInfo(path);
 		if (!fInfo.exists())
@@ -86,7 +86,7 @@ namespace QAF
 			connect(cm, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
 			cm->setHeaders(QStringList() << LStr("Ãû³Æ") << LStr("Öµ"));
 			QString key = fInfo.baseName();
-			mModels.insert(key, mRunConfig);
+			mModels.insert(key, cm);
 			return true;
 		}
 		

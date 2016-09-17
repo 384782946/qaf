@@ -31,5 +31,11 @@
     <ClInclude Include="utils_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BaseException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

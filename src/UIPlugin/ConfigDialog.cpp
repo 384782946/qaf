@@ -12,7 +12,8 @@ namespace QAF
 		ui.setupUi(this);
 		mModel = new ConfigProxyModel(this);
 		using namespace QAF;
-		ConfigModel* configModel = static_cast<ConfigSystem*>(QAFContext::getSingleton()->getSystem(ST_CONFIG))->getModel("run");
+		ConfigSystem* configSystem = static_cast<ConfigSystem*>(QAFContext::getSingleton()->getSystem(ST_CONFIG));
+		ConfigModel* configModel = configSystem->getConfig("run");
 		if (configModel){
 			mModel->setSourceModel(configModel);
 			mModel->setFilterRole(Qt::DisplayRole);

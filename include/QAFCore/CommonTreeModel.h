@@ -25,11 +25,11 @@ namespace QAF
 {
 	class ModelItem;
 
-	class QAFCORE_EXPORT AbstractTreeModel : public QAbstractItemModel
+	class QAFCORE_EXPORT CommonTreeModel : public QAbstractItemModel
 	{
 	public:
-		AbstractTreeModel(QObject *parent = nullptr);
-		virtual ~AbstractTreeModel();
+		CommonTreeModel(QObject *parent = nullptr);
+		virtual ~CommonTreeModel();
 
 		virtual int	rowCount(const QModelIndex & parent = QModelIndex()) const;
 		virtual int	columnCount(const QModelIndex & parent = QModelIndex()) const;

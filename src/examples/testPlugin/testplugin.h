@@ -2,7 +2,7 @@
 #define TESTPLUGIN_H
 
 #include "testplugin_global.h"
-#include "QAFCore/AbstractPlugin.h"
+#include "AbstractPlugin.h"
 
 using namespace QAF;
 
@@ -23,7 +23,7 @@ public:
 	testPlugin();
 	~testPlugin();
 
-	virtual void install();
+	virtual void install(const QMap<QString, QString>& params);
 	virtual void uninstall();
 
 private:

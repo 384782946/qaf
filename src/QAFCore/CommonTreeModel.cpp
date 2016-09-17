@@ -1,21 +1,21 @@
-#include "AbstractTreeModel.h"
+#include "CommonTreeModel.h"
 #include "ModelItem.h"
 
 namespace QAF
 {
-	AbstractTreeModel::AbstractTreeModel(QObject *parent)
+	CommonTreeModel::CommonTreeModel(QObject *parent)
 		: QAbstractItemModel(parent)
 		, mRootItem(new ModelItem())
 	{
 
 	}
 
-	AbstractTreeModel::~AbstractTreeModel()
+	CommonTreeModel::~CommonTreeModel()
 	{
 		delete mRootItem;
 	}
 
-	QModelIndex	AbstractTreeModel::parent(const QModelIndex & index) const
+	QModelIndex	CommonTreeModel::parent(const QModelIndex & index) const
 	{
 		ModelItem* item = itemForIndex(index);
 		if (!item)
@@ -33,7 +33,7 @@ namespace QAF
 		return createIndex(row, 0, parent);
 	}
 
-	int AbstractTreeModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
+	int CommonTreeModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
 	{
 		if (!parent.isValid() && parent.column() > 0)
 			return 0;
@@ -45,12 +45,12 @@ namespace QAF
 			return mRootItem->childCount();
 	}
 
-	int AbstractTreeModel::columnCount(const QModelIndex & parent /*= QModelIndex() */) const
+	int CommonTreeModel::columnCount(const QModelIndex & parent /*= QModelIndex() */) const
 	{
 		return mHeaders.size();
 	}
 
-	QVariant AbstractTreeModel::data(const QModelIndex & index, int role /*= Qt::DisplayRole */) const
+	QVariant CommonTreeModel::data(const QModelIndex & index, int role /*= Qt::DisplayRole */) const
 	{
 		ModelItem* modelItem = itemForIndex(index);
 		if (!modelItem)
@@ -59,7 +59,7 @@ namespace QAF
 			return modelItem->data(index.column(), role);
 	}
 
-	bool AbstractTreeModel::setData(const QModelIndex &index, const QVariant &value, int role /*= Qt::EditRole*/)
+	bool CommonTreeModel::setData(const QModelIndex &index, const QVariant &value, int role /*= Qt::EditRole*/)
 	{
 		ModelItem* modelItem = itemForIndex(index);
 		if (modelItem && modelItem->setData(value, index.column(), role))
@@ -68,7 +68,7 @@ namespace QAF
 			return QAbstractItemModel::setData(index, value, role);
 	}
 
-	QModelIndex	AbstractTreeModel::index(int row, int column, const QModelIndex & parent /*= QModelIndex()*/) const
+	QModelIndex	CommonTreeModel::index(int row, int column, const QModelIndex & parent /*= QModelIndex()*/) const
 	{
 		if (!hasIndex(row, column, parent))
 			return QModelIndex();
@@ -84,7 +84,7 @@ namespace QAF
 			return createIndex(row, column, childItem);
 	}
 
-	Qt::ItemFlags AbstractTreeModel::flags(const QModelIndex &index) const
+	Qt::ItemFlags CommonTreeModel::flags(const QModelIndex &index) const
 	{
 		if (!index.isValid())
 			return Qt::NoItemFlags;
@@ -96,7 +96,7 @@ namespace QAF
 			return Qt::NoItemFlags;
 	}
 
-	QVariant AbstractTreeModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole */) const
+	QVariant CommonTreeModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole */) const
 	{
 		if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
 			return mHeaders.at(section);
@@ -104,7 +104,7 @@ namespace QAF
 			return QAbstractItemModel::headerData(section, orientation, role);
 	}
 
-	ModelItem* AbstractTreeModel::itemForIndex(const QModelIndex& index) const
+	ModelItem* CommonTreeModel::itemForIndex(const QModelIndex& index) const
 	{
 		if (index.isValid())
 			return static_cast<ModelItem*>(index.internalPointer());
@@ -112,12 +112,12 @@ namespace QAF
 			return nullptr;
 	}
 
-	void AbstractTreeModel::setHeaders(QStringList headers)
+	void CommonTreeModel::setHeaders(QStringList headers)
 	{
 		mHeaders = headers;
 	}
 
-	void AbstractTreeModel::addItem(ModelItem* item, ModelItem* parent /*= nullptr*/)
+	void CommonTreeModel::addItem(ModelItem* item, ModelItem* parent /*= nullptr*/)
 	{
 		if (item == nullptr)
 			return;
@@ -132,7 +132,7 @@ namespace QAF
 		endInsertRows();
 	}
 
-	void AbstractTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= nullptr*/)
+	void CommonTreeModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent /*= nullptr*/)
 	{
 		if (item == nullptr)
 			return;
@@ -152,7 +152,7 @@ namespace QAF
 		endInsertRows();
 	}
 
-	void AbstractTreeModel::removeItem(ModelItem* item, ModelItem* parent)
+	void CommonTreeModel::removeItem(ModelItem* item, ModelItem* parent)
 	{
 		if (item == nullptr)
 			return;
@@ -166,12 +166,12 @@ namespace QAF
 		endRemoveRows();
 	}
 
-	ModelItem* AbstractTreeModel::getRootItem() const
+	ModelItem* CommonTreeModel::getRootItem() const
 	{
 		return mRootItem;
 	}
 
-	QModelIndex AbstractTreeModel::indexForItem(ModelItem* item) const
+	QModelIndex CommonTreeModel::indexForItem(ModelItem* item) const
 	{
 		if (item == nullptr || item->parent() == nullptr)
 			return QModelIndex();

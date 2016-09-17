@@ -3,6 +3,7 @@
 #include "AbstractSystem.h"
 
 #include <QList>
+#include <QMap>
 
 namespace QAF
 {
@@ -14,11 +15,21 @@ namespace QAF
 	{
 		Q_OBJECT
 	public:
+
+		struct PluginConfig
+		{
+			QString mPlugin;
+			QMap<QString, QString> mConfigs;
+		};
+
 		PluginSystem(int sysId, QObject* parent = 0);
 		~PluginSystem();
 
 		virtual void install();
 		virtual void uninstall();
+
+	protected:
+		QList<PluginConfig> getPluginsFromConfig();
 
 	private:
 		QList<AbstractPlugin*> mPlugins;

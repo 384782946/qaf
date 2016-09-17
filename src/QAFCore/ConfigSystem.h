@@ -34,8 +34,8 @@ namespace QAF
 		virtual void install();
 		virtual void uninstall();
 		
-		ConfigModel* getModel(const QString& key) const;
-		bool loadModel(const QString& path);
+		ConfigModel* getConfig(const QString& key) const;
+		bool loadConfig(const QString& path);
 
 		bool isExist(const QString& confName , const QString& path) const;
 		QString getConfigValue(const QString& confName , const QString& path) const;
@@ -47,7 +47,6 @@ namespace QAF
 	protected:
 		
 	private:
-		ConfigModel* mRunConfig = nullptr;
 		QMap<QString, ConfigModel*> mModels;
 	};
 }

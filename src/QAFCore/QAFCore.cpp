@@ -11,8 +11,7 @@
 namespace QAF
 {
 	QAFCore::QAFCore()
-		:mMessageCallback(nullptr)
-		, mUIInterface(nullptr)
+		:mUIInterface(nullptr)
 		, mLogModel(new QAF::LogModel())
 	{
 		mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
@@ -47,18 +46,17 @@ namespace QAF
 
 		//取消消息处理
 		qInstallMessageHandler(0);
+
+		mIsInit = false;
 	}
 
-	void QAFCore::initialize(MessageCallback fun)
+	void QAFCore::initialize()
 	{
 		if (!mIsInit)
 		{
 			mIsInit = true;
 			qInstallMessageHandler(Logger::messageHandler);
-			mMessageCallback = fun;
-			if (mMessageCallback)
-				(*mMessageCallback)(LStr("正在初始化..."));
-
+		
 			initCore(); //初始化核心层
 			initExtent(); //初始化扩展层
 		}
@@ -75,9 +73,6 @@ namespace QAF
 				if (system){
 					QString msg = QString("%1%2").arg(LStr("正在加载核心模块：")).arg(system->name());
 					qDebug() << msg;
-					if (mMessageCallback){
-						(*mMessageCallback)(msg);
-					}
 					
 					system->install();
 				}
@@ -95,10 +90,7 @@ namespace QAF
 				if (system){
 					QString msg = QString("%1%2").arg(LStr("正在加载扩展模块：")).arg(system->name());
 					qDebug() << msg;
-					if (mMessageCallback){
-						(*mMessageCallback)(msg);
-					}
-
+					
 					system->install();
 				}
 			}

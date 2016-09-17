@@ -5,17 +5,15 @@
 
 class QAFApplication : public QApplication
 {
-	Q_OBJECT
-
 public:
 	QAFApplication(int & argc, char ** argv);
 	~QAFApplication();
 
-	static void splashMessage(const QString&);
-
 	int run();
 
 	bool onlyOne();
+
+	static void splashMessage(QString);
 
 protected:
 	void initialize();

@@ -23,7 +23,7 @@ public:
 	UIPlugin();
 	~UIPlugin();
 
-	virtual void install();
+	virtual void install(const QMap<QString,QString>& params);
 	virtual void uninstall();
 
 private:

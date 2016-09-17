@@ -1,6 +1,6 @@
 #include "QAFContext.h"
 #include "QAFCore.h"
-
+#include "QAFDirs.h"
 
 namespace QAF
 {
@@ -36,4 +36,8 @@ namespace QAF
 		return QAFCore::getSingleton()->getLogModel();
 	}
 
+	QString QAFContext::wellKnownPath(DirType dt)
+	{
+		return QAFDirs::path(dt);
+	}
 }
