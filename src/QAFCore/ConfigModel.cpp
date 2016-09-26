@@ -1,5 +1,5 @@
 #include "ConfigModel.h"
-#include "QAFDirs.h"
+#include "QAFContext.h"
 
 #include <QDomDocument>
 #include <QDomElement>
@@ -138,7 +138,7 @@ namespace QAF{
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	ConfigModel::ConfigModel(QObject *parent)
-		: CommonTreeModel(parent),
+		: QtCommonModel(parent),
 		mIsModified(false)
 	{
 

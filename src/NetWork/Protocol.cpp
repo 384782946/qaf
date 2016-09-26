@@ -1,10 +1,9 @@
 #include "Protocol.h"
 
 Request::Request()
-	:mRequestId(0)
-	, mRequestType(RT_POST)
+	:mRequestType(RT_NORMAL)
 {
-
+	mHeader.Version = ProtocolVersion;
 }
 
 Request::~Request()
@@ -12,24 +11,14 @@ Request::~Request()
 
 }
 
-void Request::setReqestType(qint8 type)
+void Request::setReqestType(quint8 type)
 {
 	mRequestType = type;
 }
 
-qint8 Request::reqestType() const
+quint8 Request::reqestType() const
 {
 	return mRequestType;
-}
-
-void Request::setRequestId(qint32 id)
-{
-	mRequestId = id;
-}
-
-qint32 Request::reqestId() const
-{
-	return mRequestId;
 }
 
 void Request::setData(const QMap<QString, QString>& data)
@@ -41,15 +30,25 @@ bool Request::pack(QDataStream& stream)
 {
 	Package::pack(stream);
 
-	stream << mRequestId << mRequestType << mRequestData;
+	stream << mRequestType << mRequestData;
 	return true;
 }
 
 bool Request::unpack(QDataStream& stream)
 {
-	Package::unpack(stream);
+	try{
+		if (!Package::unpack(stream))
+			return false;
 
-	stream >> mRequestId >> mRequestType >> mRequestData;
+		if (mHeader.Version != ProtocolVersion)
+			return false;
+
+		stream >> mRequestType >> mRequestData;
+	}
+	catch (...){
+		return false;
+	}
+	
 	return true;
 }
 
@@ -61,10 +60,9 @@ const QMap<QString, QString>& Request::data() const
 //////////////////////////////////////////////////////////////////////////
 
 Response::Response()
-	:mRequestId(0)
-	, mStatus(RS_OK)
+	:mStatus(RS_OK)
 {
-
+	mHeader.Version = ProtocolVersion;
 }
 
 Response::~Response()
@@ -72,12 +70,12 @@ Response::~Response()
 
 }
 
-void Response::setStatus(qint8 status)
+void Response::setStatus(quint8 status)
 {
 	mStatus = status;
 }
 
-qint8 Response::status() const
+quint8 Response::status() const
 {
 	return mStatus;
 }
@@ -94,26 +92,28 @@ void Response::setDatas(const QByteArray& data)
 
 bool Response::pack(QDataStream& stream)
 {
-	Package::pack(stream);
+	if (!Package::pack(stream))
+		return false;
 
-	stream << mRequestId << mStatus << mDatas;
+	stream << mStatus << mDatas;
 	return true;
 }
 
 bool Response::unpack(QDataStream& stream)
 {
-	Package::unpack(stream);
+	try
+	{
+		if (!Package::unpack(stream))
+			return false;
 
-	stream >> mRequestId >> mStatus >> mDatas;
+		if (mHeader.Version != ProtocolVersion)
+			return false;
+
+		stream >> mStatus >> mDatas;
+	}
+	catch (...)
+	{
+		return false;
+	}
 	return true;
-}
-
-qint32 Response::reqestId() const
-{
-	return mRequestId;
-}
-
-void Response::setReqestId(qint32 id)
-{
-	mRequestId = id;
 }

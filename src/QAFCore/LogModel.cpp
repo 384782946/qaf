@@ -5,7 +5,7 @@
 namespace QAF
 {
 	LogModel::LogModel(QObject *parent)
-		:CommonTreeModel(parent)
+		:QtCommonModel(parent)
 	{
 
 	}

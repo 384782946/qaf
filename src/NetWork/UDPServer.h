@@ -1,7 +1,6 @@
 #ifndef UDPSERVER_H
 #define UDPSERVER_H
 
-#include <QObject>
 #include <QThread>
 #include <QSharedPointer>
 #include <QHostAddress>
@@ -14,16 +13,16 @@ class QUdpSocket;
 class Package;
 class UDPServer;
 
-class ThreadSlots:public QObject
+class UDPReceiver :public QObject
 {
 	Q_OBJECT
 
 public:
-	ThreadSlots(UDPServer* server, QObject* parent = nullptr)
-		:QObject(parent),mServer(server){}
+	UDPReceiver(UDPServer* server, QObject* parent = nullptr)
+		:QObject(parent), mServer(server){}
 
-public slots :
-	void readPendingDatagrams();
+	public slots :
+		void readPendingDatagrams();
 
 private:
 	UDPServer* mServer;
@@ -33,7 +32,7 @@ class NETWORK_EXPORT UDPServer : public QThread,public Handler
 {
 	Q_OBJECT
 
-	friend class ThreadSlots;
+		friend class UDPReceiver;
 public:
 	UDPServer(int port,QObject *parent = nullptr);
 	~UDPServer();
@@ -41,12 +40,11 @@ public:
 	void setHandler(Handler*);
 
 protected:
-
 	void run();
 
-	virtual QSharedPointer<Package> doHandle(QSharedPointer<Package>);
+	void handle(const ReqeustContext&, QByteArray& data);
 
-	void handle(const QHostAddress& address,qint16 port,QByteArray& data);
+	virtual QSharedPointer<Package> doHandle(const ReqeustContext&, QSharedPointer<Package>);
 
 private:
 	QUdpSocket* mUdpSocket;

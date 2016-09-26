@@ -1,11 +1,11 @@
 #ifndef OBJECTMODEL_H
 #define OBJECTMODEL_H
 
-#include "CommonTreeModel.h"
+#include "QtCommonModel.h"
 
 namespace QAF
 {
-	class ObjectModel : public CommonTreeModel
+	class ObjectModel : public QtCommonModel
 	{
 		Q_OBJECT
 

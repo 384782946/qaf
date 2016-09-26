@@ -3,7 +3,7 @@
 namespace QAF
 {
 	ObjectModel::ObjectModel(QObject *parent)
-		: CommonTreeModel(parent)
+		: QtCommonModel(parent)
 	{
 
 	}

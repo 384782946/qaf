@@ -5,16 +5,19 @@
 #include "network_global.h"
 #include "Package.h"
 
+const qint16 ProtocolVersion = 1010;
+
 enum RequestType
 {
-	RT_HEAD,
-	RT_POST
+	RT_NORMAL = 1,			 //常规请求
+	RT_WITHOUT_RESPONSE = 100, //无返回请求
 };
 
 enum ResponseStatus
 {
-	RS_OK,
-	RS_SERVER_ERROR
+	RS_OK = 0,			 //正常
+	RS_CLIENT_ERROR, //客户端错误
+	RS_SERVER_ERROR	 //服务器端错误
 };
 
 class NETWORK_EXPORT Request:public Package
@@ -29,21 +32,16 @@ public:
 
 	virtual bool unpack(QDataStream& stream);
 
-	void setReqestType(qint8 type);
+	void setReqestType(quint8 type);
 
-	qint8 reqestType() const;
-
-	void setRequestId(qint32 id);
-
-	qint32 reqestId() const;
+	quint8 reqestType() const;
 
 	void setData(const QMap<QString, QString>& data);
 
 	const QMap<QString, QString>& data() const;
 
 private:
-	qint32 mRequestId;
-	qint8 mRequestType;
+	quint8 mRequestType;
 	QMap<QString, QString> mRequestData;
 };
 
@@ -59,20 +57,15 @@ public:
 
 	virtual bool unpack(QDataStream& stream);
 
-	void setStatus(qint8 status);
+	void setStatus(quint8 status);
 
-	qint8 status() const;
+	quint8 status() const;
 
 	QByteArray datas() const;
 
 	void setDatas(const QByteArray& data);
 
-	qint32 reqestId() const;
-
-	void setReqestId(qint32 id);
-
 private:
-	qint32 mRequestId;
-	qint8 mStatus;
+	quint8 mStatus;
 	QByteArray mDatas;
 };

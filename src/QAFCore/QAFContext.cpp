@@ -1,6 +1,10 @@
 #include "QAFContext.h"
+
+#include <QCoreApplication>
+#include <QDir>
+
 #include "QAFCore.h"
-#include "QAFDirs.h"
+#include "QAFContext.h"
 
 namespace QAF
 {
@@ -38,6 +42,37 @@ namespace QAF
 
 	QString QAFContext::wellKnownPath(DirType dt)
 	{
-		return QAFDirs::path(dt);
+		static QString dirPath = QCoreApplication::applicationDirPath();
+		QString ret = dirPath;
+		switch (dt)
+		{
+		case QAF::DT_HOME://"Bin/"
+			break;
+		case QAF::DT_CONFIG://"Bin/../conf"
+			ret += "/../conf";
+			break;
+		case QAF::DT_TRANSTOR://"Bin/../lang"
+			ret += "/../lang";
+			break;
+		case QAF::DT_LOG://"Bin/../log"
+			ret += "/../log";
+			break;
+		case QAF::DT_DATA://"Bin/../data"
+			ret += "/../data";
+			break;
+		case QAF::DT_PLUGIN://"Bin/plugin"
+			ret += "/plugin";
+			break;
+		default:
+			break;
+		}
+
+		QDir currDir(ret);
+		if (!currDir.exists())
+		{
+			//auto make if don't exists
+			currDir.mkpath(ret);
+		}
+		return currDir.absolutePath();
 	}
 }

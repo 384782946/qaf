@@ -5,6 +5,7 @@
 #include <QtTest/QTest>
 
 class UDPServer;
+class TCPServer;
 
 class Test_Network : public QObject
 {
@@ -23,8 +24,11 @@ private slots:
 	void testUdpClient_data();
 	void testUdpClient();
 
+	void testTcpClient();
+
 private:
 	UDPServer* mUdpServer;
+	TCPServer* mTcpServer;
 };
 
 

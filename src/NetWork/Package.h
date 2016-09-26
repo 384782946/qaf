@@ -17,33 +17,34 @@
 
 struct PackageHeader
 {
-	qint32 Length;
-	qint8 Version;
+	qint16 Version;
 
-	PackageHeader() :Length(0), Version(PACKAGE_VERSION){}
+	PackageHeader() : Version(PACKAGE_VERSION){}
 };
 
 class Package
 {
 public:
+	Package(){}
+	virtual ~Package(){}
 
 	DECLARE_CLASS_NAME(Package)
 
 	virtual bool pack(QDataStream& stream) = 0
 	{
-		stream << packageType() << mHeader.Length << mHeader.Version;
+		stream << packageType() << mHeader.Version;
 		return true;
 	}
 
 	virtual bool unpack(QDataStream& stream) = 0
 	{
-		stream >> mHeader.Length >> mHeader.Version;
+		stream >> mHeader.Version;
 		return true;
 	}
 
-	qint32 lenth() const { return mHeader.Length; }
+	qint16 version() const { return mHeader.Version; }
 
-	qint8 version() const { return mHeader.Version; }
+	void setVersion(qint16 version_) { mHeader.Version = version_; }
 
 protected:
 	PackageHeader mHeader;

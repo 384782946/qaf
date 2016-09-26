@@ -18,7 +18,7 @@
 #include <QSortFilterProxyModel>
 #include "QAFGlobal.h"
 #include "ModelItem.h"
-#include "CommonTreeModel.h"
+#include "QtCommonModel.h"
 #include "qafcore_global.h"
 
 namespace QAF
@@ -102,7 +102,7 @@ namespace QAF
 		ConfigItem* ptr;
 	};
 
-	class QAFCORE_EXPORT ConfigModel : public CommonTreeModel
+	class QAFCORE_EXPORT ConfigModel : public QtCommonModel
 	{
 		Q_OBJECT
 	public:

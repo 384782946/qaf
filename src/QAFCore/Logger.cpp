@@ -10,7 +10,7 @@
 #include <QMutexLocker>
 #include <QFile>
 #include <QTextStream>
-#include "QAFDirs.h"
+#include "QAFContext.h"
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -32,7 +32,7 @@ namespace QAF
 		QMutexLocker locker(&gMutex);
 		if (!gLogFile){
 			QString logName = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss")+".txt";
-			QString logPath = QAFDirs::path(DT_LOG) + "/" + logName;
+			QString logPath = QAFContext::wellKnownPath(DT_LOG) + "/" + logName;
 			gLogFile = new QFile(logPath,QAFCore::getSingleton());
 			if (gLogFile->open(QIODevice::WriteOnly)){
 				gLogStream.setDevice(gLogFile);

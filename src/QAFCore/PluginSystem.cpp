@@ -4,7 +4,7 @@
 #include <QDir>
 #include <QDebug>
 
-#include "QAFDirs.h"
+#include "QAFContext.h"
 #include "AbstractPlugin.h"
 #include "QAFCore.h"
 #include "ConfigModel.h"
@@ -58,7 +58,7 @@ namespace QAF
 		{
 			AbstractSystem::install();
 
-			QString pluginPath = QAFDirs::path(DT_PLUGIN);
+			QString pluginPath = QAFContext::wellKnownPath(DT_PLUGIN);
 			QDir dir(pluginPath);
 			if (dir.exists()){
 				QStringList plugins = dir.entryList(QStringList() << "*.dll", QDir::Files);

@@ -25,7 +25,7 @@ void UDPServer::setHandler(Handler* handler)
 	mHandler = handler;
 }
 
-void UDPServer::handle(const QHostAddress& address, qint16 port, QByteArray& data)
+void UDPServer::handle(const ReqeustContext& context , QByteArray& data)
 {
 	QDataStream stream(&data, QIODevice::ReadOnly);
 	stream.setVersion(QDataStream::Qt_5_6);
@@ -38,34 +38,12 @@ void UDPServer::handle(const QHostAddress& address, qint16 port, QByteArray& dat
 		return;
 
 	package->unpack(stream);
-	mHandler->doHandle(package);
+	mHandler->doHandle(context,package);
+	qDebug() << "UDPServer:receive one package.";
 }
 
-QSharedPointer<Package> UDPServer::doHandle(QSharedPointer<Package> package)
+QSharedPointer<Package> UDPServer::doHandle(const ReqeustContext& context , QSharedPointer<Package> package)
 {
-	QSharedPointer<Request> request = qSharedPointerCast<Request>(package);
-	if (request->reqestType() == RT_HEAD)
-	{
-
-	}
-	else if (request->reqestType() == RT_POST)
-	{
-		Response* ret = new Response();
-		ret->setReqestId(request->reqestId());
-		ret->setStatus(RS_OK);
-
-		QString response = "success! your post data:";
-		foreach(QString key, request->data().keys())
-		{
-			response += QString("	%1:%2").arg(key).arg(request->data().value(key));
-		}
-
-		qDebug() << "response:" << response;
-
-		ret->setDatas(response.toUtf8());
-		return QSharedPointer<Package>(ret);
-	}
-	
 	return QSharedPointer<Package>();
 }
 
@@ -75,12 +53,12 @@ void UDPServer::run()
 
 	if (!mUdpSocket->bind(QHostAddress::Any, mPort, QAbstractSocket::ShareAddress | QAbstractSocket::ReuseAddressHint))
 	{
-		EXCEPTION_SIMPLE_THROW(QLogicException, "connot bind udpsocket!");
+		mUdpSocket->deleteLater();
+		EXCEPTION_SIMPLE_THROW(QRuntimeException, "connot bind udpsocket!");
 	}
 
-	ThreadSlots* ts = new ThreadSlots(this);
-
-	qDebug() << "Connect state:" << connect(mUdpSocket, SIGNAL(readyRead())
+	UDPReceiver* ts = new UDPReceiver(this);
+	connect(mUdpSocket, SIGNAL(readyRead())
 		, ts, SLOT(readPendingDatagrams()));
 
 	exec();
@@ -92,17 +70,17 @@ void UDPServer::run()
 
 //////////////////////////////////////////////////////////////////////////
 
-void ThreadSlots::readPendingDatagrams()
+void UDPReceiver::readPendingDatagrams()
 {
 	while (mServer->mUdpSocket->hasPendingDatagrams()) {
 		QByteArray datagram;
 		datagram.resize(mServer->mUdpSocket->pendingDatagramSize());
-		QHostAddress sender;
-		quint16 senderPort;
+
+		ReqeustContext context;
 
 		mServer->mUdpSocket->readDatagram(datagram.data(), datagram.size(),
-			&sender, &senderPort);
+			&context.Address, &context.Port);
 
-		mServer->handle(sender, senderPort, datagram);
+		mServer->handle(context, datagram);
 	}
 }

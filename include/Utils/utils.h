@@ -32,4 +32,10 @@ public:
 #define ASSERT_SAME_TYPE(classname1,classname2) static_assert(IsSameType<classname1,classname2>::ret, #classname1##" is not the same type with "###classname2)
 #define ASSERT_CONVERTIBLE_TYPE(classname1,classname2) static_assert(CanConvert<classname1,classname2>::ret,#classname1##" can not convert to "###classname2)
 
+#ifdef QT_DEBUG
+#define QT_CONNECT(conenction_name) qDebug() << "Connect:" << connection_name << "Sate:" << QObject::connect
+#else
+#define QT_CONNECT(connection_name) QObject::connect
+#endif
+
 #endif //UTILS_H

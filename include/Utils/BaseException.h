@@ -80,4 +80,6 @@ private:
 
 EXCEPTION_SUBCLASS(QLogicException, QBaseException)
 
+EXCEPTION_SUBCLASS(QRuntimeException, QBaseException)
+
 #endif // QAFEXCEPTION_H

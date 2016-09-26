@@ -38,9 +38,6 @@
     <ClCompile Include="ObjectSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QAFDirs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QAFCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConfigModel.cpp">
@@ -110,18 +104,12 @@
     <ClCompile Include="QAFContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommonTreeModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="qafcore_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AbstractSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QAFDirs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPtr.h">
@@ -145,9 +133,6 @@
     <ClInclude Include="Serializable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LogModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -155,9 +140,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QAFContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonTreeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

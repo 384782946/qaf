@@ -1,6 +1,6 @@
 #include "ConfigSystem.h"
 #include "qafcore.h"
-#include "QAFDirs.h"
+#include "QAFContext.h"
 #include "UIInterface.h"
 #include "ObjectSystem.h"
 #include "ConfigModel.h"
@@ -24,7 +24,7 @@ namespace QAF
 	{
 		AbstractSystem::install();
 
-		Q_ASSERT_X(loadConfig(QAFDirs::path(DT_CONFIG) + "/run.xml"),
+		Q_ASSERT_X(loadConfig(QAFContext::wellKnownPath(DT_CONFIG) + "/run.xml"),
 			"ConfigSystem::install",
 			"run configuration cann't be loaded.");
 	}

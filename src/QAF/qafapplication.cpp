@@ -3,9 +3,10 @@
 #include <QtWidgets/QSplashScreen>
 #include <QTranslator>
 #include <QAFContext.h>
-#include <QAFDirs.h>
-#include "mainwindow.h"
+#include <QAFContext.h>
 #include <QtAwesome.h>
+
+#include "mainwindow.h"
 
 QAFApplication::QAFApplication(int & argc, char ** argv)
 	:QApplication(argc,argv)
