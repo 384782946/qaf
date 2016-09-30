@@ -11,6 +11,7 @@ UDPServer::UDPServer(int port,QObject *parent)
 	: QThread(parent)
 	, mUdpSocket(nullptr)
 	, mPort(port)
+	, mRequestNum(0)
 {
 	mHandler = this;
 }
@@ -39,6 +40,7 @@ void UDPServer::handle(const ReqeustContext& context , QByteArray& data)
 
 	package->unpack(stream);
 	mHandler->doHandle(context,package);
+	mRequestNum++;
 	qDebug() << "UDPServer:receive one package.";
 }
 
@@ -49,6 +51,7 @@ QSharedPointer<Package> UDPServer::doHandle(const ReqeustContext& context , QSha
 
 void UDPServer::run()
 {
+	mRequestNum = 0;
 	mUdpSocket = new QUdpSocket();
 
 	if (!mUdpSocket->bind(QHostAddress::Any, mPort, QAbstractSocket::ShareAddress | QAbstractSocket::ReuseAddressHint))
@@ -66,6 +69,11 @@ void UDPServer::run()
 	mUdpSocket->deleteLater();
 	mUdpSocket = nullptr;
 	ts->deleteLater();
+}
+
+quint32 UDPServer::requestNum() const
+{
+	return mRequestNum;
 }
 
 //////////////////////////////////////////////////////////////////////////

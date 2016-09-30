@@ -135,7 +135,7 @@ copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
     <ClCompile Include="GeneratedFiles\Release\moc_PluginSystem.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="QAFLogger.cpp" />
     <ClCompile Include="LogModel.cpp" />
     <ClCompile Include="ObjectModel.cpp" />
     <ClCompile Include="ObjectProxy.cpp" />
@@ -167,7 +167,7 @@ copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="QAFContext.h" />
-    <ClInclude Include="Logger.h" />
+    <ClInclude Include="QAFLogger.h" />
     <ClInclude Include="LogModel.h" />
     <CustomBuild Include="ObjectModel.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

@@ -47,6 +47,7 @@ bool TcpClient::request(const QHostAddress& address, quint16 port, Request& requ
 	stream << quint64(mWriteBuffer.size());
 
 	mSocket->connectToHost(address, port);
+	return true;
 }
 
 void TcpClient::reset()
@@ -78,7 +79,7 @@ void TcpClient::on_ready_read()
 		mReadBuffer.append(mSocket->readAll());
 
 		if (mReadLength >= mTotalReadLength){
-			mSocket->close(); //关闭连接
+			mSocket->disconnectFromHost();
 		}
 	}
 }
@@ -86,8 +87,8 @@ void TcpClient::on_ready_read()
 void TcpClient::on_bytes_written(qint64 bytes)
 {
 	mWriteLength += bytes;
-	if (mWriteLength >= mTotalWriteLength){ //发送完毕
-
+	if (mWriteLength >= mTotalWriteLength && mRequestType >= RT_WITHOUT_RESPONSE){ //发送完毕,且无返回数据
+		mSocket->disconnectFromHost();
 	}
 }
 

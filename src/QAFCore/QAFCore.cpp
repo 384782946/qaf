@@ -5,7 +5,7 @@
 #include "PluginSystem.h"
 #include "ConfigSystem.h"
 #include "UIInterface.h"
-#include "Logger.h"
+#include "QAFLogger.h"
 #include "LogModel.h"
 
 namespace QAF

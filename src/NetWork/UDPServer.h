@@ -39,6 +39,8 @@ public:
 
 	void setHandler(Handler*);
 
+	quint32 requestNum() const;
+
 protected:
 	void run();
 
@@ -50,6 +52,7 @@ private:
 	QUdpSocket* mUdpSocket;
 	Handler* mHandler;
 	qint16 mPort;
+	quint32 mRequestNum;
 };
 
 #endif // UDPSERVER_H

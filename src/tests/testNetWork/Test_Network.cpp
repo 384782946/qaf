@@ -30,6 +30,8 @@ void Test_Network::testUdpClient()
 	params["key2"] = "value2";
 	request.setData(params);
 	UDPClient::send(request, QHostAddress::LocalHost, 5000);
+	QThread::usleep(100);
+	QVERIFY(mUdpServer->requestNum() == 1);
 }
 
 void Test_Network::initTestCase()
@@ -48,6 +50,9 @@ void Test_Network::initTestCase()
 void Test_Network::cleanupTestCase()
 {
 	QThread::usleep(1000);
+	mTcpServer->quit();
+	mTcpServer->wait();
+	mTcpServer->deleteLater();
 	mUdpServer->quit();
 	mUdpServer->wait();
 	mUdpServer->deleteLater();

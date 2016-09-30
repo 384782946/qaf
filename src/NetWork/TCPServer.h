@@ -69,6 +69,8 @@ public:
 
 	void setHandler(Handler*);
 
+	quint32 requestNum() const;
+
 protected:
 	void run();
 
@@ -82,6 +84,7 @@ private:
 	qint16 mPort;
 
 	QHash<QTcpSocket*, ClientEntity*> mClients;
+	quint32 mRequestNum;
 };
 
 #endif // TCPSERVER_H

@@ -2,14 +2,19 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QtConcurrent/QtConcurrent>
+#include <QFutureWatcher> 
 #include "Protocol.h"
 #include "BaseException.h"
+
+#include "Handler.h"
 
 TCPServer::TCPServer(qint16 port, QObject *parent)
 	: QThread(parent)
 	, mHandler(nullptr)
 	, mTcpServer(nullptr)
 	, mPort(port)
+	, mRequestNum(0)
 {
 	setHandler(this);
 }
@@ -22,6 +27,7 @@ TCPServer::~TCPServer()
 
 void TCPServer::run()
 {
+	mRequestNum = 0;
 	mTcpServer = new QTcpServer();
 	if (!mTcpServer->listen(QHostAddress::Any, mPort))
 	{
@@ -59,23 +65,34 @@ void TCPServer::handle(ClientEntity* entity)
 	if (!package.isNull()){
 		package->unpack(stream);
 
-		QSharedPointer<Package> response = mHandler->doHandle(context, package);
-		if (!response.isNull()){
-			QByteArray data;
-			QDataStream stream(&data, QIODevice::ReadWrite);
-			stream.setVersion(QDataStream::Qt_5_7);
+		QFutureWatcher<QSharedPointer<Package>>* watcher = new QFutureWatcher<QSharedPointer<Package>>();
+		connect(watcher, &QFutureWatcher<QSharedPointer<Package>>::finished, [=](){
+			QSharedPointer<Package> response = watcher->result();
+			if (!response.isNull()){
 
-			stream << quint64(0);
+				QDataStream stream(&entity->WriteBuffer, QIODevice::ReadWrite);
+				stream.setVersion(QDataStream::Qt_5_7);
 
-			if (response->pack(stream))
-			{
-				stream.device()->seek(0);
-				stream << (quint64)data.size();
-				entity->Socket->write(data);
+				stream << quint64(0);
+
+				if (response->pack(stream))
+				{
+					stream.device()->seek(0);
+					stream << (quint64)entity->WriteBuffer.size();
+					entity->TotalWriteLength = entity->WriteBuffer.size();
+					entity->Socket->write(entity->WriteBuffer);
+				}
 			}
-		}else{ //无返回值
-			entity->Socket->close();
-		}
+			else{ //无返回值
+			}
+
+			watcher->deleteLater();
+		});
+
+		QFuture<QSharedPointer<Package>>  future = QtConcurrent::run(mHandler, &Handler::doHandle, context, package);
+		watcher->setFuture(future);
+		mRequestNum++;
+		//QSharedPointer<Package> response = mHandler->doHandle(context, package);
 	}
 }
 
@@ -109,6 +126,11 @@ QSharedPointer<Package> TCPServer::doHandle(const ReqeustContext& context, QShar
 void TCPServer::setHandler(Handler* handler)
 {
 	mHandler = handler;
+}
+
+quint32 TCPServer::requestNum() const
+{
+	return mRequestNum;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -155,9 +177,17 @@ void TCPReceiver::on_ready_read()
 	}
 }
 
-void TCPReceiver::on_bytes_written(qint64)
+void TCPReceiver::on_bytes_written(qint64 bytes)
 {
-
+	QTcpSocket* clientSocket = (QTcpSocket*)sender();
+	ClientEntity* entity = mServer->mClients.value(clientSocket, nullptr);
+	if (clientSocket && entity){
+		entity->WriteLength += bytes;
+		if (entity->WriteLength >= entity->TotalWriteLength)
+		{
+			//发送完毕
+		}
+	}
 }
 
 void TCPReceiver::on_disconnected()
@@ -174,5 +204,5 @@ void TCPReceiver::on_disconnected()
 void TCPReceiver::on_error(QAbstractSocket::SocketError socketError)
 {
 	QTcpSocket* clientSocket = (QTcpSocket*)sender();
-	qDebug() << "TCPServer:" << "socket error" << clientSocket->errorString();
+	qDebug() << "TCPServer:" << clientSocket->errorString();
 }

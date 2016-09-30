@@ -92,9 +92,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ObjectModel.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_PluginSystem.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -102,6 +99,9 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="QAFContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QAFLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -136,10 +136,10 @@
     <ClInclude Include="LogModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="QAFContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QAFContext.h">
+    <ClInclude Include="QAFLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

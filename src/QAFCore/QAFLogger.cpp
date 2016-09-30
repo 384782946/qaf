@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include "QAFLogger.h"
 
 #include <QDir>
 #include <stdio.h>
