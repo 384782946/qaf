@@ -13,6 +13,8 @@ enum TcpClientError{
 	TCE_SOCKET_ERROR = QAbstractSocket::UnknownSocketError
 };
 
+#define WAIT_TIMEOUT -101
+
 class QTcpSocket;
 
 class NETWORK_EXPORT TcpClient : public QObject
@@ -27,7 +29,7 @@ public:
 
 	QSharedPointer<Response> response() const;
 
-	void waitForDone();
+	int waitForDone(int millisecond = -1);
 
 signals:
 	void done();

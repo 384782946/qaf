@@ -83,7 +83,7 @@ void Test_Network::testTcpClient()
 	client.request(QHostAddress::LocalHost, 5001, request);
 	client.waitForDone();
 
-	qDebug() << client.response()->datas();
+	qDebug() << "Receive datas from:" << client.response()->datas();
 }
 
 QTEST_MAIN(Test_Network)

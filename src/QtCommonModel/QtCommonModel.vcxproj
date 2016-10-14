@@ -88,6 +88,7 @@
     <ClInclude Include="ModelItem.h" />
     <ClInclude Include="QtCommonModel.h" />
     <ClInclude Include="qtcommonmodel_global.h" />
+    <ClInclude Include="QtRowTableModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModelItem.cpp" />

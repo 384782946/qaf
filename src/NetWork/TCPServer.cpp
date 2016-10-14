@@ -9,6 +9,8 @@
 
 #include "Handler.h"
 
+#define  MTU 1024
+
 TCPServer::TCPServer(qint16 port, QObject *parent)
 	: QThread(parent)
 	, mHandler(nullptr)
@@ -55,6 +57,11 @@ void TCPServer::handle(ClientEntity* entity)
 	context.Address = entity->Socket->peerAddress();
 	context.Port = entity->Socket->peerPort();
 
+	qDebug() << QString("TCPServer: The %3 time request from %1:%2")
+		.arg(context.Address.toString())
+		.arg(context.Port)
+		.arg(mRequestNum);
+
 	QDataStream stream(&entity->ReadBuffer, QIODevice::ReadOnly);
 	stream.setVersion(QDataStream::Qt_5_7);
 
@@ -80,7 +87,10 @@ void TCPServer::handle(ClientEntity* entity)
 					stream.device()->seek(0);
 					stream << (quint64)entity->WriteBuffer.size();
 					entity->TotalWriteLength = entity->WriteBuffer.size();
-					entity->Socket->write(entity->WriteBuffer);
+					entity->WriteLength = 0;
+
+					int len = (entity->TotalWriteLength - entity->WriteLength) > MTU ? MTU : (entity->TotalWriteLength - entity->WriteLength);
+					entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength,len));
 				}
 			}
 			else{ //无返回值
@@ -92,7 +102,6 @@ void TCPServer::handle(ClientEntity* entity)
 		QFuture<QSharedPointer<Package>>  future = QtConcurrent::run(mHandler, &Handler::doHandle, context, package);
 		watcher->setFuture(future);
 		mRequestNum++;
-		//QSharedPointer<Package> response = mHandler->doHandle(context, package);
 	}
 }
 
@@ -113,8 +122,6 @@ QSharedPointer<Package> TCPServer::doHandle(const ReqeustContext& context, QShar
 		{
 			response += QString("	%1:%2").arg(key).arg(request->data().value(key));
 		}
-
-		qDebug() << "response:" << response;
 
 		ret->setDatas(response.toUtf8());
 		return QSharedPointer<Package>(ret);
@@ -183,8 +190,10 @@ void TCPReceiver::on_bytes_written(qint64 bytes)
 	ClientEntity* entity = mServer->mClients.value(clientSocket, nullptr);
 	if (clientSocket && entity){
 		entity->WriteLength += bytes;
-		if (entity->WriteLength >= entity->TotalWriteLength)
-		{
+		if (entity->WriteLength < entity->TotalWriteLength){
+			int len = (entity->TotalWriteLength - entity->WriteLength) > MTU ? MTU : (entity->TotalWriteLength - entity->WriteLength);
+			entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength, len));
+		}else{
 			//发送完毕
 		}
 	}

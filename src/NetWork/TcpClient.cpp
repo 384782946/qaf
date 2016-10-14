@@ -2,8 +2,11 @@
 
 #include <QTcpSocket>
 #include <QEventLoop>
+#include <QTimer>
 
 #include "Protocol.h"
+
+#define MTU 1024
 
 TcpClient::TcpClient(QObject *parent)
 	: QObject(parent)
@@ -46,6 +49,8 @@ bool TcpClient::request(const QHostAddress& address, quint16 port, Request& requ
 	stream.device()->seek(0);
 	stream << quint64(mWriteBuffer.size());
 
+	mTotalWriteLength = mWriteBuffer.size();
+
 	mSocket->connectToHost(address, port);
 	return true;
 }
@@ -69,7 +74,6 @@ void TcpClient::on_ready_read()
 	QDataStream stream(mSocket);
 	stream.setVersion(QDataStream::Qt_5_7);
 	if (mTotalReadLength == 0 && mSocket->bytesAvailable() >= sizeof(quint64)){ //
-		
 		stream >> mTotalReadLength;
 		mReadLength += sizeof(quint64);
 	}
@@ -87,14 +91,19 @@ void TcpClient::on_ready_read()
 void TcpClient::on_bytes_written(qint64 bytes)
 {
 	mWriteLength += bytes;
-	if (mWriteLength >= mTotalWriteLength && mRequestType >= RT_WITHOUT_RESPONSE){ //发送完毕,且无返回数据
-		mSocket->disconnectFromHost();
+	if (mWriteLength < mTotalWriteLength){
+		int len = (mTotalWriteLength - mWriteLength) > MTU ? MTU : (mTotalWriteLength - mWriteLength);
+		mSocket->write(mWriteBuffer.mid(mWriteLength, len));
+	}else{ //发送完毕,且无返回数据
+		if(mRequestType >= RT_WITHOUT_RESPONSE)
+			mSocket->disconnectFromHost();
 	}
 }
 
 void TcpClient::on_connected()
 {
-	mSocket->write(mWriteBuffer);
+	int len = (mTotalWriteLength - mWriteLength) > MTU ? MTU : (mTotalWriteLength - mWriteLength);
+	mSocket->write(mWriteBuffer.mid(0, len));
 }
 
 void TcpClient::on_disconnected()
@@ -121,10 +130,19 @@ QSharedPointer<Response> TcpClient::response() const
 	return mResponse;
 }
 
-void TcpClient::waitForDone()
+int TcpClient::waitForDone(int millisecond)
 {
 	QEventLoop eventLoop;
-	connect(this, SIGNAL(done()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(error(int)), &eventLoop, SLOT(quit()));
-	eventLoop.exec();
+	connect(this, &TcpClient::done, &eventLoop, &QEventLoop::quit);
+	connect(this, &TcpClient::error, [&eventLoop](int error){
+		eventLoop.exit(error);
+	});
+
+	if (millisecond > 0){
+		QTimer::singleShot(millisecond, [&eventLoop](){
+			eventLoop.exit(WAIT_TIMEOUT);
+		});
+	}
+	
+	return eventLoop.exec();
 }
