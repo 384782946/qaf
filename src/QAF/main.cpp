@@ -8,6 +8,8 @@
 
 int main(int argc, char *argv[])
 {
+	QApplication::addLibraryPath("");
+
 	QAFApplication app(argc, argv);
 
 	Log4Qt::BasicConfigurator::configure();
