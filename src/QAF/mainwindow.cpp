@@ -42,10 +42,10 @@ void MainWindow::createMenu()
 
 void MainWindow::createAction()
 {
-	
-	QAction* as = ui.menuSetting->addAction(QIcon(":/QAF/Resources/gear.png"),LStr("运行配置"));
 
-	setAction(QAF::AI_RUNCONFIG,as);
+	QAction* as = ui.menuSetting->addAction(QIcon(":/QAF/Resources/gear.png"), LStr("运行配置"));
+
+	setAction(QAF::AI_RUNCONFIG, as);
 
 	ui.mainToolBar->addAction(as);
 }

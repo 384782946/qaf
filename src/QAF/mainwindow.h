@@ -7,9 +7,9 @@
 
 using QAF::UIInterface;
 
-class MainWindow 
+class MainWindow
 	: public QMainWindow
-	,public UIInterface
+	, public UIInterface
 {
 	Q_OBJECT
 

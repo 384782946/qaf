@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.框架", "1.框架", "{57
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtCommonModel", "src\QtCommonModel\QtCommonModel.vcxproj", "{B808B9AC-4B02-42DE-A03C-6E643101C0CA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtCustomWidgets", "src\QtCustomWidgets\QtCustomWidgets.vcxproj", "{570ADBFC-972D-4A83-87A8-9C2BF71500F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -106,6 +108,10 @@ Global
 		{B808B9AC-4B02-42DE-A03C-6E643101C0CA}.Debug|Win32.Build.0 = Debug|Win32
 		{B808B9AC-4B02-42DE-A03C-6E643101C0CA}.Release|Win32.ActiveCfg = Release|Win32
 		{B808B9AC-4B02-42DE-A03C-6E643101C0CA}.Release|Win32.Build.0 = Release|Win32
+		{570ADBFC-972D-4A83-87A8-9C2BF71500F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{570ADBFC-972D-4A83-87A8-9C2BF71500F8}.Debug|Win32.Build.0 = Debug|Win32
+		{570ADBFC-972D-4A83-87A8-9C2BF71500F8}.Release|Win32.ActiveCfg = Release|Win32
+		{570ADBFC-972D-4A83-87A8-9C2BF71500F8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{4B9A676E-3F56-4854-BBBB-588A987DD6DD} = {D690C5A3-0F76-4AFA-82DE-40E2499EAD35}
 		{570BAE03-78E2-4A42-9CC3-9A0087568EA2} = {D690C5A3-0F76-4AFA-82DE-40E2499EAD35}
 		{B808B9AC-4B02-42DE-A03C-6E643101C0CA} = {4B9A676E-3F56-4854-BBBB-588A987DD6DD}
+		{570ADBFC-972D-4A83-87A8-9C2BF71500F8} = {4B9A676E-3F56-4854-BBBB-588A987DD6DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		Qt5Version = Qt5.7.0
