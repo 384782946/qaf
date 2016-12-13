@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UIINTERFACE_H
+#define UIINTERFACE_H
 
 #include "QAFGlobal.h"
 
@@ -36,3 +37,5 @@ namespace QAF
 		virtual void setDockWidget(int id, QDockWidget* dock, DockWidgetPos pos = DWP_BOTTOM) = 0;
 	};
 }
+
+#endif //UIINTERFACE_H

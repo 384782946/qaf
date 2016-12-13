@@ -1,4 +1,5 @@
-#pragma once
+#ifndef QAFGLOBAL_H
+#define QAFGLOBAL_H
 
 #include <QString>
 #include <Qt>
@@ -112,3 +113,5 @@ namespace QAF
 		CT_ATTR
 	};
 }
+
+#endif //QAFGLOBAL_H

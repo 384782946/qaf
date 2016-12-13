@@ -6,20 +6,23 @@ TEMPLATE = lib
 TARGET = UIPlugin
 DESTDIR = ../../bin/Debug/plugin
 QT += core widgets gui
-CONFIG += debug
-DEFINES += WIN64 QT_DLL QT_WIDGETS_LIB UIPLUGIN_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    $(SolutionDir)include \
+CONFIG += debug_and_release
+DEFINES += QT_DLL QT_WIDGETS_LIB UIPLUGIN_LIB
+INCLUDEPATH += . \
+    ./../../include \
     ./../Utils \
     ./../QAFCore \
-    ./../QtCommonModel
-LIBS += -L"$(SolutionDir)lib" \
-    -lQAFCored
+    ./../QtCommonModel \
+LIBS += -L"./../../lib"
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+    LIBS += -lQAFCored \
+        -lQtPropertyBrowserd
+}
+
+CONFIG(release,release|debug){
+    LIBS += -lQAFCore \
+        -lQtPropertyBrowser
+}
 include(UIPlugin.pri)

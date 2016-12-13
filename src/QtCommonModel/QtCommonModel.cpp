@@ -53,8 +53,8 @@ QVariant QtCommonModel::data(const QModelIndex & index, int role /*= Qt::Display
 	ModelItem* modelItem = itemForIndex(index);
 	if (!modelItem)
 		return QVariant();
-	else
-		return modelItem->data(index.column(), role);
+	
+	return modelItem->data(index.column(), role);
 }
 
 bool QtCommonModel::setData(const QModelIndex &index, const QVariant &value, int role /*= Qt::EditRole*/)

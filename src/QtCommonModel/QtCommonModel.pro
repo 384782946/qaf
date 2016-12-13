@@ -6,14 +6,16 @@ TEMPLATE = lib
 TARGET = QtCommonModel
 DESTDIR = ../../lib
 QT += core
-CONFIG += debug
-DEFINES += WIN64 QT_DLL QTCOMMONMODEL_LIB
+CONFIG += debug_and_release
+DEFINES += QT_DLL QTCOMMONMODEL_LIB
 INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug
+    .
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+}
+
+CONFIG(release,release|debug){
+
+}
 include(QtCommonModel.pri)

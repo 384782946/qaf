@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLUGINSYSTEM_H
+#define PLUGINSYSTEM_H
 
 #include "AbstractSystem.h"
 
@@ -36,3 +37,5 @@ namespace QAF
 		QList<AbstractPluginFactory*> mFactorys;
 	};
 }
+
+#endif //PLUGINSYSTEM_H

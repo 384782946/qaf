@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECTSYSTEM_H
+#define OBJECTSYSTEM_H
 
 #include "AbstractObject.h"
 #include "ObjectPtr.h"
@@ -89,3 +90,5 @@ namespace QAF
 		ObjectId mMaxValidId;
 	};
 }
+
+#endif //OBJECTSYSTEM_H

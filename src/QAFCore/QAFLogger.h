@@ -1,4 +1,6 @@
-#pragma once
+#ifndef QAFLOGGER_H
+#define QAFLOGGER_H
+
 #include <QtCore/QMetaType>
 
 namespace QAF
@@ -10,3 +12,5 @@ namespace QAF
 		static void backTrace(int traceNum = 255);
 	};
 }
+
+#endif //QAFLOGGER_H

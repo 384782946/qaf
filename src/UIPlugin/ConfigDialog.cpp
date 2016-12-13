@@ -6,10 +6,11 @@
 namespace QAF
 {
 	ConfigDialog::ConfigDialog(QWidget *parent)
-		: QDialog(parent)
+        : QDialog(parent)
 		, mModel(0)
 	{
 		ui.setupUi(this);
+
 		mModel = new ConfigProxyModel(this);
 		using namespace QAF;
 		ConfigSystem* configSystem = static_cast<ConfigSystem*>(QAFContext::getSingleton()->getSystem(ST_CONFIG));

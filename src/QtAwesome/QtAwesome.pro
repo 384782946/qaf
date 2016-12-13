@@ -6,18 +6,20 @@ TEMPLATE = lib
 TARGET = QtAwesome
 DESTDIR = ../../lib
 QT += core widgets gui
-CONFIG += debug
-DEFINES += _WINDOWS QTAWESONME_LIB
+CONFIG += debug_and_release
+DEFINES += QT_DLL QTAWESONME_LIB
 INCLUDEPATH += . \
     ./../Utils \
     ./debug \
-    $(QTDIR)/mkspecs/win32-msvc2013 \
-    ../../../include \
-    ./GeneratedFiles/Debug
-LIBS += -l$(NOINHERIT)
+    ./../../include \
+
+#LIBS += -l$(NOINHERIT)
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+}
+
+CONFIG(release,release|debug){
+
+}
 include(QtAwesome.pri)

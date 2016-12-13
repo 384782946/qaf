@@ -12,7 +12,8 @@
  * \note
 */
 
-#pragma once
+#ifndef ABSTRACTSYSTEM_H
+#define ABSTRACTSYSTEM_H
 
 #include "QAFGlobal.h"
 #include <QObject>
@@ -51,3 +52,5 @@ namespace QAF
 	};
 
 }
+
+#endif //ABSTRACTSYSTEM_H

@@ -6,21 +6,29 @@ TEMPLATE = app
 TARGET = QAF
 DESTDIR = ../../bin/Debug
 QT += core widgets gui
-CONFIG += debug console
-DEFINES += WIN64 QT_DLL QT_WIDGETS_LIB
+CONFIG += debug_and_release console
+DEFINES += QT_DLL QT_WIDGETS_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
     ./../QAFCore \
     ./../QtAwesome \
-    ./../Utils
-LIBS += -L"$(SolutionDir)lib" \
-    -lQAFCored
+    ./../Utils \
+    ./../../include
+LIBS += -L"./../../lib"
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+    LIBS += -lQAFCored \
+        -llog4qtd \
+        -lQtAwesomed
+}
+
+CONFIG(release,release|debug){
+    LIBS += -lQAFCore \
+        -llog4qt \
+        -lQtAwesome
+}
 include(QAF.pri)
 win32:RC_FILE = QAF.rc

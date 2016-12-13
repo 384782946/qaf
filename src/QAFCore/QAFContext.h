@@ -11,7 +11,8 @@
  * \note
 */
 
-#pragma once
+#ifndef QAFCONTEXT_H
+#define QAFCONTEXT_H
 
 #include "qafcore_global.h"
 #include "Singleton.h"
@@ -84,3 +85,5 @@ namespace QAF
 		AbstractSystem* getSystem(SystemType) const;
 	};
 }
+
+#endif //QAFCONTEXT_H

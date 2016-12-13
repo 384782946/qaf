@@ -9,7 +9,7 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 HEADERS += ./AbstractPlugin.h \
     ./QAFContext.h \
-    ./Logger.h \
+    ./QAFLogger.h \
     ./LogModel.h \
     ./ObjectProxy.h \
     ./ObjectPtr.h \
@@ -30,7 +30,7 @@ SOURCES += ./AbstractObject.cpp \
     ./ConfigModel.cpp \
     ./ConfigSystem.cpp \
     ./QAFContext.cpp \
-    ./Logger.cpp \
+    ./QAFLogger.cpp \
     ./LogModel.cpp \
     ./ObjectModel.cpp \
     ./ObjectProxy.cpp \

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECTPTR_H
+#define OBJECTPTR_H
 
 #include "ObjectProxy.h"
 
@@ -83,3 +84,5 @@ namespace QAF
 //		ASSERT_CONVERTIBLE_TYPE(T, AbstractObject);
 	};
 }
+
+#endif //OBJECTPTR_H

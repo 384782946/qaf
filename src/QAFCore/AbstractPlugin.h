@@ -10,7 +10,8 @@
  *
  * \note
 */
-#pragma once
+#ifndef ABSTRACTPLUGIN_H
+#define ABSTRACTPLUGIN_H
 
 #include "QAFGlobal.h"
 #include "AbstractObject.h"
@@ -72,3 +73,5 @@ namespace QAF
 		virtual bool isAutoLoad() = 0;
 	};
 }
+
+#endif //ABSTRACTPLUGIN_H

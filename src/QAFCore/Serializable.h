@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SERIALIZABLE_H
+#define SERIALIZABLE_H
 
 #include "qafcore_global.h"
 
@@ -16,3 +17,5 @@ public:
 
 QAFCORE_EXPORT QDataStream& operator<< (QDataStream&, const Serializable&);
 QAFCORE_EXPORT QDataStream& operator>> (QDataStream&, Serializable&);
+
+#endif //SERIALIZABLE_H

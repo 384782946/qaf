@@ -5,18 +5,20 @@
 TEMPLATE = app
 TARGET = testNetWork
 DESTDIR = ../../../bin/Debug
-QT += core network
-CONFIG += qtestlib debug console
-DEFINES += WIN64 QT_DLL QT_TESTLIB_LIB QT_NETWORK_LIB
+QT += core network testlib
+CONFIG += debug_and_release console
+DEFINES += QT_DLL QT_TESTLIB_LIB
 INCLUDEPATH += . \
-    ./GeneratedFiles/Debug \
     ./../../NetWork \
     ./../../Utils
-LIBS += -L"$(SolutionDir)lib" \
-    -lNetWorkd
+LIBS += -L"./../../../lib"
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+    LIBS += -lNetWorkd
+}
+
+CONFIG(release,release|debug){
+    LIBS += -lNetWork
+}
 include(testNetWork.pri)

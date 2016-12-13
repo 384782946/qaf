@@ -12,7 +12,8 @@
  * \note
 */
 
-#pragma once
+#ifndef SINGLETON_H
+#define SINGLETON_H
 
 #include <QAtomicPointer>
 
@@ -64,3 +65,5 @@ private:
 
 template<typename T>
 QBasicAtomicPointer<T> Singleton<T>::sInstancePtr = Q_BASIC_ATOMIC_INITIALIZER(0);
+
+#endif //SINGLETON_H

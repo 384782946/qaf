@@ -6,18 +6,20 @@ TEMPLATE = lib
 TARGET = testPlugin
 DESTDIR = ../../../bin/Debug/plugin
 QT += core widgets gui
-CONFIG += debug
-DEFINES += WIN64 QT_DLL TESTPLUGIN_LIB QT_WIDGETS_LIB
+CONFIG += debug_and_release
+DEFINES += QT_DLL TESTPLUGIN_LIB QT_WIDGETS_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
-    ./GeneratedFiles/Debug \
     ./../../QAFCore \
     ./../../Utils
-LIBS += -L"$(SolutionDir)lib" \
-    -lQAFCored
+LIBS += -L"./../../../lib"
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+    LIBS += -lQAFCored
+}
+
+CONFIG(release,release|debug){
+    LIBS += -lQAFCore
+}
 include(testPlugin.pri)

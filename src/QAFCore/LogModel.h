@@ -12,7 +12,9 @@
  * \note
 */
 
-#pragma once
+#ifndef LOGMODEL_H
+#define LOGMODEL_H
+
 #include "QtCommonModel.h"
 #include "ModelItem.h"
 
@@ -42,3 +44,5 @@ namespace QAF
 		~LogModel();
 	};
 }
+
+#endif //LOGMODEL_H

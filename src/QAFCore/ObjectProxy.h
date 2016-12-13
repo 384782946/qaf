@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECTPROXY_H
+#define OBJECTPROXY_H
 
 #include "qafcore_global.h"
 #include "AbstractObject.h"
@@ -36,5 +37,6 @@ namespace QAF
 		ObjectId mObjectId;
 		ObjectSystem* mObjectSystem;
 	};
-
 }
+
+#endif //OBJECTPROXY_H

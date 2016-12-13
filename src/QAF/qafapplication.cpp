@@ -46,17 +46,17 @@ void QAFApplication::initialize()
 	setApplicationVersion(QAF_VERSION_STR);
 
 	//install qss
-	//QFile f(":qdarkstyle/style.qss");
-	//if (!f.exists())
-	//{
-	//	printf("Unable to set stylesheet, file not found\n");
-	//}
-	//else
-	//{
-	//	f.open(QFile::ReadOnly | QFile::Text);
-	//	QTextStream ts(&f);
-	//	qApp->setStyleSheet(ts.readAll());
-	//}
+	QFile f(":qdarkstyle/style.qss");
+	if (!f.exists())
+	{
+		printf("Unable to set stylesheet, file not found\n");
+	}
+	else
+	{
+		f.open(QFile::ReadOnly | QFile::Text);
+		QTextStream ts(&f);
+		qApp->setStyleSheet(ts.readAll());
+	}
 
 	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);

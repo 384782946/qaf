@@ -2,12 +2,12 @@
 #define QCUSTOMMAINWINDOW_H
 
 #include "qtcustomwidgets_global.h"
-#include <QWidget>
+#include <QDialog>
 
 class QToolButton;
 class QLabel;
 
-class QTCUSTOMWIDGETS_EXPORT QNoTitleWidget : public QWidget
+class QTCUSTOMWIDGETS_EXPORT QNoTitleWidget : public QDialog
 {
 public:
 	QNoTitleWidget(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags());
@@ -19,6 +19,8 @@ public:
 
 protected:
 	virtual void paintEvent(QPaintEvent *event);
+
+	void init();
 
 protected:
 	bool mIsDrag;

@@ -6,15 +6,17 @@ TEMPLATE = lib
 TARGET = NetWork
 DESTDIR = ../../lib
 QT += core network
-CONFIG += debug
-DEFINES += WIN64 QT_DLL NETWORK_LIB QT_NETWORK_LIB
+CONFIG += debug_and_release
+DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
-    ./GeneratedFiles/Debug \
     ./../Utils
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+}
+
+CONFIG(release,release|debug){
+
+}
 include(NetWork.pri)

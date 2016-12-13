@@ -49,7 +49,7 @@ namespace QAF
 			if (mType == QtWarningMsg || mType == QtCriticalMsg)
 				return QColor(Qt::red);
 			else
-				return QColor(Qt::black);
+				return QVariant();
 		}else if (role == Qt::DecorationRole){
 		
 		}else if (role == Qt::CheckStateRole){

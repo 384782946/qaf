@@ -10,7 +10,8 @@
  * \note
 */
 
-#pragma once
+#ifndef ABSTRACTOBJECT_H
+#define ABSTRACTOBJECT_H
 
 #include <QObject>
 #include "Serializable.h"
@@ -179,3 +180,5 @@ namespace QAF
 		ObjectId mParentId;
 	};
 }
+
+#endif //ABSTRACTOBJECT_H

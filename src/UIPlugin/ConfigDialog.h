@@ -1,14 +1,14 @@
 #ifndef CONFIGDIALOG_H
 #define CONFIGDIALOG_H
 
-#include <QDialog>
 #include "ui_ConfigDialog.h"
+#include <QDialog>
 
 class QSortFilterProxyModel;
 
 namespace QAF
 {
-	class ConfigDialog : public QDialog
+    class ConfigDialog : public QDialog
 	{
 		Q_OBJECT
 

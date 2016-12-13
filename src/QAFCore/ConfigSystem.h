@@ -12,7 +12,8 @@
  * \note
 */
 
-#pragma once
+#ifndef CONFIGSYSTEM_H
+#define CONFIGSYSTEM_H
 
 #include "qafcore_global.h"
 #include "AbstractSystem.h"
@@ -50,3 +51,5 @@ namespace QAF
 		QMap<QString, ConfigModel*> mModels;
 	};
 }
+
+#endif //CONFIGSYSTEM_H

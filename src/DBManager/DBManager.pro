@@ -6,14 +6,15 @@ TEMPLATE = lib
 TARGET = DBManager
 DESTDIR = ../../lib
 QT += core sql
-CONFIG += staticlib debug
-DEFINES += WIN64 QT_DLL DBMANAGER_LIB QT_SQL_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug
+CONFIG += debug_and_release
+DEFINES += QT_DLL DBMANAGER_LIB QT_SQL_LIB
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+CONFIG(debug,debug|release){
+    TARGET=$$join(TARGET,,,d)
+}
+CONFIG(release,release|debug){
+
+}
 include(DBManager.pri)
+
+message($$ConfigureName)
