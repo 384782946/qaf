@@ -4,7 +4,8 @@
 
 TEMPLATE = app
 TARGET = testNetWork
-DESTDIR = ../../../bin/Debug
+win32:DESTDIR = ../../bin/win32
+unix:DESTDIR = ../../bin/unix
 QT += core network testlib
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_TESTLIB_LIB
@@ -14,7 +15,8 @@ INCLUDEPATH += . \
 LIBS += -L"./../../../lib"
 DEPENDPATH += .
 CONFIG(debug,debug|release){
-    TARGET=$$join(TARGET,,,d)
+    win32:TARGET=$$join(TARGET,,,d)
+    mac:TARGET=$$join(TARGET,,,_debug)
     LIBS += -lNetWorkd
 }
 

@@ -17,7 +17,9 @@ INCLUDEPATH += ./GeneratedFiles \
 LIBS += -L"./../../lib"
 DEPENDPATH += .
 CONFIG(debug,debug|release){
-    TARGET=$$join(TARGET,,,d)
+    win32:TARGET=$$join(TARGET,,,d)
+    mac:TARGET=$$join(TARGET,,,_debug)
+
     LIBS += -lQtCommonModeld
 }
 

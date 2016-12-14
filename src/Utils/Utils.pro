@@ -11,7 +11,8 @@ DEFINES += QT_DLL UTILS_LIB
 INCLUDEPATH += .
 DEPENDPATH += .
 CONFIG(debug,debug|release){
-    TARGET=$$join(TARGET,,,d)
+    win32:TARGET=$$join(TARGET,,,d)
+    mac:TARGET=$$join(TARGET,,,_debug)
 }
 
 CONFIG(release,release|debug){
