@@ -7,18 +7,7 @@
 Qt5.5.1+msvc2013
 
 ###2、工程配置
-输出目录 $(SolutionDir)bin\$(Configuration)\
-中间目录 $(SolutionDir)temp\$(ProjectName)\$(Configuration)\
-目标文件名 $(ProjectName)d
-目标文件扩展名 .dll
-输出文件 $(OutDir)\$(TargetName)$(TargetExt)
-附加库目录 $(SolutionDir)lib
-附加包含目录 $(SolutionDir)xxx
 
-某些项目需添加生成后事件：
-copy $(TargetPath) $(SolutionDir)bin\$(Configuration)
-copy $(OutDir)$(TargetName).pdb $(SolutionDir)bin\$(Configuration)
-copy $(ProjectDir)*.h $(SolutionDir)include\$(ProjectName)
 
 ###3、输出目录结果说明：
 conf 配置文件
@@ -26,8 +15,8 @@ log 日志文件
 lang 翻译文件
 style 样式
 data 公用数据文件
-$(Configuration) 主程序目录
-$(Configuration)/plugin 插件目录
+$(Platform) 主程序目录
+$(Platform)/plugin 插件目录
 
 ###4、运行环境：
 第三方依赖库放在./lib下，需要拷贝到对应应用程序目录
@@ -47,4 +36,3 @@ AwesomeFont支持
 日志管理
 
 ##更新日志
-***
