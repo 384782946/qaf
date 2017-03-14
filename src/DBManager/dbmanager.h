@@ -8,8 +8,7 @@
 #include <QStringList>
 #include <QList>
 #include <QVariant>
-
-class QSqlDatabase;
+#include <QSqlDatabase>
 
 class DBMANAGER_EXPORT DBManager : public QObject
 {
@@ -27,14 +26,26 @@ public:
 
     bool remove(const QString& table,const QString& _where = "");
 
-    bool add(const QString& table,const QMap<QString,QVariant>& values);
+    int insert(const QString& table,const QMap<QString,QVariant>& values);
 
-    QList<QList<QVariant>> query(const QString& table,/*[Output]*/QStringList& columns=QStringList(),const QString& _where = "");
+    QList<QList<QVariant>> query(const QString& table,/*[Output]*/QStringList& columns,const QString& _where = "");
+
+    QList<QList<QVariant>> query(const QString& table,const QString& _where = "");
+
+    bool dropTable(const QString& table);
+
+    bool deleteAll(const QString& table);
+
+    bool commit();
+
+    bool transaction();
+
+    bool rollback();
 
     void close();
 
 private:
-    QSqlDatabase* mDB;
+    QSqlDatabase mDB;
 };
 
 #endif // DBMANAGER_H

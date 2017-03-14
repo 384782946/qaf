@@ -4,21 +4,20 @@
 
 TEMPLATE = lib
 TARGET = QAFCore
-DESTDIR = ../../lib
+DESTDIR = $$PWD/../../lib
 QT += core xml widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QAFCORE_LIB QT_WIDGETS_LIB QT_XML_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../QtAwesome \
-    ./../Utils \
-    ./../QtCommonModel
-LIBS += -L"./../../lib"
-DEPENDPATH += .
+INCLUDEPATH += $$PWD \
+    $$PWD/../QtAwesome \
+    $$PWD/../Utils \
+    $$PWD/../QtCommonModel
+
+LIBS += -L"$$PWD/../../lib"
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
 
     LIBS += -lQtCommonModeld
 }

@@ -13,7 +13,7 @@ public:
 	ModelItem();
 	virtual ~ModelItem();
 
-	virtual QString className();
+    virtual QString className() const = 0;
 	virtual QVariant data(int index, int role = Qt::DisplayRole);
 	virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
 	virtual int itemFlags(int index);

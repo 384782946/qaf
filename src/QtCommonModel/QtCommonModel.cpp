@@ -1,9 +1,15 @@
 #include "QtCommonModel.h"
 #include "ModelItem.h"
 
+class RootItem:public ModelItem{
+    virtual QString className() const{
+        return "RootItem";
+    }
+};
+
 QtCommonModel::QtCommonModel(QObject *parent)
 	: QAbstractItemModel(parent)
-	, mRootItem(new ModelItem())
+    , mRootItem(new RootItem())
 {
 
 }

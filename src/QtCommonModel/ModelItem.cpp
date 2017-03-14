@@ -45,7 +45,7 @@ ModelItem* ModelItem::child(int index)
 		return nullptr;
 }
 
-QString ModelItem::className()
+QString ModelItem::className() const
 {
 	return "ModelItem";
 }
@@ -57,6 +57,7 @@ QList<QAction*> ModelItem::actions()
 
 QVariant ModelItem::data(int index, int role)
 {
+    Q_UNUSED(index)
 	if (role == Qt::CheckStateRole)
 		return mStatus;
 	else
@@ -65,6 +66,7 @@ QVariant ModelItem::data(int index, int role)
 
 bool ModelItem::setData(const QVariant &value, int index, int role)
 {
+    Q_UNUSED(index)
 	if (role == Qt::CheckStateRole)
 	{
 		setStatus(value.toInt());

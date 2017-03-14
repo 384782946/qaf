@@ -165,7 +165,6 @@ namespace QAF{
 
 		file.close();
 
-		//深度遍历xml
 		typedef QPair<QDomElement, ConfigItem*> NodeType;
 		QList<NodeType> tmpList;
 
@@ -194,7 +193,6 @@ namespace QAF{
 					model->addItem(configItem);
 				}
 
-				//遍历属性
 				QDomNamedNodeMap attrNodes = elm.attributes();
 				for (int i = 0; i < attrNodes.count(); ++i){
 					QDomAttr attr = attrNodes.item(i).toAttr();

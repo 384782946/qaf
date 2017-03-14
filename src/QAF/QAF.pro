@@ -4,33 +4,33 @@
 
 TEMPLATE = app
 TARGET = QAF
-win32:DESTDIR = ../../bin/win32
-unix:DESTDIR = ../../bin/unix
+win32:DESTDIR = $$PWD/../../bin/win32
+unix:DESTDIR = $$PWD/../../bin/unix
 QT += core widgets gui
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_WIDGETS_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../QAFCore \
-    ./../QtAwesome \
-    ./../Utils \
-    ./../../include
-LIBS += -L"./../../lib"
+INCLUDEPATH += $$PWD \
+    $$PWD/../QAFCore \
+    $$PWD/../QtAwesome \
+    $$PWD/../Utils \
+    $$PWD/../../include
+
+LIBS += -L"$$PWD/../../lib"
 PRECOMPILED_HEADER = stdafx.h
-DEPENDPATH += .
+DEPENDPATH += $$PWD
+
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
 
     LIBS += -lQAFCored \
-        -llog4qtd \
+        #-llog4qtd \
         -lQtAwesomed
 }
 
 CONFIG(release,release|debug){
     LIBS += -lQAFCore \
-        -llog4qt \
+       # -llog4qt \
         -lQtAwesome
 }
 include(QAF.pri)

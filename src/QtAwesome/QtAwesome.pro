@@ -4,20 +4,19 @@
 
 TEMPLATE = lib
 TARGET = QtAwesome
-DESTDIR = ../../lib
+DESTDIR = $$PWD/../../lib
 QT += core widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QTAWESONME_LIB
-INCLUDEPATH += . \
-    ./../Utils \
-    ./debug \
-    ./../../include \
+INCLUDEPATH += $$PWD \
+    $$PWD/../Utils \
+    $$PWD/../../include \
 
 #LIBS += -l$(NOINHERIT)
-DEPENDPATH += .
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
 }
 
 CONFIG(release,release|debug){

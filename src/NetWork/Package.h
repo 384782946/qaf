@@ -8,6 +8,8 @@
 #include <QHash>
 #include <QSharedPointer>
 
+#include <functional>
+
 #ifndef PACKAGE_VERSION
 #define  PACKAGE_VERSION 1
 #endif // !PACKAGE_VERSION
@@ -18,8 +20,22 @@
 struct PackageHeader
 {
 	qint16 Version;
+    qint32 PackageSize;
 
 	PackageHeader() : Version(PACKAGE_VERSION){}
+
+    qint16 version() const {
+        return Version;
+    }
+
+    qint32 packgeSize() const{
+        return PackageSize;
+    }
+
+    void reset(){
+        Version = PACKAGE_VERSION;
+        PackageSize = 0;
+    }
 };
 
 class Package
@@ -42,6 +58,11 @@ public:
 		return true;
 	}
 
+    virtual void reset()
+    {
+        mHeader.reset();
+    }
+
 	qint16 version() const { return mHeader.Version; }
 
 	void setVersion(qint16 version_) { mHeader.Version = version_; }
@@ -53,6 +74,7 @@ protected:
 class NETWORK_EXPORT ObjectFactory
 {
 public:
+
 	template<typename T>
 	static void registerClass()
 	{
@@ -62,7 +84,7 @@ public:
 	static QSharedPointer<Package> createObject(const QByteArray& className);
 
 private:
-	typedef Package* (*Constructor)();
+    typedef std::function<Package*()> Constructor;
 
 	template<typename T>
 	static Package* constructorHelper()
@@ -70,5 +92,5 @@ private:
 		return new T();
 	}
 
-	static QHash<QByteArray, Constructor>& constructors();
+    static QHash<QByteArray, Constructor>& constructors();
 };

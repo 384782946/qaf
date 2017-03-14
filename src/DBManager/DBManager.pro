@@ -4,15 +4,16 @@
 
 TEMPLATE = lib
 TARGET = DBManager
-DESTDIR = ../../lib
+DESTDIR = $$PWD/../../lib
 QT += core sql
 CONFIG += debug_and_release
 DEFINES += QT_DLL DBMANAGER_LIB QT_SQL_LIB
-DEPENDPATH += .
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
 }
+
 CONFIG(release,release|debug){
 
 }

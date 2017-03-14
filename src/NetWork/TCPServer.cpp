@@ -193,8 +193,8 @@ void TCPReceiver::on_bytes_written(qint64 bytes)
 		if (entity->WriteLength < entity->TotalWriteLength){
 			int len = (entity->TotalWriteLength - entity->WriteLength) > MTU ? MTU : (entity->TotalWriteLength - entity->WriteLength);
 			entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength, len));
-		}else{
-			//发送完毕
+        }else{//发送完毕,尝试关闭连接
+            entity->Socket->disconnectFromHost();
 		}
 	}
 }
@@ -213,5 +213,6 @@ void TCPReceiver::on_disconnected()
 void TCPReceiver::on_error(QAbstractSocket::SocketError socketError)
 {
 	QTcpSocket* clientSocket = (QTcpSocket*)sender();
+    clientSocket->disconnectFromHost();
 	qDebug() << "TCPServer:" << clientSocket->errorString();
 }

@@ -2,36 +2,36 @@
 #include <QtSql/QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QDebug>
+#include <QSqlError>
 
 DBManager::DBManager(const QString& dbType,QObject *parent)
     : QObject(parent)
-	, mDB(nullptr)
 {
-	mDB = new QSqlDatabase(QSqlDatabase::addDatabase("QOCI"));
-	Q_ASSERT_X(mDB != nullptr,"DBManager", "create sqldatabase fail!");
+    mDB = QSqlDatabase::addDatabase(dbType);
+    //Q_ASSERT_X(mDB != nullptr,"DBManager", "create sqldatabase fail!");
 }
 
 DBManager::~DBManager()
 {
    close();
-   QSqlDatabase::removeDatabase(mDB->connectionName());
-   delete mDB;
+   QSqlDatabase::removeDatabase(mDB.connectionName());
 }
 
 bool DBManager::isOpened() const
 {
-    return mDB->isOpen();
+    return mDB.isOpen();
 }
 
 bool DBManager::open(const QString& dbName,const QString& user, const QString& psw, const QString& address,int port)
 {
-    if(!mDB->isOpen()){
-		mDB->setHostName(address);
-		mDB->setDatabaseName(dbName);
-		mDB->setUserName(user);
-		mDB->setPassword(psw);
-		mDB->setPort(port);
-		return mDB->open();
+    if(!mDB.isOpen()){
+        mDB.setHostName(address);
+        mDB.setDatabaseName(dbName);
+        mDB.setUserName(user);
+        mDB.setPassword(psw);
+        mDB.setPort(port);
+        return mDB.open();
     }else{
         return true;
     }
@@ -39,9 +39,9 @@ bool DBManager::open(const QString& dbName,const QString& user, const QString& p
 
 void DBManager::close()
 {
-	if (mDB->isOpen())
+    if (mDB.isOpen())
     {
-		mDB->close();
+        mDB.close();
     }
 }
 
@@ -49,8 +49,13 @@ bool DBManager::execSql( const QString& sql )
 {
 	if (!isOpened()) 
 		return false;
-    QSqlQuery query;
-    return query.exec(sql);
+    QSqlQuery query(mDB);
+    if(query.exec(sql)){
+        return true;
+    }else{
+        qDebug()<<"DBManager execSql error:"<<query.lastError().text()<<query.lastQuery();
+        return false;
+    }
 }
 
 bool DBManager::update( const QString& table,const QMap<QString,QVariant>& values ,const QString& _where)
@@ -58,7 +63,7 @@ bool DBManager::update( const QString& table,const QMap<QString,QVariant>& value
 	if (!isOpened()) 
 		return false;
 
-    QSqlQuery query;
+    QSqlQuery query(mDB);
     QString datas;
     QList<QString> keyList = values.keys();
     foreach(QString key,keyList){
@@ -77,7 +82,13 @@ bool DBManager::update( const QString& table,const QMap<QString,QVariant>& value
     {
         query.bindValue(i,values.value(keyList.at(i)));
     }
-    return query.exec();
+
+    if(query.exec()){
+        return true;
+    }else{
+        qDebug()<<"DBManager update"<<query.lastError().text()<<query.lastQuery();
+        return false;
+    }
 }
 
 bool DBManager::remove( const QString& table,const QString& _where )
@@ -85,12 +96,11 @@ bool DBManager::remove( const QString& table,const QString& _where )
 	if (!isOpened()) 
 		return false;
 
-    QSqlQuery query;
     QString sql = QString("DELETE FROM %1 WHERE %2").arg(table).arg(_where);
-    return query.exec(sql);
+    return execSql(sql);
 }
 
-bool DBManager::add( const QString& table,const QMap<QString,QVariant>& values )
+int DBManager::insert( const QString& table,const QMap<QString,QVariant>& values )
 {
 	if (!isOpened()) 
 		return false;
@@ -115,10 +125,15 @@ bool DBManager::add( const QString& table,const QMap<QString,QVariant>& values )
     {
         query.bindValue(i,values.value(keyList.at(i)));
     }
-    return query.exec();
+    if(query.exec()){
+        return query.lastInsertId().toInt();
+    }else{
+        qDebug()<<"DBManager insert"<<query.lastError().text()<<query.lastQuery();
+        return -1;
+    }
 }
 
-QList<QList<QVariant>> DBManager::query( const QString& table,QStringList& columns/*=QStringList()*/,const QString& _where )
+QList<QList<QVariant>> DBManager::query( const QString& table,QStringList& columns,const QString& _where )
 {
     QList<QList<QVariant>> rets;
 	if (!isOpened()) 
@@ -157,4 +172,61 @@ QList<QList<QVariant>> DBManager::query( const QString& table,QStringList& colum
         }
     }
     return rets;
+}
+
+QList<QList<QVariant> > DBManager::query(const QString &table, const QString &_where)
+{
+    QList<QList<QVariant>> rets;
+    if (!isOpened())
+        return rets;
+
+    QSqlQuery query(mDB);
+    QString sql;
+    if(_where.isEmpty())
+        sql = QString("SELECT * FROM %1").arg(table);
+    else
+        sql = QString("SELECT * FROM %1 WHERE %2").arg(table).arg(_where);
+    if(query.exec(sql))
+    {
+        int colNum = query.record().count();
+        while(query.next())
+        {
+            QList<QVariant> row;
+            for(int i=0;i<colNum;++i)
+            {
+                row.append(query.value(i));
+            }
+
+            rets.append(row);
+        }
+    }else{
+        qDebug()<<"DBManager query"<<query.lastError().text()<<query.lastQuery();
+    }
+    return rets;
+}
+
+bool DBManager::dropTable(const QString& table)
+{
+    QString sql = QString("DROP TABLE %1").arg(table);
+    return execSql(sql);
+}
+
+bool DBManager::deleteAll(const QString& table)
+{
+    return remove(table,"1");
+}
+
+bool DBManager::commit()
+{
+    return mDB.commit();
+}
+
+bool DBManager::transaction()
+{
+    return mDB.transaction();
+}
+
+bool DBManager::rollback()
+{
+    return mDB.rollback();
 }

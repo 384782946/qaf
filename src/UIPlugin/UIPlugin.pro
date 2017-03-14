@@ -4,21 +4,24 @@
 
 TEMPLATE = lib
 TARGET = UIPlugin
-win32:DESTDIR = ../../bin/win32/plugin
-unix:DESTDIR = ../../bin/unix/plugin
+win32:DESTDIR = $$PWD/../../bin/win32/plugin
+unix:DESTDIR = $$PWD/../../bin/unix/plugin
 QT += core widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QT_WIDGETS_LIB UIPLUGIN_LIB
-INCLUDEPATH += . \
-    ./../../include \
-    ./../Utils \
-    ./../QAFCore \
-    ./../QtCommonModel \
-LIBS += -L"./../../lib"
-DEPENDPATH += .
+INCLUDEPATH += $$PWD \
+    $$PWD/../../include \
+    $$PWD/../Utils \
+    $$PWD/../QAFCore \
+    $$PWD/../QtCommonModel
+
+LIBS += -L"$$PWD/../../lib"
+DEPENDPATH += $$PWD
+
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
+
     LIBS += -lQAFCored \
         -lQtPropertyBrowserd
 }

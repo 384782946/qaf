@@ -28,6 +28,7 @@ namespace QAF
 		{
 		}
 
+        virtual QString className() const {return "LogItem";}
 		virtual QVariant data(int index, int role = Qt::DisplayRole);
 
 	private:

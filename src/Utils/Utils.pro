@@ -4,15 +4,15 @@
 
 TEMPLATE = lib
 TARGET = Utils
-DESTDIR = ../../lib
+DESTDIR = $$PWD/../../lib
 QT += core
 CONFIG += debug_and_release
 DEFINES += QT_DLL UTILS_LIB
-INCLUDEPATH += .
-DEPENDPATH += .
+INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
-    mac:TARGET=$$join(TARGET,,,_debug)
+    unix:TARGET=$$join(TARGET,,,_debug)
 }
 
 CONFIG(release,release|debug){
