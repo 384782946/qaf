@@ -7,13 +7,15 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 TEMPLATE = subdirs
-SUBDIRS += src/NetWork/NetWork.pro \
-    src/DBManager/DBManager.pro \
-    src/QtAwesome/QtAwesome.pro \
-    src/QtCommonModel/QtCommonModel.pro \
-    src/Utils/Utils.pro \
-    src/QAFCore/QAFCore.pro \
-    src/QAF/QAF.pro \
-    src/UIPlugin/UIPlugin.pro \
-    src/tests/testNetWork/testNetWork.pro \
-    src/examples/testPlugin/testPlugin.pro
+SUBDIRS += $$PWD/src/NetWork/NetWork.pro \
+    $$PWD/src/DBManager/DBManager.pro \
+    $$PWD/src/QtAwesome/QtAwesome.pro \
+    $$PWD/src/QtCommonModel/QtCommonModel.pro \
+    $$PWD/src/QtPropertyBrowser/qtpropertybrowser.pro \
+    $$PWD/src/Utils/Utils.pro \
+    $$PWD/src/QAFCore/QAFCore.pro \
+    $$PWD/src/QAF/QAF.pro \
+    $$PWD/src/UIPlugin/UIPlugin.pro \
+    $$PWD/src/tests/testNetWork/testNetWork.pro \
+    $$PWD/src/examples/testPlugin/testPlugin.pro
+
