@@ -4,8 +4,8 @@
 
 TEMPLATE = app
 TARGET = testNetWork
-win32:DESTDIR = $$PWD/../../bin/win32
-unix:DESTDIR = $$PWD/../../bin/unix
+win32:DESTDIR = $$PWD/../../../bin/win32
+unix:DESTDIR = $$PWD/../../../bin/unix
 QT += core network testlib
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_TESTLIB_LIB
