@@ -20,18 +20,26 @@ PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += $$PWD
 
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
-    unix:TARGET=$$join(TARGET,,,_debug)
+    win32{
+        TARGET=$$join(TARGET,,,d)
 
-    LIBS += -lQAFCored \
-        #-llog4qtd \
-        -lQtAwesomed
+        LIBS += -lQAFCored \
+            -lQtAwesomed
+    }
+
+    unix{
+        TARGET=$$join(TARGET,,,_debug)
+
+        LIBS += -lQAFCore_debug \
+            -lQtAwesome_debug \
+            -lQtCommonModel_debug
+    }
 }
 
 CONFIG(release,release|debug){
     LIBS += -lQAFCore \
-       # -llog4qt \
-        -lQtAwesome
+        -lQtAwesome \
+        -lQtCommonModel
 }
 include(QAF.pri)
 win32:RC_FILE = QAF.rc

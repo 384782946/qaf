@@ -28,11 +28,11 @@ namespace QAF
 		AbstractPlugin(){}
 		virtual ~AbstractPlugin(){}
 
-		virtual void install(const QMap<QString,QString>& params) = 0{ 
+        virtual void install(const QMap<QString,QString>& params){
 			mIsInstalled = true; 
 		}
 
-		virtual void uninstall() = 0{
+        virtual void uninstall(){
 			mIsInstalled = false;
 		}
 

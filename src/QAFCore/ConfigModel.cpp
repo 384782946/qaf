@@ -176,7 +176,7 @@ namespace QAF{
         QList<NodeType> tmpList;
 
         QDomElement root = doc.documentElement();
-        tmpList.append(NodeType(root, nullptr));
+        tmpList.append(NodeType(root, ConfigItemPtr()));
 
         while (tmpList.size() > 0)
         {
@@ -314,6 +314,7 @@ namespace QAF{
                 ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
                 if (child && child->getName() == key)
                 {
+                    item = qSharedPointerCast<ModelItem>(child);
                     ret = child;
                     match = true;
                     break;

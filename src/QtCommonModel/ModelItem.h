@@ -9,8 +9,9 @@
 #include "qtcommonmodel_global.h"
 #include <memory>
 
-class QAction;
+
 class ModelItem;
+class QAction;
 
 typedef QSharedPointer<ModelItem> ModelItemPtr;
 typedef QWeakPointer<ModelItem> ModelItemWeekRef;
@@ -18,7 +19,7 @@ typedef QWeakPointer<ModelItem> ModelItemWeekRef;
 class QTCOMMONMODEL_EXPORT ModelItem:public QEnableSharedFromThis<ModelItem>
 {
 public:
-    explicit ModelItem(ModelItemPtr parent = NULL);
+    explicit ModelItem(ModelItemPtr parent = ModelItemPtr());
     virtual ~ModelItem(){}
 
     //method for qtcommonmodel

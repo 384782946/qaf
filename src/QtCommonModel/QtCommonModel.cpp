@@ -90,7 +90,7 @@ Qt::ItemFlags QtCommonModel::flags(const QModelIndex &index) const
 
     ModelItemPtr item = itemForIndex(index);
 	if (item)
-		return item->itemFlags(index.column());
+        return (Qt::ItemFlags)item->itemFlags(index.column());
 	else
 		return Qt::NoItemFlags;
 }
@@ -106,9 +106,9 @@ QVariant QtCommonModel::headerData(int section, Qt::Orientation orientation, int
 ModelItemPtr QtCommonModel::itemForIndex(const QModelIndex& index) const
 {
 	if (index.isValid())
-        return mModelHash.value(reinterpret_cast<int>(index.internalPointer()));
+        return mModelHash.value(index.internalPointer());
 	else
-		return nullptr;
+        return ModelItemPtr();
 }
 
 void QtCommonModel::setHeaders(QStringList headers)
@@ -182,7 +182,7 @@ QModelIndex QtCommonModel::indexForItem(ModelItemPtr item) const
 
 QModelIndex QtCommonModel::createIndex(int row, int column, ModelItemPtr data) const
 {
-    int key = reinterpret_cast<int>(data.data());
+    void* key = data.data();
     mModelHash.insert(key,data);
     return QAbstractItemModel::createIndex(row,column,key);
 }

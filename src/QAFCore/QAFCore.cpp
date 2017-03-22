@@ -1,4 +1,4 @@
-#include "qafcore.h"
+#include "QAFCore.h"
 #include <QDockWidget>
 #include <QDebug>
 #include "ObjectSystem.h"

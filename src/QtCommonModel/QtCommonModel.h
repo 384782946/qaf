@@ -51,7 +51,7 @@ public:
 	void setHeaders(QStringList headers);
     void addItem(ModelItemPtr item, ModelItemPtr parent = ModelItemPtr());
     void insertItem(ModelItemPtr item, ModelItemPtr befor, ModelItemPtr parent = ModelItemPtr());
-    void removeItem(ModelItemPtr item, ModelItemPtr parent = nullptr);
+    void removeItem(ModelItemPtr item, ModelItemPtr parent = ModelItemPtr());
 
     QModelIndex indexForItem(ModelItemPtr item) const;
     ModelItemPtr itemForIndex(const QModelIndex& index) const;
@@ -63,7 +63,7 @@ protected:
 private:
 	QStringList mHeaders;
     QSharedPointer<RootItem> mRootItem;
-    mutable QHash<int,ModelItemPtr> mModelHash;
+    mutable QHash<void*,ModelItemPtr> mModelHash;
 };
 
 #endif // ABSTRACTTREEMODEL_H

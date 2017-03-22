@@ -17,7 +17,7 @@ namespace QAF
 		ObjectProxy(const ObjectProxy&);
 		virtual ~ObjectProxy();
 
-		inline bool isNull() const;
+        bool isNull() const;
 		ObjectProxy& operator=(const ObjectProxy&);
 
 		ObjectId objectId() const

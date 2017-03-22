@@ -28,7 +28,10 @@ namespace QAF
 	{
 		QList<PluginSystem::PluginConfig> pluginConfigs;
         ConfigItemPtr plugins = QAFCore::getSingleton()->getConfigSystem()->getConfig("run")->getItem("config/plugins");
-		for (int i = 0; i < plugins->childCount(); ++i)
+        if(!plugins)
+            return pluginConfigs;
+
+        for (int i = 0; i < plugins->childCount(); ++i)
 		{
 			PluginConfig pc;
             ConfigItemPtr plugin = plugins->child(i);

@@ -16,21 +16,20 @@ INCLUDEPATH += $$PWD \
 LIBS += -L"$$PWD/../../output/lib"
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
-    unix:TARGET=$$join(TARGET,,,_debug)
+    win32{
+        TARGET=$$join(TARGET,,,d)
 
-    LIBS += -lQtCommonModeld
+        LIBS += -lQtCommonModeld
+    }
+
+    unix{
+        TARGET=$$join(TARGET,,,_debug)
+
+        LIBS += -lQtCommonModel_debug
+    }
 }
 
 CONFIG(release,release|debug){
     LIBS += -lQtCommonModel
-
-    # msvc
-    QMAKE_CXXFLAGS_RELEASE += /Zi
-    QMAKE_CXXFLAGS_RELEASE += /Od
-    QMAKE_LFLAGS_RELEASE += /DEBUG
-
-    # DEFINES +=QT_NO_DEBUG_OUTPUT # disable debug output
-    DEFINES -=QT_NO_DEBUG_OUTPUT # enable debug output
 }
 include(QAFCore.pri)
