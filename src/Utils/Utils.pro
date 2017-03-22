@@ -4,7 +4,7 @@
 
 TEMPLATE = lib
 TARGET = Utils
-DESTDIR = $$PWD/../../lib
+DESTDIR = $$PWD/../../output/lib
 QT += core
 CONFIG += debug_and_release
 DEFINES += QT_DLL UTILS_LIB

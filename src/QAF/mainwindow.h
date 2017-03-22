@@ -17,15 +17,15 @@ public:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
-	inline virtual QWidget* getMainWindow();
-	inline virtual QMenu* getMenu(int id);
-	inline virtual QAction* getAction(int id);
-	inline virtual QWidget* getWidget(int id);
-	inline virtual QDockWidget* getDockWidget(int id);
-	inline virtual void setMenu(int id, QMenu* menu);
-	inline virtual void setAction(int id, QAction* action);
-	inline virtual void setWidget(int id, QWidget* widget);
-	inline virtual void setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos = QAF::DWP_BOTTOM);
+    virtual QWidget* getMainWindow();
+    virtual QMenu* getMenu(int id);
+    virtual QAction* getAction(int id);
+    virtual QWidget* getWidget(int id);
+    virtual QDockWidget* getDockWidget(int id);
+    virtual void setMenu(int id, QMenu* menu);
+    virtual void setAction(int id, QAction* action);
+    virtual void setWidget(int id, QWidget* widget);
+    virtual void setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos = QAF::DWP_BOTTOM);
 
 protected:
 	void createMenu();

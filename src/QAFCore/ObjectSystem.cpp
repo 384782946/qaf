@@ -47,7 +47,7 @@ namespace QAF
 		mObjects.clear();
 	}
 
-	bool ObjectSystem::merge(ObjectSystem& os)
+    bool ObjectSystem::merge(ObjectSystem&)
 	{
 		return true;
 	}
@@ -91,7 +91,7 @@ namespace QAF
 		if (hasObject(id))
 		{
 			//通知所有物体被销毁
-			AbstractObject* ao = mObjects.value(id)->mObject;
+            //AbstractObject* ao = mObjects.value(id)->mObject;
 			foreach(ObjectProxy* op, mObjects.value(id)->mProxys)
 			{
 				if (op)
@@ -107,7 +107,6 @@ namespace QAF
 		{
 			return false;
 		}
-
 	}
 
 	AbstractObject* ObjectSystem::query(ObjectId id)

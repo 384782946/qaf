@@ -4,8 +4,8 @@
 
 TEMPLATE = app
 TARGET = QAF
-win32:DESTDIR = $$PWD/../../bin/win32
-unix:DESTDIR = $$PWD/../../bin/unix
+win32:DESTDIR = $$PWD/../../output/bin/win32
+unix:DESTDIR = $$PWD/../../output/bin/unix
 QT += core widgets gui
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_WIDGETS_LIB
@@ -15,23 +15,40 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../../include
 
-LIBS += -L"$$PWD/../../lib"
+LIBS += -L"$$PWD/../../output/lib"
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += $$PWD
 
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
-    unix:TARGET=$$join(TARGET,,,_debug)
+    win32{
+        TARGET=$$join(TARGET,,,d)
 
-    LIBS += -lQAFCored \
-        #-llog4qtd \
-        -lQtAwesomed
+        LIBS += -lQAFCored \
+            -lQtAwesomed
+    }
+
+    unix{
+        TARGET=$$join(TARGET,,,_debug)
+
+        LIBS += -lQAFCore_debug \
+            -lQtAwesome_debug \
+            -lQtCommonModel_debug
+    }
 }
 
 CONFIG(release,release|debug){
     LIBS += -lQAFCore \
-       # -llog4qt \
-        -lQtAwesome
+        -lQtAwesome \
+        -lQtCommonModel
 }
 include(QAF.pri)
 win32:RC_FILE = QAF.rc
+
+FORMS += \
+    settingsdialog.ui
+
+HEADERS += \
+    SettingsDialog.h
+
+SOURCES += \
+    SettingsDialog.cpp

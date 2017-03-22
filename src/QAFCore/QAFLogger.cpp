@@ -81,8 +81,7 @@ namespace QAF
 		if (logModel)
 		{
 			QString timeStr = QDateTime::currentDateTime().toString("yy/MM/dd hh:mm:ss");
-			QAF::LogItem* item = new QAF::LogItem(type, timeStr, msg);
-			logModel->addItem(item);
+            logModel->addItem(LogItemPtr(new QAF::LogItem(type, timeStr, msg)));
 		}
 #endif
 	}

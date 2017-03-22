@@ -4,7 +4,7 @@
 
 TEMPLATE = lib
 TARGET = NetWork
-DESTDIR = $$PWD/../../lib
+DESTDIR = $$PWD/../../output/lib
 QT += core network
 CONFIG += debug_and_release
 DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB

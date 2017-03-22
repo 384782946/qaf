@@ -46,13 +46,13 @@ public:
 
 	DECLARE_CLASS_NAME(Package)
 
-	virtual bool pack(QDataStream& stream) = 0
+    virtual bool pack(QDataStream& stream)
 	{
 		stream << packageType() << mHeader.Version;
 		return true;
 	}
 
-	virtual bool unpack(QDataStream& stream) = 0
+    virtual bool unpack(QDataStream& stream)
 	{
 		stream >> mHeader.Version;
 		return true;

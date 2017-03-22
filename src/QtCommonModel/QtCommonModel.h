@@ -18,10 +18,20 @@
 
 #include <QAbstractItemModel>
 #include <QStringList>
+#include <QHash>
 
 #include "qtcommonmodel_global.h"
+#include "ModelItem.h"
 
-class ModelItem;
+class RootItem:public ModelItem{
+    virtual QString className() const{
+        return "RootItem";
+    }
+
+    ModelItemPtr parent() const{
+        return ModelItemPtr();
+    }
+};
 
 class QTCOMMONMODEL_EXPORT QtCommonModel : public QAbstractItemModel
 {
@@ -39,16 +49,21 @@ public:
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
 	void setHeaders(QStringList headers);
-	void addItem(ModelItem* item, ModelItem* parent = nullptr);
-	void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = nullptr);
-	void removeItem(ModelItem* item, ModelItem* parent = nullptr);
+    void addItem(ModelItemPtr item, ModelItemPtr parent = ModelItemPtr());
+    void insertItem(ModelItemPtr item, ModelItemPtr befor, ModelItemPtr parent = ModelItemPtr());
+    void removeItem(ModelItemPtr item, ModelItemPtr parent = ModelItemPtr());
 
-	QModelIndex indexForItem(ModelItem* item) const;
-	ModelItem* itemForIndex(const QModelIndex& index) const;
-	ModelItem* getRootItem() const;
+    QModelIndex indexForItem(ModelItemPtr item) const;
+    ModelItemPtr itemForIndex(const QModelIndex& index) const;
+
+protected:
+    QModelIndex createIndex(int row, int column, ModelItemPtr data) const;
+    ModelItemPtr getRootItem() const;
+
 private:
 	QStringList mHeaders;
-	ModelItem* mRootItem = nullptr;
+    QSharedPointer<RootItem> mRootItem;
+    mutable QHash<void*,ModelItemPtr> mModelHash;
 };
 
 #endif // ABSTRACTTREEMODEL_H

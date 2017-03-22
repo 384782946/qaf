@@ -1,4 +1,4 @@
-#include "qafcore.h"
+#include "QAFCore.h"
 #include <QDockWidget>
 #include <QDebug>
 #include "ObjectSystem.h"
@@ -143,7 +143,7 @@ namespace QAF
 		return static_cast<ConfigSystem*>(getSystem(ST_CONFIG));
 	}
 
-	ObjectSystem* QAFCore::getObjectSystem(int sysId) const
+    ObjectSystem* QAFCore::getObjectSystem(int) const
 	{
 		return static_cast<ObjectSystem*>(getSystem(ST_OBJECT));
 	}

@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 	createAction();
 
 	QAF::QAFContext::getSingleton()->setUIInterface(this);
+
+
 }
 
 MainWindow::~MainWindow()

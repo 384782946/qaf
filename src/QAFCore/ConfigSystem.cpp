@@ -1,5 +1,5 @@
 #include "ConfigSystem.h"
-#include "qafcore.h"
+#include "QAFCore.h"
 #include "QAFContext.h"
 #include "UIInterface.h"
 #include "ObjectSystem.h"

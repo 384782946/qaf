@@ -1,120 +1,96 @@
 #include "ModelItem.h"
 
-ModelItem::ModelItem()
-	:mParent(0)
-	, mStatus(0)
+ModelItem::ModelItem(ModelItemPtr parent)
+    :mParent(parent)
+    //, mStatus(0)
 {
 
 }
 
-ModelItem::~ModelItem(void)
+ModelItemPtr ModelItem::parent() const
 {
-	qDeleteAll(mChildren);
+    return mParent.toStrongRef();
 }
 
-ModelItem* ModelItem::parent()
+int ModelItem::childCount() const
 {
-	return mParent;
+    return mChildren.size();
 }
 
-int ModelItem::childCount()
+int ModelItem::indexOf(ModelItemPtr child) const
 {
-	return mChildren.size();
+    return mChildren.indexOf(child);
 }
 
-void ModelItem::setStatus(int status)
+ModelItemPtr ModelItem::child(int index) const
 {
-	mStatus = status;
-}
-
-int ModelItem::status()
-{
-	return mStatus;
-}
-
-int ModelItem::indexOf(ModelItem* child)
-{
-	return mChildren.indexOf(child);
-}
-
-ModelItem* ModelItem::child(int index)
-{
-	if (index >= 0 && index < mChildren.size())
-		return mChildren.at(index);
+    if (index >= 0 && index < mChildren.size())
+        return mChildren.at(index);
 	else
-		return nullptr;
+        return ModelItemPtr();
 }
 
 QString ModelItem::className() const
 {
-	return "ModelItem";
+    return "ModelItem";
 }
 
-QList<QAction*> ModelItem::actions()
+QList<QAction*> ModelItem::actions() const
 {
 	return QList<QAction*>();
 }
 
-QVariant ModelItem::data(int index, int role)
+QVariant ModelItem::data(int index, int role) const
 {
     Q_UNUSED(index)
-	if (role == Qt::CheckStateRole)
-		return mStatus;
-	else
-		return QVariant();
+    return QVariant();
 }
 
 bool ModelItem::setData(const QVariant &value, int index, int role)
 {
     Q_UNUSED(index)
-	if (role == Qt::CheckStateRole)
-	{
-		setStatus(value.toInt());
-		return true;
-	}
 	return false;
 }
 
-void ModelItem::addChild(ModelItem* item)
+void ModelItem::addChild(ModelItemPtr item)
 {
-	if (item){
-		mChildren.append(item);
-		item->mParent = this;
+    if (item){
+        mChildren.append(item);
+        item->mParent = sharedFromThis();
 	}
 }
 
-void ModelItem::insertChild(ModelItem* befor, ModelItem* item)
+void ModelItem::insertChild(ModelItemPtr befor, ModelItemPtr item)
 {
-	if (befor && item)
-	{
-		int beforeIndex = mChildren.indexOf(befor);
-		if (beforeIndex != -1)
-			mChildren.insert(beforeIndex, item);
-		else
-			mChildren.append(item);
+    if (befor && item)
+    {
+        int beforeIndex = mChildren.indexOf(befor);
+        if (beforeIndex != -1)
+            mChildren.insert(beforeIndex, item);
+        else
+            mChildren.append(item);
 
-		item->mParent = this;
-	}
-	else if (item)
-	{
-		mChildren.append(item);
+        item->mParent = sharedFromThis();
+    }
+    else if (item)
+    {
+        mChildren.append(item);
+        item->mParent = sharedFromThis();
+    }
+}
 
-		item->mParent = this;
+void ModelItem::removeChild(ModelItemPtr item)
+{
+    if (item){
+        mChildren.removeOne(item);
+        item->mParent.clear();
 	}
 }
 
-void ModelItem::removeChild(ModelItem* item)
-{
-	if (item){
-		mChildren.removeOne(item);
-		item->mParent = nullptr;
-	}
-}
-
-int ModelItem::itemFlags(int)
+int ModelItem::itemFlags(int) const
 {
 	return Qt::ItemIsEnabled |
 		Qt::ItemIsSelectable |
-		Qt::ItemIsEditable |
+        Qt::ItemIsEditable |
 		Qt::ItemIsTristate;
 }

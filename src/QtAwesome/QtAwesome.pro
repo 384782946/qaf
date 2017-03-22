@@ -4,7 +4,7 @@
 
 TEMPLATE = lib
 TARGET = QtAwesome
-DESTDIR = $$PWD/../../lib
+DESTDIR = $$PWD/../../output/lib
 QT += core widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QTAWESONME_LIB

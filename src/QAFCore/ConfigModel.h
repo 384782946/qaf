@@ -23,6 +23,9 @@
 
 namespace QAF
 {
+    class ConfigItem;
+    typedef QSharedPointer<ConfigItem> ConfigItemPtr;
+
 	class QAFCORE_EXPORT ConfigItem :public ModelItem
 	{
 		friend class ConfigModel;
@@ -36,8 +39,8 @@ namespace QAF
 		virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
 		virtual int itemFlags(int);
 
-		ConfigItem* getChildByName(const QString& name);
-		ConfigItem* child(int);
+        ConfigItemPtr getChildByName(const QString& name);
+        ConfigItemPtr child(int) const;
 
 		void setName(QString name){ mName = name; }
 		QString getName() const{ return mName; }
@@ -63,45 +66,45 @@ namespace QAF
 		QString mPath;
 	};
 
-	class QAFCORE_EXPORT ConfigIterator
-	{
-	public:
-		ConfigIterator() :ptr(nullptr){}
-		ConfigIterator(ConfigItem* item) :ptr(item){}
-		ConfigIterator(const ConfigIterator& other) :ptr(other.ptr){}
+//	class QAFCORE_EXPORT ConfigIterator
+//	{
+//	public:
+//		ConfigIterator() :ptr(nullptr){}
+//        ConfigIterator(ConfigItemPtr item) :ptr(item){}
+//		ConfigIterator(const ConfigIterator& other) :ptr(other.ptr){}
 
-		QString getPath();
+//		QString getPath();
 
-		bool isValid() const { return ptr != nullptr; }
+//		bool isValid() const { return ptr != nullptr; }
 		
-		QString& operator*();
+//		QString& operator*();
 		
-		ConfigIterator& operator++()
-		{
-			return move(1);
-		}
+//		ConfigIterator& operator++()
+//		{
+//			return move(1);
+//		}
 
-		ConfigIterator& operator--()
-		{
-			return move(-1);
-		}
+//		ConfigIterator& operator--()
+//		{
+//			return move(-1);
+//		}
 
-		ConfigIterator& operator+(int step)
-		{
-			return move(step);
-		}
+//		ConfigIterator& operator+(int step)
+//		{
+//			return move(step);
+//		}
 
-		ConfigIterator& operator-(int step)
-		{
-			return move(-step);
-		}
+//		ConfigIterator& operator-(int step)
+//		{
+//			return move(-step);
+//		}
 
-	protected:
-		ConfigIterator& move(int step);
+//	protected:
+//		ConfigIterator& move(int step);
 
-	private:
-		ConfigItem* ptr;
-	};
+//	private:
+//        ConfigItemPtr ptr;
+//	};
 
 	class QAFCORE_EXPORT ConfigModel : public QtCommonModel
 	{
@@ -117,16 +120,16 @@ namespace QAF
 		QString getPath() const{ return mConfigFilePath; }
 		QString getValue(const QString& path) const;
 		//ConfigIterator getChild(const QString& parent_path);
-		ConfigItem* getItem(const QString& path);
+        ConfigItemPtr getItem(const QString& path);
 		bool isExist(const QString& path) const;
 		bool setConfigValue(const QString& path, const QString& value);
-		void update(ConfigItem* item);
+        void update(ConfigItemPtr item);
 
 	signals:
 		void valueChanged(QString path);
 
 	protected:
-		ConfigItem* query(const QString path) const;
+        ConfigItemPtr query(const QString path) const;
 
 	private:
 		QString mConfigFilePath;

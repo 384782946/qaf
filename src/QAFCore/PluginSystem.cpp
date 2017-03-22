@@ -27,19 +27,22 @@ namespace QAF
 	QList<PluginSystem::PluginConfig> PluginSystem::getPluginsFromConfig()
 	{
 		QList<PluginSystem::PluginConfig> pluginConfigs;
-		ConfigItem* plugins = QAFCore::getSingleton()->getConfigSystem()->getConfig("run")->getItem("config/plugins");
-		for (int i = 0; i < plugins->childCount(); ++i)
+        ConfigItemPtr plugins = QAFCore::getSingleton()->getConfigSystem()->getConfig("run")->getItem("config/plugins");
+        if(!plugins)
+            return pluginConfigs;
+
+        for (int i = 0; i < plugins->childCount(); ++i)
 		{
 			PluginConfig pc;
-			ConfigItem* plugin = plugins->child(i);
-			ConfigItem* configs = plugin->getChildByName("configs");
+            ConfigItemPtr plugin = plugins->child(i);
+            ConfigItemPtr configs = plugin->getChildByName("configs");
 			pc.mPlugin = plugin->getChildByName("lib")->getValue();
 
 			if (configs)
 			{
 				for (int j = 0; j < configs->childCount(); ++j)
 				{
-					ConfigItem* config = configs->child(j);
+                    ConfigItemPtr config = configs->child(j);
 					QString key = config->getChildByName("key")->getValue();
 					QString value = config->getChildByName("value")->getValue();
 					pc.mConfigs[key] = value;
