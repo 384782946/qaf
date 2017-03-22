@@ -3,7 +3,7 @@ TEMPLATE = lib
 QT += core widgets gui
 TARGET = QtPropertyBrowser
 DEFINES += QT_QTPROPERTYBROWSER_EXPORT
-DESTDIR = $$PWD/../../lib
+DESTDIR = $$PWD/../../output/lib
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 

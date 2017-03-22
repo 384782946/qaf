@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QAction>
+#include <QSharedPointer>
 
 namespace QAF{
 
@@ -80,60 +81,66 @@ namespace QAF{
 		mPath = path;
 	}
 
-	ConfigItem* ConfigItem::getChildByName(const QString& name)
+    ConfigItemPtr ConfigItem::getChildByName(const QString& name)
 	{
-		for (int i = 0; i < childCount(); i++)
-		{
-			ConfigItem* child = (ConfigItem*)this->child(i);
-			if (child && child->getName() == name)
-			{
-				return child;
-			}
-		}
-		return nullptr;
-	}
+        for (int i = 0; i < childCount(); i++)
+        {
+            ConfigItemPtr item = child(i);
+            if (item && item->getName() == name)
+            {
+                return item;
+            }
+        }
+        return ConfigItemPtr();
+    }
 
-	ConfigItem* ConfigItem::child(int pos)
-	{
-		return static_cast<ConfigItem*>(ModelItem::child(pos));
-	}
+    ConfigItemPtr ConfigItem::child(int index) const
+    {
+        ModelItemPtr item = ModelItem::child(index);
+        if(item){
+            ConfigItemPtr cf = qSharedPointerCast<ConfigItem>(item);
+            return cf;
+        }
+
+        return ConfigItemPtr();
+    }
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	QString ConfigIterator::getPath()
-	{
-		Q_ASSERT(ptr);
-		return ptr->getPath();
-	}
+//	QString ConfigIterator::getPath()
+//	{
+//		Q_ASSERT(ptr);
+//		return ptr->getPath();
+//	}
 
-	QString& ConfigIterator::operator*()
-	{
-		Q_ASSERT(ptr);
-		return ptr->mValue;
-	}
+//	QString& ConfigIterator::operator*()
+//	{
+//		Q_ASSERT(ptr);
+//		return ptr->mValue;
+//	}
 
-	ConfigIterator& ConfigIterator::move(int step)
-	{
-		if (ptr == nullptr)
-			return ConfigIterator();
+//	ConfigIterator& ConfigIterator::move(int step)
+//	{
+//        //if (!ptr)
+//			return ConfigIterator();
 
-		ModelItem* parentItem = ptr->parent();
-		if (parentItem == nullptr)
-			return ConfigIterator();
+////        ModelItemPtr parentItem = ptr->parent();
+////        if (!parentItem)
+////			return ConfigIterator();
 
-		int index = parentItem->indexOf(ptr);
-		index += step;
+////		int index = parentItem->indexOf(ptr);
+////		index += step;
 
-		if (index < step || index >= parentItem->childCount())
-		{
-			return ConfigIterator();
-		}
-		else
-		{
-			ConfigItem* curItem = static_cast<ConfigItem*>(parentItem->child(index));
-			return ConfigIterator();
-		}
-	}
+////		if (index < step || index >= parentItem->childCount())
+////		{
+////			return ConfigIterator();
+////		}
+////		else
+////		{
+////            //ConfigItemPtr curItem = qSharedPointerCast<ConfigItem>(parentItem->child(index));
+////			return ConfigIterator();
+////		}
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,74 +162,75 @@ namespace QAF{
 	{
 		QFile file(path);
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-			return nullptr;
+            return NULL;
 
-		ConfigModel* model = new ConfigModel();
-		model->mConfigFilePath = path;
-		QDomDocument doc;
-		if (!doc.setContent(&file))
-			return false;
+        ConfigModel* model = new ConfigModel();
+        model->mConfigFilePath = path;
+        QDomDocument doc;
+        if (!doc.setContent(&file))
+            return NULL;
 
-		file.close();
+        file.close();
 
-		typedef QPair<QDomElement, ConfigItem*> NodeType;
-		QList<NodeType> tmpList;
+        typedef QPair<QDomElement, ConfigItemPtr> NodeType;
+        QList<NodeType> tmpList;
 
-		QDomElement root = doc.documentElement();
-		tmpList.append(NodeType(root, nullptr));
+        QDomElement root = doc.documentElement();
+        tmpList.append(NodeType(root, nullptr));
 
-		while (tmpList.size() > 0)
-		{
-			NodeType node = tmpList.takeLast();
-			QDomElement elm = node.first;
+        while (tmpList.size() > 0)
+        {
+            NodeType node = tmpList.takeLast();
+            QDomElement elm = node.first;
 
-			if (elm.isNull()||!elm.isElement())
-				continue;
+            if (elm.isNull()||!elm.isElement())
+                continue;
 
-			ConfigItem* configItem = new ConfigItem();
-			if (configItem)
-			{
-				configItem->setType(CT_NODE);
-				configItem->setName(elm.tagName());
-				if (node.second){
-					configItem->setPath(node.second->getPath() + "/" + configItem->getName());
-					model->addItem(configItem, node.second);
-				}
-				else{
-					configItem->setPath(configItem->getName());
-					model->addItem(configItem);
-				}
+            ConfigItemPtr configItem = ConfigItemPtr(new ConfigItem());
+            if (configItem)
+            {
+                configItem->setType(CT_NODE);
+                configItem->setName(elm.tagName());
+                if (node.second){
 
-				QDomNamedNodeMap attrNodes = elm.attributes();
-				for (int i = 0; i < attrNodes.count(); ++i){
-					QDomAttr attr = attrNodes.item(i).toAttr();
-					if (!attr.isNull()){
-						QString attrName = attr.name();
-						QString attrValue = attr.value();
-						ConfigItem* attrItem = new ConfigItem();
-						attrItem->setType(CT_ATTR);
-						attrItem->setName(attrName);
-						attrItem->setValue(attrValue);
-						attrItem->setPath(configItem->getPath() + "<" + attrName + ">");
-						model->addItem(attrItem, configItem);
-					}
-				}
+                    configItem->setPath(node.second->getPath() + "/" + configItem->getName());
+                    model->addItem(qSharedPointerCast<ModelItem>(configItem), node.second);
+                }
+                else{
+                    configItem->setPath(configItem->getName());
+                    model->addItem(qSharedPointerCast<ModelItem>(configItem));
+                }
 
-				//遍历子节点
-				for (QDomNode child = elm.lastChild(); !child.isNull(); child = child.previousSibling())
-				{
-					if (child.isText()){
-						QDomText t = child.toText();
-						if (!t.isNull())
-							configItem->setValue(t.data());
-					}else if (child.isElement()){
-						tmpList.append(NodeType(child.toElement(), configItem));
-					}
-				}
-			}
-		}
+                QDomNamedNodeMap attrNodes = elm.attributes();
+                for (int i = 0; i < attrNodes.count(); ++i){
+                    QDomAttr attr = attrNodes.item(i).toAttr();
+                    if (!attr.isNull()){
+                        QString attrName = attr.name();
+                        QString attrValue = attr.value();
+                        ConfigItemPtr attrItem = ConfigItemPtr(new ConfigItem());
+                        attrItem->setType(CT_ATTR);
+                        attrItem->setName(attrName);
+                        attrItem->setValue(attrValue);
+                        attrItem->setPath(configItem->getPath() + "<" + attrName + ">");
+                        model->addItem(qSharedPointerCast<ModelItem>(attrItem), qSharedPointerCast<ModelItem>(configItem));
+                    }
+                }
 
-		return model;
+                //遍历子节点
+                for (QDomNode child = elm.lastChild(); !child.isNull(); child = child.previousSibling())
+                {
+                    if (child.isText()){
+                        QDomText t = child.toText();
+                        if (!t.isNull())
+                            configItem->setValue(t.data());
+                    }else if (child.isElement()){
+                        tmpList.append(NodeType(child.toElement(), configItem));
+                    }
+                }
+            }
+        }
+
+        return model;
 	}
 
 	bool ConfigModel::saveConfig()
@@ -231,109 +239,110 @@ namespace QAF{
 		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 			return false;
 
-		QDomDocument doc;
-		QDomProcessingInstruction pi 
-			= doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
-		doc.appendChild(pi);
+        QDomDocument doc;
+        QDomProcessingInstruction pi
+            = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
+        doc.appendChild(pi);
 
-		typedef QPair<QDomElement, ConfigItem*> NodeType;
-		QList<NodeType> tmpList;
+        typedef QPair<QDomElement, ConfigItemPtr> NodeType;
+        QList<NodeType> tmpList;
 
-		ConfigItem* parentItem = (ConfigItem*)itemForIndex(index(0, 0));
-		tmpList.append(NodeType(QDomElement(), parentItem));
-		while (tmpList.size() > 0)
-		{
-			NodeType node = tmpList.takeLast();
-			ConfigItem* item = node.second;
-			if (item)
-			{
-				QDomElement elm = doc.createElement(item->getName());
-				QDomText domText = doc.createTextNode(item->getValue());
-				elm.appendChild(domText);
+        ConfigItemPtr parentItem = qSharedPointerCast<ConfigItem>(itemForIndex(index(0, 0)));
+        tmpList.append(NodeType(QDomElement(), parentItem));
+        while (tmpList.size() > 0)
+        {
+            NodeType node = tmpList.takeLast();
+            ConfigItemPtr item = node.second;
+            if (item)
+            {
+                QDomElement elm = doc.createElement(item->getName());
+                QDomText domText = doc.createTextNode(item->getValue());
+                elm.appendChild(domText);
 
-				for (int i = item->childCount() - 1; i >= 0; --i)
-				{
-					ConfigItem* child = (ConfigItem*)item->child(i);
-					if (child->getType() == CT_ATTR){
-						elm.setAttribute(child->getName(), child->getValue());
-					}else{
-						tmpList.append(NodeType(elm, (ConfigItem*)item->child(i)));
-					}
-				}
+                for (int i = item->childCount() - 1; i >= 0; --i)
+                {
+                    ConfigItemPtr child = item->child(i);
+                    if (child->getType() == CT_ATTR){
+                        elm.setAttribute(child->getName(), child->getValue());
+                    }else{
+                        tmpList.append(NodeType(elm, item->child(i)));
+                    }
+                }
 
-				if (node.first.isElement())
-					node.first.appendChild(elm);
-				else
-					doc.appendChild(elm);
-			}
-		}
+                if (node.first.isElement())
+                    node.first.appendChild(elm);
+                else
+                    doc.appendChild(elm);
+            }
+        }
 
-		QTextStream out(&file);
-		out.setCodec("UTF-8");
-		doc.save(out, 4, QDomNode::EncodingFromTextStream);
-		file.close();
+        QTextStream out(&file);
+        out.setCodec("UTF-8");
+        doc.save(out, 4, QDomNode::EncodingFromTextStream);
+        file.close();
 
-		return true;
-	}
+        return true;
+    }
 
-	ConfigItem* ConfigModel::query(const QString path) const
+    ConfigItemPtr ConfigModel::query(const QString path) const
 	{
 		int numOfTag = path.count("<");
-		Q_ASSERT_X(numOfTag <= 1, "config query", "error syntax:only one attribute is allowed in path.");
+        Q_ASSERT_X(numOfTag <= 1, "config query", "error syntax:only one attribute is allowed in path.");
 
 		QStringList keys = path.trimmed().split('/');
 		if (keys.size() == 0)
-			return nullptr;
+            return ConfigItemPtr();
 
-		QString attrKey;
-		if (numOfTag == 1){
-			int lastIndex = keys.size() - 1;
-			QString tmp = keys[lastIndex];
-			int index = tmp.indexOf("<");
-			keys[lastIndex] = tmp.left(index);
-			attrKey = tmp.mid(index + 1, tmp.length() - index - 2);
-		}
+        QString attrKey;
+        if (numOfTag == 1){
+            int lastIndex = keys.size() - 1;
+            QString tmp = keys[lastIndex];
+            int index = tmp.indexOf("<");
+            keys[lastIndex] = tmp.left(index);
+            attrKey = tmp.mid(index + 1, tmp.length() - index - 2);
+        }
 
-		ModelItem* item = getRootItem();
-		for (int i = 0; i < keys.size();++i)
-		{
-			QString key = keys.at(i);
-			bool match = false;
+        ModelItemPtr item = getRootItem();
+        ConfigItemPtr ret;
+        for (int i = 0; i < keys.size();++i)
+        {
+            QString key = keys.at(i);
+            bool match = false;
 			
-			for (int i = 0; i < item->childCount(); i++)
-			{
-				ConfigItem* child = (ConfigItem*)item->child(i);
-				if (child && child->getName() == key)
-				{
-					item = child;
-					match = true;
-					break;
-				}
-			}
+            for (int i = 0; i < item->childCount(); i++)
+            {
+                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                if (child && child->getName() == key)
+                {
+                    ret = child;
+                    match = true;
+                    break;
+                }
+            }
 
-			if (!match) 
-				return nullptr;
-		}
+            if (!match)
+                return ConfigItemPtr();
+        }
 
-		if (!attrKey.isEmpty()){
-			for (int i = 0; i < item->childCount(); i++)
-			{
-				ConfigItem* child = (ConfigItem*)item->child(i);
-				if (child && child->getType() == CT_ATTR
-					&& child->getName() == attrKey)
-				{
-					item = child;
-					break;
-				}
-			}
-		}
+        if (!attrKey.isEmpty()){
+            for (int i = 0; i < item->childCount(); i++)
+            {
+                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                if (child && child->getType() == CT_ATTR
+                    && child->getName() == attrKey)
+                {
+                    ret = child;
+                    break;
+                }
+            }
+        }
 
-		return (ConfigItem*)item;
+        return ret;
 	}
 
 	QString ConfigModel::getValue(const QString& path) const
 	{
-		const ConfigItem* item = query(path);
+        ConfigItemPtr item = query(path);
 		if (item)
 			return item->getValue();
 		else
@@ -342,20 +351,21 @@ namespace QAF{
 
 	bool ConfigModel::isExist(const QString& path) const
 	{
-		return query(path) != nullptr;
+        return query(path);
 	}
 
 	bool ConfigModel::setConfigValue(const QString& path, const QString& value)
 	{
-		ConfigItem* item = query(path);
+        ConfigItemPtr item = query(path);
 		if (item){
+            item->setValue(value);
 			update(item);
 			return true;
 		}
 		return false;
 	}
 
-	void ConfigModel::update(ConfigItem* item)
+    void ConfigModel::update(ConfigItemPtr item)
 	{
 		if (item){
 			QString path = item->getPath();
@@ -364,25 +374,12 @@ namespace QAF{
 		}
 	}
 
-	/*ConfigIterator ConfigModel::getChild(const QString& parent_path)
+    ConfigItemPtr ConfigModel::getItem(const QString& path)
 	{
-	ConfigItem* parentItem = query(parent_path);
-	if (parent_path == nullptr)
-	return ConfigIterator();
+        if (path.isEmpty())
+            return ConfigItemPtr();
 
-	if (parentItem->childCount() <= 0)
-	return ConfigIterator();
-
-	ConfigItem* firstItem = static_cast<ConfigItem*>(parentItem->child(0));
-	return ConfigIterator(firstItem);
-	}*/
-
-	ConfigItem* ConfigModel::getItem(const QString& path)
-	{
-		if (path.isEmpty())
-			return nullptr;
-
-		return query(path);
+        return query(path);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,7 +394,6 @@ namespace QAF{
 
 		bool filter = true;
 		QModelIndex source_index = sourceModel()->index(source_row, 0, source_parent);
-		ModelItem* item = static_cast<ModelItem*>(source_index.internalPointer());
 		filter = QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 		if (filter)
 			return true;
@@ -412,5 +408,4 @@ namespace QAF{
 
 		return false;
 	}
-
 }

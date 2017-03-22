@@ -4,8 +4,8 @@
 
 TEMPLATE = app
 TARGET = QAF
-win32:DESTDIR = $$PWD/../../bin/win32
-unix:DESTDIR = $$PWD/../../bin/unix
+win32:DESTDIR = $$PWD/../../output/bin/win32
+unix:DESTDIR = $$PWD/../../output/bin/unix
 QT += core widgets gui
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_WIDGETS_LIB
@@ -15,7 +15,7 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../../include
 
-LIBS += -L"$$PWD/../../lib"
+LIBS += -L"$$PWD/../../output/lib"
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += $$PWD
 
@@ -35,3 +35,12 @@ CONFIG(release,release|debug){
 }
 include(QAF.pri)
 win32:RC_FILE = QAF.rc
+
+FORMS += \
+    settingsdialog.ui
+
+HEADERS += \
+    SettingsDialog.h
+
+SOURCES += \
+    SettingsDialog.cpp

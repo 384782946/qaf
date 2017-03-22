@@ -4,7 +4,7 @@
 
 TEMPLATE = lib
 TARGET = QAFCore
-DESTDIR = $$PWD/../../lib
+DESTDIR = $$PWD/../../output/lib
 QT += core xml widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QAFCORE_LIB QT_WIDGETS_LIB QT_XML_LIB
@@ -13,7 +13,7 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../QtCommonModel
 
-LIBS += -L"$$PWD/../../lib"
+LIBS += -L"$$PWD/../../output/lib"
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     win32:TARGET=$$join(TARGET,,,d)
@@ -24,5 +24,13 @@ CONFIG(debug,debug|release){
 
 CONFIG(release,release|debug){
     LIBS += -lQtCommonModel
+
+    # msvc
+    QMAKE_CXXFLAGS_RELEASE += /Zi
+    QMAKE_CXXFLAGS_RELEASE += /Od
+    QMAKE_LFLAGS_RELEASE += /DEBUG
+
+    # DEFINES +=QT_NO_DEBUG_OUTPUT # disable debug output
+    DEFINES -=QT_NO_DEBUG_OUTPUT # enable debug output
 }
 include(QAFCore.pri)

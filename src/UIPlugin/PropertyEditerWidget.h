@@ -2,8 +2,8 @@
 #define PROPERTYEDITERWIDGET_H
 
 #include <QWidget>
-#include "QtPropertyBrowser/qttreepropertybrowser.h"
-#include "QtPropertyBrowser/qtvariantproperty.h"
+#include "qttreepropertybrowser.h"
+#include "qtvariantproperty.h"
 
 class PropertyEditerWidget : public QWidget
 {

@@ -1,37 +1,47 @@
 #pragma once
 
+#include <QObject>
 #include <QList>
 #include <QVariant>
+#include <QSharedPointer>
+#include <QWeakPointer>
+#include <QEnableSharedFromThis>
 #include "qtcommonmodel_global.h"
-
+#include <memory>
 
 class QAction;
+class ModelItem;
 
-class QTCOMMONMODEL_EXPORT ModelItem
+typedef QSharedPointer<ModelItem> ModelItemPtr;
+typedef QWeakPointer<ModelItem> ModelItemWeekRef;
+
+class QTCOMMONMODEL_EXPORT ModelItem:public QEnableSharedFromThis<ModelItem>
 {
 public:
-	ModelItem();
-	virtual ~ModelItem();
+    explicit ModelItem(ModelItemPtr parent = NULL);
+    virtual ~ModelItem(){}
 
+    //method for qtcommonmodel
     virtual QString className() const = 0;
-	virtual QVariant data(int index, int role = Qt::DisplayRole);
+    virtual QVariant data(int index, int role = Qt::DisplayRole) const;
 	virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
-	virtual int itemFlags(int index);
-	virtual QList<QAction*> actions();
+    virtual int itemFlags(int index) const;
+    virtual QList<QAction*> actions() const;
 
-	ModelItem* parent();
-	void addChild(ModelItem*);
-	void insertChild(ModelItem* befor, ModelItem* item);
-	void removeChild(ModelItem*);
-	int childCount();
-	int indexOf(ModelItem*);
-	ModelItem* child(int);
+    ModelItemPtr parent() const;
+    int childCount() const;
+    int indexOf(ModelItemPtr) const;
+    ModelItemPtr child(int) const;
 
-	void setStatus(int);
-	int status();
+    void addChild(ModelItemPtr);
+    void insertChild(ModelItemPtr befor, ModelItemPtr item);
+    void removeChild(ModelItemPtr);
+
+    //int status() const;
+    //void setStatus(int);
 
 private:
-	QList<ModelItem*> mChildren;
-	ModelItem* mParent;
-	int mStatus;
+    QList<ModelItemPtr> mChildren;
+    ModelItemWeekRef mParent;
+    //int mStatus;
 };

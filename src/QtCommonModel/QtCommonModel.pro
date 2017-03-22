@@ -4,9 +4,12 @@
 
 TEMPLATE = lib
 TARGET = QtCommonModel
-DESTDIR = $$PWD/../../lib
+
+DESTDIR = $$PWD/../../output/lib
 QT += core
 CONFIG += debug_and_release
+CONFIG += c++11
+
 DEFINES += QT_DLL QTCOMMONMODEL_LIB
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD

@@ -20,6 +20,9 @@
 
 namespace QAF
 {
+    class LogItem;
+    typedef QSharedPointer<LogItem> LogItemPtr;
+
 	class LogItem :public ModelItem
 	{
 	public:
