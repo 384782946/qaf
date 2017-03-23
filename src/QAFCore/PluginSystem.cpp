@@ -69,7 +69,11 @@ namespace QAF
 
 				foreach(PluginConfig pluginConfig, pluginConfigs){
 #ifdef QT_DEBUG
+#ifdef Q_OS_WIN
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "d", this);
+#else
+                    QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "_debug", this);
+#endif
 #else
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin, this);
 #endif
