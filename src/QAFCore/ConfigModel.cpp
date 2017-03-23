@@ -98,7 +98,7 @@ namespace QAF{
     {
         ModelItemPtr item = ModelItem::child(index);
         if(item){
-            ConfigItemPtr cf = qSharedPointerCast<ConfigItem>(item);
+            ConfigItemPtr cf = qSharedPointerDynamicCast<ConfigItem>(item);
             return cf;
         }
 
@@ -192,9 +192,8 @@ namespace QAF{
                 configItem->setType(CT_NODE);
                 configItem->setName(elm.tagName());
                 if (node.second){
-
                     configItem->setPath(node.second->getPath() + "/" + configItem->getName());
-                    model->addItem(qSharedPointerCast<ModelItem>(configItem), node.second);
+                    model->addItem(qSharedPointerCast<ModelItem>(configItem), qSharedPointerCast<ModelItem>(node.second));
                 }
                 else{
                     configItem->setPath(configItem->getName());
@@ -247,7 +246,7 @@ namespace QAF{
         typedef QPair<QDomElement, ConfigItemPtr> NodeType;
         QList<NodeType> tmpList;
 
-        ConfigItemPtr parentItem = qSharedPointerCast<ConfigItem>(itemForIndex(index(0, 0)));
+        ConfigItemPtr parentItem = qSharedPointerDynamicCast<ConfigItem>(itemForIndex(index(0, 0)));
         tmpList.append(NodeType(QDomElement(), parentItem));
         while (tmpList.size() > 0)
         {
@@ -311,7 +310,7 @@ namespace QAF{
 			
             for (int i = 0; i < item->childCount(); i++)
             {
-                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                ConfigItemPtr child = qSharedPointerDynamicCast<ConfigItem>(item->child(i));
                 if (child && child->getName() == key)
                 {
                     item = qSharedPointerCast<ModelItem>(child);
@@ -328,7 +327,7 @@ namespace QAF{
         if (!attrKey.isEmpty()){
             for (int i = 0; i < item->childCount(); i++)
             {
-                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                ConfigItemPtr child = qSharedPointerDynamicCast<ConfigItem>(item->child(i));
                 if (child && child->getType() == CT_ATTR
                     && child->getName() == attrKey)
                 {
@@ -352,7 +351,7 @@ namespace QAF{
 
 	bool ConfigModel::isExist(const QString& path) const
 	{
-        return query(path);
+        return !query(path).isNull();
 	}
 
 	bool ConfigModel::setConfigValue(const QString& path, const QString& value)

@@ -53,7 +53,7 @@ UIPlugin::~UIPlugin()
 
 }
 
-void UIPlugin::install(const QMap<QString, QString>& params)
+void UIPlugin::install(const QMap<QString, QString>&)
 {
 	QDockWidget* consoleDock = new QDockWidget(LStr("¿ØÖÆÌ¨"));
 	consoleDock->setWidget(new ConsoleWidget(consoleDock));

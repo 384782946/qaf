@@ -16,7 +16,7 @@ public:
 	DBManager(const QString& dbType,QObject *parent = 0);
     ~DBManager();
 
-    inline bool isOpened() const;
+    bool isOpened() const;
 
 	bool open(const QString& dbName,const QString& user, const QString& psw, const QString& address,int port);
 

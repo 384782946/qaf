@@ -3,7 +3,7 @@
 
 QtCommonModel::QtCommonModel(QObject *parent)
 	: QAbstractItemModel(parent)
-    , mRootItem(new RootItem())
+    , mRootItem(QSharedPointer<RootItem>(new RootItem()))
 {
 
 }
@@ -73,7 +73,7 @@ QModelIndex	QtCommonModel::index(int row, int column, const QModelIndex & parent
 		return QModelIndex();
 
     ModelItemPtr parentItem = itemForIndex(parent);
-	if (parentItem == nullptr)
+    if (!parentItem)
         parentItem = mRootItem;
 
     ModelItemPtr childItem = parentItem->child(row);
@@ -116,7 +116,7 @@ void QtCommonModel::setHeaders(QStringList headers)
 	mHeaders = headers;
 }
 
-void QtCommonModel::addItem(ModelItemPtr item, ModelItemPtr parent /*= nullptr*/)
+void QtCommonModel::addItem(ModelItemPtr item, ModelItemPtr parent)
 {
     if (!item)
 		return;
@@ -131,7 +131,7 @@ void QtCommonModel::addItem(ModelItemPtr item, ModelItemPtr parent /*= nullptr*/
 	endInsertRows();
 }
 
-void QtCommonModel::insertItem(ModelItemPtr item, ModelItemPtr befor, ModelItemPtr parent /*= nullptr*/)
+void QtCommonModel::insertItem(ModelItemPtr item, ModelItemPtr befor, ModelItemPtr parent)
 {
     if (!item)
 		return;
@@ -153,7 +153,7 @@ void QtCommonModel::insertItem(ModelItemPtr item, ModelItemPtr befor, ModelItemP
 
 void QtCommonModel::removeItem(ModelItemPtr item, ModelItemPtr parent)
 {
-	if (item == nullptr)
+    if (!item)
 		return;
 
 	QModelIndex index = indexForItem(item);
@@ -172,7 +172,7 @@ ModelItemPtr QtCommonModel::getRootItem() const
 
 QModelIndex QtCommonModel::indexForItem(ModelItemPtr item) const
 {
-	if (item == nullptr || item->parent() == nullptr)
+    if (!item || !item->parent())
 		return QModelIndex();
 
     ModelItemPtr parent = item->parent();

@@ -51,7 +51,7 @@ testPlugin::~testPlugin()
 
 }
 
-void testPlugin::install(const QMap<QString, QString>& params)
+void testPlugin::install(const QMap<QString, QString>&)
 {
 
 }

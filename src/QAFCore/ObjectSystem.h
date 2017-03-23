@@ -59,12 +59,12 @@ namespace QAF
 
 		bool merge(ObjectSystem&);
 		bool destory(ObjectId);
-		inline bool hasObject(ObjectId);
-		inline int objectCount();
+        bool hasObject(ObjectId);
+        int objectCount();
 
 	protected:
-		inline ObjectId makeId();
-		inline void releaseId(ObjectId);
+        ObjectId makeId();
+        void releaseId(ObjectId);
 		bool changeId(ObjectId before, ObjectId after);
 		AbstractObject* query(ObjectId);
 

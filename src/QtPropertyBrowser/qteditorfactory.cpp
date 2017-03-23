@@ -70,7 +70,7 @@ QT_BEGIN_NAMESPACE
 // Set a hard coded left margin to account for the indentation
 // of the tree view icon when switching to an editor
 
-static inline void setupTreeViewEditorMargin(QLayout *lt)
+static void setupTreeViewEditorMargin(QLayout *lt)
 {
     enum { DecorationMargin = 4 };
     if (QApplication::layoutDirection() == Qt::LeftToRight)

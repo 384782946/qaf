@@ -56,7 +56,7 @@ void ModelItem::addChild(ModelItemPtr item)
 {
     if (item){
         mChildren.append(item);
-        item->mParent = sharedFromThis();
+        item->mParent = sharedFromThis().toWeakRef();
 	}
 }
 
@@ -70,12 +70,12 @@ void ModelItem::insertChild(ModelItemPtr befor, ModelItemPtr item)
         else
             mChildren.append(item);
 
-        item->mParent = sharedFromThis();
+        item->mParent = sharedFromThis().toWeakRef();
     }
     else if (item)
     {
         mChildren.append(item);
-        item->mParent = sharedFromThis();
+        item->mParent = sharedFromThis().toWeakRef();
     }
 }
 
