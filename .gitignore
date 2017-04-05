@@ -238,3 +238,4 @@ _Pvt_Extensions
 /src/Utils/*.vcxproj
 /output/bin/unix
 /output/lib
+/output/bin/log
