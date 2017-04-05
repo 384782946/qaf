@@ -1,4 +1,4 @@
-﻿
+
 TEMPLATE = lib
 QT += core widgets gui
 TARGET = QtPropertyBrowser
