@@ -40,6 +40,11 @@ QList<QAction*> ModelItem::actions() const
 	return QList<QAction*>();
 }
 
+QVariant ModelItem::data(int,int) const
+{
+    return QVariant();
+}
+
 bool ModelItem::setData(const QVariant &, int, int)
 {
 	return false;
