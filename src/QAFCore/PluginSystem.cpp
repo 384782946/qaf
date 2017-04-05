@@ -71,15 +71,13 @@ namespace QAF
 			QString pluginPath = QAFContext::wellKnownPath(DT_PLUGIN);
 			QDir dir(pluginPath);
 			if (dir.exists()){
-				QStringList plugins = dir.entryList(QStringList() << "*.dll", QDir::Files);
+                //QStringList plugins = dir.entryList(QStringList() << "*.dll", QDir::Files);
 				QList<PluginConfig> pluginConfigs = getPluginsFromConfig();
-
                 qDebug()<<pluginConfigs.size() <<"puglin will be loaded.";
-
 				foreach(PluginConfig pluginConfig, pluginConfigs){
                     qDebug()<<"start load plugin:" << pluginConfig.mPlugin;
 #ifdef QT_DEBUG
-#ifdef Q_OS_WIN
+#ifdef Q_OS_UNIX
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "d", this);
 #else
                     QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "_debug", this);
