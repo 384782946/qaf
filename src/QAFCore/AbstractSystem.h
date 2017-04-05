@@ -37,11 +37,11 @@ namespace QAF
 
         virtual void uninstall(){ setInstalled(false); }
 
-		inline QString name() const{ return this->metaObject()->className(); }
+        QString name() const{ return this->metaObject()->className(); }
 
-		inline int systemId() const { return mSystemId; }
+        int systemId() const { return mSystemId; }
 
-		inline bool isInstalled() const{ return mInstalled; }
+        bool isInstalled() const{ return mInstalled; }
 
 	protected:
 		void setInstalled(bool installed){ mInstalled = installed; }

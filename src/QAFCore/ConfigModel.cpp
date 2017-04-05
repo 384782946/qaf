@@ -160,6 +160,7 @@ namespace QAF{
 
 	ConfigModel* ConfigModel::loadConfig(const QString& path)
 	{
+        qDebug()<<"load cofig from"<<path;
 		QFile file(path);
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             return NULL;
@@ -287,7 +288,10 @@ namespace QAF{
     ConfigItemPtr ConfigModel::query(const QString path) const
 	{
 		int numOfTag = path.count("<");
-        Q_ASSERT_X(numOfTag <= 1, "config query", "error syntax:only one attribute is allowed in path.");
+        if(numOfTag > 1){
+            qDebug() <<"ConfigModel::query:"<<"error syntax:only one attribute is allowed in path.";
+            return ConfigItemPtr();
+        }
 
 		QStringList keys = path.trimmed().split('/');
 		if (keys.size() == 0)
@@ -311,7 +315,7 @@ namespace QAF{
 			
             for (int i = 0; i < item->childCount(); i++)
             {
-                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                ConfigItemPtr child = qSharedPointerDynamicCast<ConfigItem>(item->child(i));
                 if (child && child->getName() == key)
                 {
                     item = qSharedPointerCast<ModelItem>(child);
@@ -328,7 +332,7 @@ namespace QAF{
         if (!attrKey.isEmpty()){
             for (int i = 0; i < item->childCount(); i++)
             {
-                ConfigItemPtr child = qSharedPointerCast<ConfigItem>(item->child(i));
+                ConfigItemPtr child = qSharedPointerDynamicCast<ConfigItem>(item->child(i));
                 if (child && child->getType() == CT_ATTR
                     && child->getName() == attrKey)
                 {

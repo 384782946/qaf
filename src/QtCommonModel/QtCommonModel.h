@@ -62,7 +62,7 @@ protected:
 
 private:
 	QStringList mHeaders;
-    QSharedPointer<RootItem> mRootItem;
+    ModelItemPtr mRootItem;
     mutable QHash<void*,ModelItemPtr> mModelHash;
 };
 

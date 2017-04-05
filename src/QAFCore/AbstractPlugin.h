@@ -29,6 +29,7 @@ namespace QAF
 		virtual ~AbstractPlugin(){}
 
         virtual void install(const QMap<QString,QString>& params){
+            Q_UNUSED(params)
 			mIsInstalled = true; 
 		}
 

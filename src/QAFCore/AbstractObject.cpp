@@ -11,12 +11,6 @@ namespace QAF
 		//传递参数以防止被Qt管理机制释放
 	}
 
-	AbstractObject::AbstractObject(const AbstractObject& other)
-	{
-		mObjectId = other.mObjectId;
-		mParentId = other.mParentId;
-	}
-
 	AbstractObject::~AbstractObject()
 	{
 	}

@@ -1,0 +1,6 @@
+2017-03-21 16:27:36	Type:Debug	File:	Line:0	Function:
+	"���ڼ��غ���ģ�飺QAF::ConfigSystem"
+2017-03-21 16:27:36	Type:Debug	File:	Line:0	Function:
+	"���ڼ��غ���ģ�飺QAF::ObjectSystem"
+2017-03-21 16:27:36	Type:Debug	File:	Line:0	Function:
+	"���ڼ�����չģ�飺QAF::PluginSystem"

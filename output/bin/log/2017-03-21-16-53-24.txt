@@ -1,0 +1,16 @@
+2017-03-21 16:53:24	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"正在加载核心模块：QAF::ConfigSystem"
+2017-03-21 16:53:24	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"正在加载核心模块：QAF::ObjectSystem"
+2017-03-21 16:53:24	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:92	Function:void QAF::QAFCore::initExtent()
+	"正在加载扩展模块：QAF::PluginSystem"
+2017-03-21 16:53:29	Type:Critical	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:100	Function:virtual void QAF::PluginSystem::install()
+	"插件加载失败:" "testPlugin"
+2017-03-21 16:53:29	Type:Critical	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:100	Function:virtual void QAF::PluginSystem::install()
+	"插件加载失败:" "UIPlugin"
+2017-03-21 16:53:37	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载核心模块：QAF::ConfigSystem"
+2017-03-21 16:53:37	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载核心模块：QAF::ObjectSystem"
+2017-03-21 16:53:37	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载扩展模块：QAF::PluginSystem"

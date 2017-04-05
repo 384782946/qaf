@@ -26,7 +26,7 @@ namespace QAF
 		PluginSystem(int sysId, QObject* parent = 0);
 		~PluginSystem();
 
-		virtual void install();
+        virtual void install();
 		virtual void uninstall();
 
 	protected:

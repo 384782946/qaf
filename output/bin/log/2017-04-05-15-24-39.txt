@@ -1,0 +1,22 @@
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	"正在加载核心模块：QAF::ConfigSystem"
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	ConfigSystem::loadConfig "/home/zxj/workspace/cpp/QAF/output/bin/conf/run.xml"
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	load cofig from "/home/zxj/workspace/cpp/QAF/output/bin/conf/run.xml"
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	"正在加载核心模块：QAF::ObjectSystem"
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	"正在加载扩展模块：QAF::PluginSystem"
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	plugin system install...
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	ConfigModel::query: error syntax:only one attribute is allowed in path.
+2017-04-05 15:24:39	Type:Debug	File:	Line:0	Function:
+	0 puglin will be loaded.
+2017-04-05 15:24:42	Type:Debug	File:	Line:0	Function:
+	"正在卸载核心模块：QAF::ConfigSystem"
+2017-04-05 15:24:42	Type:Debug	File:	Line:0	Function:
+	"正在卸载核心模块：QAF::ObjectSystem"
+2017-04-05 15:24:42	Type:Debug	File:	Line:0	Function:
+	"正在卸载扩展模块：QAF::PluginSystem"

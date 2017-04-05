@@ -1,0 +1,16 @@
+2017-04-05 15:04:18	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"���ڼ��غ���ģ�飺QAF::ConfigSystem"
+2017-04-05 15:04:18	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"���ڼ��غ���ģ�飺QAF::ObjectSystem"
+2017-04-05 15:04:18	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:92	Function:void QAF::QAFCore::initExtent()
+	"���ڼ�����չģ�飺QAF::PluginSystem"
+2017-04-05 15:04:18	Type:Debug	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:90	Function:virtual void QAF::PluginSystem::install()
+	"���ڼ��ز���:" "zxj" "test for plugin" 1 "1.0"
+2017-04-05 15:04:18	Type:Debug	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:90	Function:virtual void QAF::PluginSystem::install()
+	"���ڼ��ز���:" "zxj" "UI plugins" 1 "1.0"
+2017-04-05 15:04:26	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"����ж�غ���ģ�飺QAF::ConfigSystem"
+2017-04-05 15:04:26	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"����ж�غ���ģ�飺QAF::ObjectSystem"
+2017-04-05 15:04:26	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"����ж����չģ�飺QAF::PluginSystem"

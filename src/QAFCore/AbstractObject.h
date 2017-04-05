@@ -130,17 +130,6 @@ namespace QAF
 		AbstractObject(ObjectId parent = INVALID_OBJECT_ID);
 
 		/*!
-		* \fn	AbstractObject
-		* \brief
-		*		refuse to call copy constructor outside of the class
-		* \param
-		*		other object instance
-		* \return
-		*		void
-		*/
-		AbstractObject(const AbstractObject& other);
-
-		/*!
 		* \fn	~AbstractObject
 		* \brief
 		*		object's destructor 
@@ -163,6 +152,17 @@ namespace QAF
 		virtual bool isSerializable() const{ return false; }
 
 	private:
+        /*!
+        * \fn	AbstractObject
+        * \brief
+        *		refuse to call copy constructor outside of the class
+        * \param
+        *		other object instance
+        * \return
+        *		void
+        */
+        AbstractObject(const AbstractObject& other);
+
 		/*!
 		* \fn	operator=
 		* \brief

@@ -31,34 +31,34 @@ namespace QAF
 
 		~ObjectPtr(){}
 
-		inline bool isValid() const
+        bool isValid() const
 		{
 			return this->isNull();
 		}
 
-		inline const T& operator*() const
+        const T& operator*() const
 		{
 			T* t = dynamic_cast<T*>(ptr());
 			Q_ASSERT(t);
 			return *t;
 		}
 
-		inline T* operator->() const
+        T* operator->() const
 		{
 			return static_cast<T*>(ptr());
 		}
 
-		inline const T* data() const
+        const T* data() const
 		{
 			return static_cast<T*>(ptr());
 		}
 
-		inline bool operator!() const
+        bool operator!() const
 		{
 			return isValid();
 		}
 
-		inline bool operator==(const ObjectPtr<T>& other) const
+        bool operator==(const ObjectPtr<T>& other) const
 		{
 			if (isValid() && other.isValid()
 				&& objectId() == other->objectId()

@@ -1,0 +1,16 @@
+2017-04-05 15:04:58	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"正在加载核心模块：QAF::ConfigSystem"
+2017-04-05 15:04:58	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:75	Function:void QAF::QAFCore::initCore()
+	"正在加载核心模块：QAF::ObjectSystem"
+2017-04-05 15:04:58	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:92	Function:void QAF::QAFCore::initExtent()
+	"正在加载扩展模块：QAF::PluginSystem"
+2017-04-05 15:04:58	Type:Debug	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:90	Function:virtual void QAF::PluginSystem::install()
+	"正在加载插件:" "zxj" "test for plugin" 1 "1.0"
+2017-04-05 15:04:58	Type:Debug	File:../../../QAF/src/QAFCore/PluginSystem.cpp	Line:90	Function:virtual void QAF::PluginSystem::install()
+	"正在加载插件:" "zxj" "UI plugins" 1 "1.0"
+2017-04-05 15:05:01	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载核心模块：QAF::ConfigSystem"
+2017-04-05 15:05:01	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载核心模块：QAF::ObjectSystem"
+2017-04-05 15:05:01	Type:Debug	File:../../../QAF/src/QAFCore/QAFCore.cpp	Line:40	Function:void QAF::QAFCore::destory()
+	"正在卸载扩展模块：QAF::PluginSystem"

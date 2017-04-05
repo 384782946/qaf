@@ -27,9 +27,15 @@ namespace QAF
 	QList<PluginSystem::PluginConfig> PluginSystem::getPluginsFromConfig()
 	{
 		QList<PluginSystem::PluginConfig> pluginConfigs;
-        ConfigItemPtr plugins = QAFCore::getSingleton()->getConfigSystem()->getConfig("run")->getItem("config/plugins");
+        ConfigModel* cm = QAFCore::getSingleton()->getConfigSystem()->getConfig("run");
+        if(cm == nullptr)
+            return pluginConfigs;
+
+        ConfigItemPtr plugins = cm->getItem("config/plugins");
         if(!plugins)
             return pluginConfigs;
+
+
 
         for (int i = 0; i < plugins->childCount(); ++i)
 		{
@@ -53,12 +59,13 @@ namespace QAF
 		}
 
 		return pluginConfigs;
-	}
+    }
 
-	void QAF::PluginSystem::install()
+    void QAF::PluginSystem::install()
 	{
 		if (!isInstalled())
 		{
+            qDebug()<<"plugin system install...";
 			AbstractSystem::install();
 
 			QString pluginPath = QAFContext::wellKnownPath(DT_PLUGIN);
@@ -67,13 +74,21 @@ namespace QAF
 				QStringList plugins = dir.entryList(QStringList() << "*.dll", QDir::Files);
 				QList<PluginConfig> pluginConfigs = getPluginsFromConfig();
 
+                qDebug()<<pluginConfigs.size() <<"puglin will be loaded.";
+
 				foreach(PluginConfig pluginConfig, pluginConfigs){
+                    qDebug()<<"start load plugin:" << pluginConfig.mPlugin;
 #ifdef QT_DEBUG
+#ifdef Q_OS_WIN
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "d", this);
+#else
+                    QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "_debug", this);
+#endif
 #else
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin, this);
 #endif
 					if (library->load()){
+                        qDebug()<<"load plugin success!";
 						LoadPluginFunc avg = reinterpret_cast<LoadPluginFunc>(library->resolve("create"));
 						if (avg){
 							AbstractPluginFactory* apf = avg();
@@ -97,11 +112,12 @@ namespace QAF
 							}
 						}
 					}else{
-						qCritical() << LStr("²å¼þ¼ÓÔØÊ§°Ü:") << pluginConfig.mPlugin;
+                        qDebug()<<"fail to load plugin:"<<pluginConfig.mPlugin;
+                        //qCritical() << LStr("²å¼þ¼ÓÔØÊ§°Ü:") << pluginConfig.mPlugin;
 					}
 				}
 			} else{
-				qCritical() << LStr("Î´ÕÒµ½²å¼þÄ¿Â¼");
+                qCritical() << "Can not find plugin directory.";
 			}
 		}
 	}
