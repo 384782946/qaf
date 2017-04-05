@@ -10,7 +10,7 @@
 
 namespace QAF{
 
-	QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/)
+    QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/) const
 	{
 		if (role == Qt::DisplayRole || role == Qt::EditRole){
 

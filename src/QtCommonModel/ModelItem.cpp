@@ -40,15 +40,8 @@ QList<QAction*> ModelItem::actions() const
 	return QList<QAction*>();
 }
 
-QVariant ModelItem::data(int index, int role) const
+bool ModelItem::setData(const QVariant &, int, int)
 {
-    Q_UNUSED(index)
-    return QVariant();
-}
-
-bool ModelItem::setData(const QVariant &value, int index, int role)
-{
-    Q_UNUSED(index)
 	return false;
 }
 
