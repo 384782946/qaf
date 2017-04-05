@@ -55,7 +55,6 @@ UIPlugin::~UIPlugin()
 
 void UIPlugin::install(const QMap<QString, QString>&)
 {
-    Q_UNUSED(params)
 	QDockWidget* consoleDock = new QDockWidget(LStr("¿ØÖÆÌ¨"));
 	consoleDock->setWidget(new ConsoleWidget(consoleDock));
 	g_UIInterface->setDockWidget(DI_CONSOLE, consoleDock, DWP_BOTTOM);
