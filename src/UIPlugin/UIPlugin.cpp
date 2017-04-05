@@ -55,11 +55,11 @@ UIPlugin::~UIPlugin()
 
 void UIPlugin::install(const QMap<QString, QString>&)
 {
-	QDockWidget* consoleDock = new QDockWidget(LStr("¿ØÖÆÌ¨"));
+	QDockWidget* consoleDock = new QDockWidget(LStr("æŽ§åˆ¶å°"));
 	consoleDock->setWidget(new ConsoleWidget(consoleDock));
 	g_UIInterface->setDockWidget(DI_CONSOLE, consoleDock, DWP_BOTTOM);
 
-	QDockWidget* propertyDock = new QDockWidget(LStr("ÊôÐÔ±à¼­Æ÷"));
+	QDockWidget* propertyDock = new QDockWidget(LStr("å±žæ€§ç¼–è¾‘å™¨"));
 	propertyDock->setWidget(new PropertyEditerWidget(propertyDock));
 	g_UIInterface->setDockWidget(DI_PROPERTY, propertyDock, DWP_RIGHT);
 

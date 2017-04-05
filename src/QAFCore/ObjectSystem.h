@@ -85,7 +85,7 @@ namespace QAF
 			}
 		};
 
-        //¾ºÕùĞÔ×ÊÔ´
+        //ç«äº‰æ€§èµ„æº
 		QHash<ObjectId, ObjectInfo*> mObjects;
 		ObjectId mMinValidId;
 		ObjectId mMaxValidId;

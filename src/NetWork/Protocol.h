@@ -9,15 +9,15 @@ const qint16 ProtocolVersion = 1010;
 
 enum RequestType
 {
-	RT_NORMAL = 1,			 //³£¹æÇëÇó
-	RT_WITHOUT_RESPONSE = 100, //ÎÞ·µ»ØÇëÇó
+	RT_NORMAL = 1,			 //å¸¸è§„è¯·æ±‚
+	RT_WITHOUT_RESPONSE = 100, //æ— è¿”å›žè¯·æ±‚
 };
 
 enum ResponseStatus
 {
-	RS_OK = 0,			 //Õý³£
-	RS_CLIENT_ERROR, //¿Í»§¶Ë´íÎó
-	RS_SERVER_ERROR	 //·þÎñÆ÷¶Ë´íÎó
+	RS_OK = 0,			 //æ­£å¸¸
+	RS_CLIENT_ERROR, //å®¢æˆ·ç«¯é”™è¯¯
+	RS_SERVER_ERROR	 //æœåŠ¡å™¨ç«¯é”™è¯¯
 };
 
 class NETWORK_EXPORT Request:public Package

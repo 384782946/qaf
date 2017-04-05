@@ -25,15 +25,15 @@ namespace QAF
 			{
 				switch (mType) {
 				case QtDebugMsg:
-					return LStr("µ÷ÊÔ");
+					return LStr("è°ƒè¯•");
 				case QtInfoMsg:
-					return LStr("ĞÅÏ¢");
+					return LStr("ä¿¡æ¯");
 				case QtWarningMsg:
-					return LStr("¾¯¸æ");
+					return LStr("è­¦å‘Š");
 				case QtCriticalMsg:
-					return LStr("Î£ÏÕ");
+					return LStr("å±é™©");
 				case QtFatalMsg:
-					return LStr("´íÎó");
+					return LStr("é”™è¯¯");
 				default:
 					return "";
 				}

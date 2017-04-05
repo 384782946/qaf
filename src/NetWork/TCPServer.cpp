@@ -93,7 +93,7 @@ void TCPServer::handle(ClientEntity* entity)
 					entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength,len));
 				}
 			}
-			else{ //ÎÞ·µ»ØÖµ
+			else{ //æ— è¿”å›žå€¼
 			}
 
 			watcher->deleteLater();
@@ -193,7 +193,7 @@ void TCPReceiver::on_bytes_written(qint64 bytes)
 		if (entity->WriteLength < entity->TotalWriteLength){
 			int len = (entity->TotalWriteLength - entity->WriteLength) > MTU ? MTU : (entity->TotalWriteLength - entity->WriteLength);
 			entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength, len));
-        }else{//·¢ËÍÍê±Ï,³¢ÊÔ¹Ø±ÕÁ¬½Ó
+        }else{//å‘é€å®Œæ¯•,å°è¯•å…³é—­è¿žæŽ¥
             entity->Socket->disconnectFromHost();
 		}
 	}

@@ -9,16 +9,16 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	ui.mainToolBar->setWindowTitle(LStr("¹¤¾ßÀ¸"));
+	ui.mainToolBar->setWindowTitle(LStr("å·¥å…·æ "));
 
-	//ÉèÖÃÇ¶Èë´°¿ÚÓÅÏÈ¼¶
+	//è®¾ç½®åµŒå…¥çª—å£ä¼˜å…ˆçº§
 	setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
 	setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
 	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
 	setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
-	QAFApplication::splashMessage(LStr("ÕýÔÚ³õÊ¼»¯½çÃæ..."));
-	QAFApplication::splashMessage(LStr("ÕýÔÚ´´½¨²Ëµ¥..."));
+	QAFApplication::splashMessage(LStr("æ­£åœ¨åˆå§‹åŒ–ç•Œé¢..."));
+	QAFApplication::splashMessage(LStr("æ­£åœ¨åˆ›å»ºèœå•..."));
 	createMenu();
 	createAction();
 
@@ -45,7 +45,7 @@ void MainWindow::createMenu()
 void MainWindow::createAction()
 {
 
-	QAction* as = ui.menuSetting->addAction(QIcon(":/QAF/Resources/gear.png"), LStr("ÔËÐÐÅäÖÃ"));
+	QAction* as = ui.menuSetting->addAction(QIcon(":/QAF/Resources/gear.png"), LStr("è¿è¡Œé…ç½®"));
 
 	setAction(QAF::AI_RUNCONFIG, as);
 
@@ -105,7 +105,7 @@ void MainWindow::setDockWidget(int id, QDockWidget* dock, QAF::DockWidgetPos pos
 {
 	if (dock && !mDockWidgets.contains(id))
 	{
-		//Ñ°ÕÒ¾ßÓÐÏàÍ¬¹ÒÔØÎ»ÖÃµÄdock
+		//å¯»æ‰¾å…·æœ‰ç›¸åŒæŒ‚è½½ä½ç½®çš„dock
 		dock->setProperty("dockPos", (int)pos);
 		QDockWidget* lastDock = nullptr;
 		foreach(QDockWidget* widget, mDockWidgets){

@@ -94,7 +94,7 @@ void TcpClient::on_bytes_written(qint64 bytes)
 	if (mWriteLength < mTotalWriteLength){
 		int len = (mTotalWriteLength - mWriteLength) > MTU ? MTU : (mTotalWriteLength - mWriteLength);
 		mSocket->write(mWriteBuffer.mid(mWriteLength, len));
-	}else{ //·¢ËÍÍê±Ï,ÇÒÎÞ·µ»ØÊý¾Ý
+	}else{ //å‘é€å®Œæ¯•,ä¸”æ— è¿”å›žæ•°æ®
 		if(mRequestType >= RT_WITHOUT_RESPONSE)
 			mSocket->disconnectFromHost();
 	}
@@ -108,7 +108,7 @@ void TcpClient::on_connected()
 
 void TcpClient::on_disconnected()
 {
-	if (mRequestType < RT_WITHOUT_RESPONSE){ //´ø·µ»ØµÄÇëÇóÐèÒª½âÎö·µ»Ø½á¹û
+	if (mRequestType < RT_WITHOUT_RESPONSE){ //å¸¦è¿”å›žçš„è¯·æ±‚éœ€è¦è§£æžè¿”å›žç»“æžœ
 		QDataStream stream(&mReadBuffer, QIODevice::ReadOnly);
 		QByteArray className;
 		stream >> className;

@@ -53,7 +53,7 @@ public:
 
     void doPost(int unique,const QUrl& url,const QMap<QString,QString>& data);
 
-    void doUploadFile(int unique,const QUrl& url,QString filePath); //ͼƬΪjpeg�ļ�-
+    void doUploadFile(int unique,const QUrl& url,QString filePath);
 
 	void doDownloadFile(int unique,const QUrl& url,QString savePath);
 

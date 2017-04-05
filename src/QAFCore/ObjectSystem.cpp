@@ -10,7 +10,7 @@ namespace QAF
 		, mMinValidId(1)
 		, mMaxValidId(1)
 	{
-		//TODO ÊµÏÖObjectModel
+		//TODO å®žçŽ°ObjectModel
 	}
 
 	ObjectSystem::~ObjectSystem()
@@ -61,7 +61,7 @@ namespace QAF
 		if (mMinValidId < mMaxValidId)
 		{
 			ret = mMinValidId;
-			while (mMinValidId < mMaxValidId && hasObject(mMinValidId)) //È·±£idÎ¨Ò»
+			while (mMinValidId < mMaxValidId && hasObject(mMinValidId)) //ç¡®ä¿idå”¯ä¸€
 			{
 				mMinValidId++;
 			}
@@ -94,7 +94,7 @@ namespace QAF
 	{
 		if (hasObject(id))
 		{
-            //Í¨ÖªËùÓÐ¶ÔÏóÒýÓÃÕß£¬¶ÔÏóÒÑÏú»Ù
+            //é€šçŸ¥æ‰€æœ‰å¯¹è±¡å¼•ç”¨è€…ï¼Œå¯¹è±¡å·²é”€æ¯
 			foreach(ObjectProxy* op, mObjects.value(id)->mProxys)
 			{
 				if (op)

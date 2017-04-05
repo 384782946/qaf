@@ -86,7 +86,7 @@ namespace QAF
 		ConfigModel* cm = ConfigModel::loadConfig(path);
 		if (cm){
 			connect(cm, SIGNAL(valueChanged(QString)), this, SIGNAL(configValueChanged(QString)));
-			cm->setHeaders(QStringList() << LStr("Ãû³Æ") << LStr("Öµ"));
+			cm->setHeaders(QStringList() << LStr("â”œÑ‡â”‚Ðº") << LStr("Ð¾Ñ…"));
 			QString key = fInfo.baseName();
 			mModels.insert(key, cm);
 			return true;

@@ -5,7 +5,7 @@
 #include <Qt>
 
 /************************************************************************/
-/*   Ԥ����                                                             */
+/*   预处理                                                             */
 /************************************************************************/
 #define QAF_VERSON_1_0_0 0
 #define QAF_VERSON_1_0_1 1
@@ -16,7 +16,7 @@
 #define LStr(strings) QString::fromLocal8Bit(strings)
 
 /************************************************************************/
-/*   ȫ�ֶ���                                                           */
+/*   全局定义                                                           */
 /************************************************************************/
 
 namespace QAF
@@ -26,14 +26,14 @@ namespace QAF
 		ST_NONE,
 		ST_CONFIG,
 		ST_OBJECT,
-		ST_OBJECT_TEMP, //��ʱ�����Ķ���ϵͳ���������ڶ�ȡ�ⲿ�ļ�ϵͳ
+		ST_OBJECT_TEMP, //临时创建的对象系统，例如用于读取外部文件系统
 		ST_LOG,
-		ST_CORE = 100, //С�ڸ�ֵ���ں��Ĳ㣬���ڸ�ֵ������չ��
+		ST_CORE = 100, //小于该值处于核心层，大于该值处于扩展层
 		ST_PLUGIN,
 		ST_CUSTOM = 256
 	};
 
-	enum PluginType //�������
+	enum PluginType //插件类型
 	{
 		PT_NONE,
 		PT_GUI,
@@ -65,19 +65,19 @@ namespace QAF
 		MI_ACTION,
 		MI_SETTING,
 		MI_HELP,
-		MI_CUSTOM = 256 //֮����Ϊ�û��Զ���
+		MI_CUSTOM = 256 //之后都是为用户自定义
 	};
 
 	enum ActionId
 	{
 		AI_RUNCONFIG,
-		AI_CUSTOM = 256 //֮����Ϊ�û��Զ���
+		AI_CUSTOM = 256 //之后都是为用户自定义
 	};
 
 	enum WidgetId
 	{
 		WI_MAIN,
-		WI_CUSTOM = 256 //֮����Ϊ�û��Զ���
+		WI_CUSTOM = 256 //之后都是为用户自定义
 	};
 
 	enum DockWidgetId
@@ -86,7 +86,7 @@ namespace QAF
 		DI_PROPERTY,
 		DI_OBJECT,
 		DI_CONSOLE,
-		DI_CUSTOM = 256 //֮����Ϊ�û��Զ���
+		DI_CUSTOM = 256 //之后都是为用户自定义
 	};
 
 	enum DockWidgetPos

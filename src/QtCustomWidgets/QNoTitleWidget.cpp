@@ -24,7 +24,7 @@ void QNoTitleWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	if (mIsDrag){
 		QPoint movePot = event->globalPos() - mMousePosition;
-		//moveÊÇÒÆ¶¯µÄÎ»ÖÃÊÇÏà¶ÔÓÚÈ«¾Ö¶øÑÔ(¼´ÆÁÄ»)
+		//moveæ˜¯ç§»åŠ¨çš„ä½ç½®æ˜¯ç›¸å¯¹äºŽå…¨å±€è€Œè¨€(å³å±å¹•)
 		move(movePot);
 	}
 }
@@ -70,7 +70,7 @@ void QNoTitleWidget::init()
 	//mMaxBtn->setIcon(maxPix);
 	//mCloseBtn->setIcon(closePix);
 
-	//ÉèÖÃ×îÐ¡»¯¡¢¹Ø±ÕµÈ°´Å¥µÄÑùÊ½
+	//è®¾ç½®æœ€å°åŒ–ã€å…³é—­ç­‰æŒ‰é’®çš„æ ·å¼
 	//mMinBtn->setStyleSheet("background-color:transparent;");
 	//mMaxBtn->setStyleSheet("background-color:transparent;");
 	//mCloseBtn->setStyleSheet("background-color:transparent;");

@@ -8,8 +8,8 @@
 #include "network_global.h"
 
 enum TcpClientError{
-	TCE_UNSPORT_RESPONSE = -100, //不支持的响应类型
-	TCE_UNPACK_ERROR, //解析响应错误
+	TCE_UNSPORT_RESPONSE = -100, //涓嶆敮鎸佺殑鍝嶅簲绫诲瀷
+	TCE_UNPACK_ERROR, //瑙ｆ瀽鍝嶅簲閿欒
 	TCE_SOCKET_ERROR = QAbstractSocket::UnknownSocketError
 };
 

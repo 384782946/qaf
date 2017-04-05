@@ -94,7 +94,7 @@ namespace QAF
 							AbstractPluginFactory* apf = avg();
 							if (apf){
 								mFactorys << apf;
-								qDebug() << LStr("ÕýÔÚ¼ÓÔØ²å¼þ:") << apf->getAuthor()
+								qDebug() << LStr("æ­£åœ¨åŠ è½½æ’ä»¶:") << apf->getAuthor()
 									<< apf->getDesc()
 									<< apf->getType()
 									<< apf->getVersion();
@@ -113,7 +113,7 @@ namespace QAF
 						}
 					}else{
                         qDebug()<<"fail to load plugin:"<<pluginConfig.mPlugin;
-                        //qCritical() << LStr("²å¼þ¼ÓÔØÊ§°Ü:") << pluginConfig.mPlugin;
+                        //qCritical() << LStr("æ’ä»¶åŠ è½½å¤±è´¥:") << pluginConfig.mPlugin;
 					}
 				}
 			} else{

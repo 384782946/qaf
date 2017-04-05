@@ -7,7 +7,7 @@
  *
  * \brief 
  *
- * 配置项模型，基于AbstractTreeModel实现
+ * 閰嶇疆椤规ā鍨嬶紝鍩轰簬AbstractTreeModel瀹炵幇
  *
  * \note
 */

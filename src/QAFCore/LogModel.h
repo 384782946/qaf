@@ -7,7 +7,7 @@
  *
  * \brief 
  *
- * 日志模型，基于AbstractTreeModel
+ * 鏃ュ織妯″瀷锛屽熀浜嶢bstractTreeModel
  *
  * \note
 */

@@ -7,8 +7,8 @@
  *
  * \brief 
  *
- * ����Qt MVCģʽʵ�ֵ����νṹģ�ͣ�ʵ��������Ϊ��λ��ģ��
- * ���QStandardItem�Ե�Ԫ��Ϊ��λ��ģ�ͣ���ģ�͸������������Դ������
+ * 基于Qt MVC模式实现的树形结构模型，实现了以行为单位的模型
+ * 相比QStandardItem以单元格为单位的模型，该模型更适数据粒度稍大的需求
  *
  * \note
 */

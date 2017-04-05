@@ -6,7 +6,7 @@
 #include <cstring>
 #include <sstream>
 
-//ÉùÃ÷Òì³£ÀàĞÍ
+//å£°æ˜å¼‚å¸¸ç±»å‹
 #define EXCEPTION_SUBCLASS(classname,parentclassname) \
 	class classname:public parentclassname{ \
 	public:								\
@@ -21,7 +21,7 @@ static int A = 0, B = 0;
 #define AB(a,N) std::make_pair(#a,a) << N
 #define A(a) AB(a,B)
 #define B(a) AB(a,A)
-//¼òµ¥Å×³öÒì³£
+//ç®€å•æŠ›å‡ºå¼‚å¸¸
 #define  EXCEPTION_SIMPLE_THROW(classname,what) classname(what,__FILE__,__LINE__) << A
 
 class QBaseException : public QException
@@ -67,7 +67,7 @@ public:
 		return *this;
 	}
 
-	//×÷Îªºêµü´úµÄÖÕÖ¹Ìõ¼ş£¬ÓÃ»§²»Ó¦µ±²»Ó¦µ±µ÷ÓÃ¸Ã·½·¨
+	//ä½œä¸ºå®è¿­ä»£çš„ç»ˆæ­¢æ¡ä»¶ï¼Œç”¨æˆ·ä¸åº”å½“ä¸åº”å½“è°ƒç”¨è¯¥æ–¹æ³•
 	QBaseException& operator << (int) { raise(); return *this; }
 
 private:

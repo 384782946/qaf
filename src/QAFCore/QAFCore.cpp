@@ -14,7 +14,7 @@ namespace QAF
 		:mUIInterface(nullptr)
 		, mLogModel(new QAF::LogModel())
 	{
-		mLogModel->setHeaders(QStringList() << LStr("ÀàÐÍ") << LStr("Ê±¼ä") << LStr("ÄÚÈÝ"));
+		mLogModel->setHeaders(QStringList() << LStr("ç±»åž‹") << LStr("æ—¶é—´") << LStr("å†…å®¹"));
 	}
 
 	QAFCore::~QAFCore()
@@ -31,10 +31,10 @@ namespace QAF
 			if (system){
 				QString msg;
 				if (key > ST_NONE && key < ST_CORE){
-					msg = QString("%1%2").arg(LStr("ÕýÔÚÐ¶ÔØºËÐÄÄ£¿é£º")).arg(system->name());
+					msg = QString("%1%2").arg(LStr("æ­£åœ¨å¸è½½æ ¸å¿ƒæ¨¡å—ï¼š")).arg(system->name());
 				}
 				else if (key > ST_CORE){
-					msg = QString("%1%2").arg(LStr("ÕýÔÚÐ¶ÔØÀ©Õ¹Ä£¿é£º")).arg(system->name());
+					msg = QString("%1%2").arg(LStr("æ­£åœ¨å¸è½½æ‰©å±•æ¨¡å—ï¼š")).arg(system->name());
 				}
 
 				qDebug() << msg;
@@ -44,7 +44,7 @@ namespace QAF
 
 		qDeleteAll(mSystems);
 
-		//È¡ÏûÏûÏ¢´¦Àí
+		//å–æ¶ˆæ¶ˆæ¯å¤„ç†
 		qInstallMessageHandler(0);
 
 		mIsInit = false;
@@ -57,8 +57,8 @@ namespace QAF
 			mIsInit = true;
 			qInstallMessageHandler(Logger::messageHandler);
 		
-			initCore(); //³õÊ¼»¯ºËÐÄ²ã
-			initExtent(); //³õÊ¼»¯À©Õ¹²ã
+			initCore(); //åˆå§‹åŒ–æ ¸å¿ƒå±‚
+			initExtent(); //åˆå§‹åŒ–æ‰©å±•å±‚
 		}
 	}
 
@@ -71,7 +71,7 @@ namespace QAF
 			if (key > ST_NONE && key < ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
-					QString msg = QString("%1%2").arg(LStr("ÕýÔÚ¼ÓÔØºËÐÄÄ£¿é£º")).arg(system->name());
+					QString msg = QString("%1%2").arg(LStr("æ­£åœ¨åŠ è½½æ ¸å¿ƒæ¨¡å—ï¼š")).arg(system->name());
 					qDebug() << msg;
 					
 					system->install();
@@ -88,7 +88,7 @@ namespace QAF
 			if (key > ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
-					QString msg = QString("%1%2").arg(LStr("ÕýÔÚ¼ÓÔØÀ©Õ¹Ä£¿é£º")).arg(system->name());
+					QString msg = QString("%1%2").arg(LStr("æ­£åœ¨åŠ è½½æ‰©å±•æ¨¡å—ï¼š")).arg(system->name());
 					qDebug() << msg;
 					
 					system->install();

@@ -216,7 +216,7 @@ namespace QAF{
                     }
                 }
 
-                //±éÀú×Ó½Úµã
+                //éå†å­èŠ‚ç‚¹
                 for (QDomNode child = elm.lastChild(); !child.isNull(); child = child.previousSibling())
                 {
                     if (child.isText()){

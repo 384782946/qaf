@@ -188,7 +188,7 @@ void NetworkManager::doUploadFile( int unique,const QUrl& url,QString filePath )
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\""+filePath+"\"")); //×¢ÒâÕâÀïµÄfilename±ØÐëÕýÈ·Éè¶¨£¬·ñÔò»á³öÏÖÃ»ÓÐÉÏ´«ÎÄ¼þµÄ´íÎó
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\""+filePath+"\"")); //æ³¨æ„è¿™é‡Œçš„filenameå¿…é¡»æ­£ç¡®è®¾å®šï¼Œå¦åˆ™ä¼šå‡ºçŽ°æ²¡æœ‰ä¸Šä¼ æ–‡ä»¶çš„é”™è¯¯
     QFile *file = new QFile(filePath);
     if(!file->open(QIODevice::ReadOnly))
     {
