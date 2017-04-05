@@ -1,4 +1,4 @@
-#include "dbmanager.h"
+﻿#include "dbmanager.h"
 #include <QtSql/QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>

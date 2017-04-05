@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "mainwindow.h"
 #include <QAFGlobal.h>
 #include <QAFContext.h>
@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	ui.mainToolBar->setWindowTitle(LStr("工具栏"));
+    ui.mainToolBar->setWindowTitle(LStr("工具栏"));
 
 	//设置嵌入窗口优先级
 	setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
 	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
 	setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
-	QAFApplication::splashMessage(LStr("正在初始化界面..."));
-	QAFApplication::splashMessage(LStr("正在创建菜单..."));
+    QAFApplication::splashMessage(LStr("正在初始化界面..."));
+    QAFApplication::splashMessage(LStr("正在创建菜单..."));
 	createMenu();
 	createAction();
 

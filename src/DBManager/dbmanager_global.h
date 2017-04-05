@@ -1,4 +1,4 @@
-#ifndef DBMANAGER_GLOBAL_H
+﻿#ifndef DBMANAGER_GLOBAL_H
 #define DBMANAGER_GLOBAL_H
 
 #include <QtCore/qglobal.h>

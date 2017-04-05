@@ -1,4 +1,4 @@
-#include "UIPlugin.h"
+﻿#include "UIPlugin.h"
 #include <QDockWidget>
 #include <QMenu>
 #include <QAFContext.h>
@@ -55,11 +55,11 @@ UIPlugin::~UIPlugin()
 
 void UIPlugin::install(const QMap<QString, QString>&)
 {
-	QDockWidget* consoleDock = new QDockWidget(LStr("控制台"));
+    QDockWidget* consoleDock = new QDockWidget(LStr("控制台"));
 	consoleDock->setWidget(new ConsoleWidget(consoleDock));
 	g_UIInterface->setDockWidget(DI_CONSOLE, consoleDock, DWP_BOTTOM);
 
-	QDockWidget* propertyDock = new QDockWidget(LStr("属性编辑器"));
+    QDockWidget* propertyDock = new QDockWidget(LStr("属性编辑器"));
 	propertyDock->setWidget(new PropertyEditerWidget(propertyDock));
 	g_UIInterface->setDockWidget(DI_PROPERTY, propertyDock, DWP_RIGHT);
 

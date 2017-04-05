@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "qafapplication.h"
 
 #include <QMessageBox>
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	QApplication::addLibraryPath("");
 	QAFApplication app(argc, argv);
 
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    //QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
 
     //Log4Qt::BasicConfigurator::configure();
     //Log4Qt::Logger* rootLogger = Log4Qt::Logger::rootLogger();

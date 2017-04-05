@@ -1,4 +1,4 @@
-#ifndef DBMANAGER_H
+﻿#ifndef DBMANAGER_H
 #define DBMANAGER_H
 
 #include "dbmanager_global.h"

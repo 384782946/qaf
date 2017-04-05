@@ -1,4 +1,4 @@
-#include "QAFCore.h"
+﻿#include "QAFCore.h"
 #include <QDockWidget>
 #include <QDebug>
 #include "ObjectSystem.h"
@@ -31,10 +31,10 @@ namespace QAF
 			if (system){
 				QString msg;
 				if (key > ST_NONE && key < ST_CORE){
-					msg = QString("%1%2").arg(LStr("正在卸载核心模块：")).arg(system->name());
+                    msg = QString("%1%2").arg(LStr("正在卸载核心模块：")).arg(system->name());
 				}
 				else if (key > ST_CORE){
-					msg = QString("%1%2").arg(LStr("正在卸载扩展模块：")).arg(system->name());
+                    msg = QString("%1%2").arg(LStr("正在卸载扩展模块：")).arg(system->name());
 				}
 
 				qDebug() << msg;
@@ -71,7 +71,7 @@ namespace QAF
 			if (key > ST_NONE && key < ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
-					QString msg = QString("%1%2").arg(LStr("正在加载核心模块：")).arg(system->name());
+                    QString msg = QString("%1%2").arg(LStr("正在加载核心模块：")).arg(system->name());
 					qDebug() << msg;
 					
 					system->install();
@@ -88,9 +88,9 @@ namespace QAF
 			if (key > ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
 				if (system){
-					QString msg = QString("%1%2").arg(LStr("正在加载扩展模块：")).arg(system->name());
-					qDebug() << msg;
-					
+                    QString msg = QString("%1%2").arg(LStr("正在加载扩展模块：")).arg(system->name());
+                    qDebug() << msg;
+
 					system->install();
 				}
 			}
