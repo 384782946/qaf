@@ -1,4 +1,4 @@
-#ifndef QAFAPPLICATION_H
+﻿#ifndef QAFAPPLICATION_H
 #define QAFAPPLICATION_H
 
 #include <QApplication>

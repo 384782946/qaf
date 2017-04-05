@@ -1,4 +1,4 @@
-#ifndef QAFLOGGER_H
+﻿#ifndef QAFLOGGER_H
 #define QAFLOGGER_H
 
 #include <QtCore/QMetaType>

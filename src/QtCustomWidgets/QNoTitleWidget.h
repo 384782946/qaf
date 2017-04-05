@@ -1,4 +1,4 @@
-#ifndef QCUSTOMMAINWINDOW_H
+﻿#ifndef QCUSTOMMAINWINDOW_H
 #define QCUSTOMMAINWINDOW_H
 
 #include "qtcustomwidgets_global.h"

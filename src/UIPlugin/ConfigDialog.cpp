@@ -1,4 +1,4 @@
-#include "ConfigDialog.h"
+﻿#include "ConfigDialog.h"
 #include <ConfigSystem.h>
 #include <ConfigModel.h>
 #include <QAFContext.h>

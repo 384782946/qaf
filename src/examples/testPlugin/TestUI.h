@@ -1,4 +1,4 @@
-#ifndef TESTUI_H
+﻿#ifndef TESTUI_H
 #define TESTUI_H
 
 #include <QWidget>

@@ -1,4 +1,4 @@
-#include "QtAwesomeAnim.h"
+﻿#include "QtAwesomeAnim.h"
 
 #include <cmath>
 #include <QPainter>

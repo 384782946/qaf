@@ -1,4 +1,4 @@
-#ifndef QAFCORE_GLOBAL_H
+﻿#ifndef QAFCORE_GLOBAL_H
 #define QAFCORE_GLOBAL_H
 
 #include <QtCore/qglobal.h>

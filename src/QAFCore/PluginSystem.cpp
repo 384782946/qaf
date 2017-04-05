@@ -1,4 +1,4 @@
-#include "PluginSystem.h"
+﻿#include "PluginSystem.h"
 
 #include <QLibrary>
 #include <QDir>

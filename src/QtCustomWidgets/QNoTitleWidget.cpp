@@ -1,4 +1,4 @@
-#include "QNoTitleWidget.h"
+﻿#include "QNoTitleWidget.h"
 
 #include <QVBoxLayout>
 #include <QLabel>

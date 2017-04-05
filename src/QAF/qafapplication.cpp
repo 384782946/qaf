@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "qafapplication.h"
 #include <QtWidgets/QSplashScreen>
 #include <QTranslator>

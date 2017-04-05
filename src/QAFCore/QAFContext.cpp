@@ -1,4 +1,4 @@
-#include "QAFContext.h"
+﻿#include "QAFContext.h"
 
 #include <QCoreApplication>
 #include <QDir>

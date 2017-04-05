@@ -239,3 +239,5 @@ _Pvt_Extensions
 /output/bin/unix
 /output/lib
 /output/bin/log
+/src/QAFCore/*.vcxproj
+/src/QAFCore/*.filters

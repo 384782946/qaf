@@ -1,4 +1,4 @@
-#ifndef QAF_H
+﻿#ifndef QAF_H
 #define QAF_H
 
 #include <QtWidgets/QMainWindow>

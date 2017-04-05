@@ -1,4 +1,4 @@
-#ifndef OBJECTPROXY_H
+﻿#ifndef OBJECTPROXY_H
 #define OBJECTPROXY_H
 
 #include "qafcore_global.h"

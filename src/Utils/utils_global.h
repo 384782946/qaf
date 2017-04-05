@@ -1,4 +1,4 @@
-#ifndef UTILS_GLOBAL_H
+﻿#ifndef UTILS_GLOBAL_H
 #define UTILS_GLOBAL_H
 
 #include <qglobal.h>

@@ -1,4 +1,4 @@
-#ifndef CONSOLEWIDGET_H
+﻿#ifndef CONSOLEWIDGET_H
 #define CONSOLEWIDGET_H
 
 #include <QWidget>

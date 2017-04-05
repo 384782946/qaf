@@ -1,4 +1,4 @@
-#include "TcpClient.h"
+﻿#include "TcpClient.h"
 
 #include <QTcpSocket>
 #include <QEventLoop>

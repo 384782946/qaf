@@ -1,4 +1,4 @@
-#ifndef QTAWESONME_GLOBAL_H
+﻿#ifndef QTAWESONME_GLOBAL_H
 #define QTAWESONME_GLOBAL_H
 
 #include <QtCore/qglobal.h>

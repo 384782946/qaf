@@ -1,4 +1,4 @@
-#ifndef TESTPLUGIN_GLOBAL_H
+﻿#ifndef TESTPLUGIN_GLOBAL_H
 #define TESTPLUGIN_GLOBAL_H
 
 #include <QtCore/qglobal.h>

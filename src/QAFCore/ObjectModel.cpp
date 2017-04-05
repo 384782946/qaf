@@ -1,4 +1,4 @@
-#include "ObjectModel.h"
+﻿#include "ObjectModel.h"
 
 namespace QAF
 {

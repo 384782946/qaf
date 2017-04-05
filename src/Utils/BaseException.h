@@ -1,4 +1,4 @@
-#ifndef QAFEXCEPTION_H
+﻿#ifndef QAFEXCEPTION_H
 #define QAFEXCEPTION_H
 
 #include <QException>

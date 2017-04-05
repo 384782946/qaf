@@ -1,4 +1,4 @@
-#include "ModelItem.h"
+﻿#include "ModelItem.h"
 
 ModelItem::ModelItem(ModelItemPtr parent)
     :mParent(parent)

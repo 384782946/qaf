@@ -1,4 +1,4 @@
-/**
+﻿/**
  * QtAwesome - use font-awesome (or other font icons) in your c++ / Qt Application
  *
  * MIT Licensed

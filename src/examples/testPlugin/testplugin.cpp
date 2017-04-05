@@ -1,4 +1,4 @@
-#include "testplugin.h"
+ï»¿#include "testplugin.h"
 #include <QDockWidget>
 #include <QMenu>
 #include <UIInterface.h>
@@ -9,10 +9,10 @@
 ObjectPtr<AbstractPlugin> testPluginFactory::create()
 {
 	QWidget* widget = new TestUI();
-	QDockWidget* dock = new QDockWidget(LStr("²âÊÔ²å¼ş"));
+	QDockWidget* dock = new QDockWidget(LStr("æµ‹è¯•æ’ä»¶"));
 	dock->setWidget(widget);
 	QAFContext::getSingleton()->getUIInterface()->setDockWidget(DI_CUSTOM + 1, dock, QAF::DWP_LEFT);
-	QAFContext::getSingleton()->getUIInterface()->getMenu(QAF::MI_ACTION)->addAction(LStr("²âÊÔ²å¼ş¶¯×÷"));
+	QAFContext::getSingleton()->getUIInterface()->getMenu(QAF::MI_ACTION)->addAction(LStr("æµ‹è¯•æ’ä»¶åŠ¨ä½œ"));
 	return static_cast<ObjectSystem*>(QAFContext::getSingleton()->getSystem(ST_OBJECT))->create<testPlugin>();
 }
 

@@ -1,4 +1,4 @@
-#include "ConfigSystem.h"
+﻿#include "ConfigSystem.h"
 #include "QAFCore.h"
 #include "QAFContext.h"
 #include "UIInterface.h"

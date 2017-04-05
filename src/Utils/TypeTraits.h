@@ -1,4 +1,4 @@
-#ifndef UTILS_H
+﻿#ifndef UTILS_H
 #define UTILS_H
 
 template<typename T1, typename T2>

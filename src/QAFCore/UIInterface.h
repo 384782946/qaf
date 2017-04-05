@@ -1,4 +1,4 @@
-#ifndef UIINTERFACE_H
+﻿#ifndef UIINTERFACE_H
 #define UIINTERFACE_H
 
 #include "QAFGlobal.h"

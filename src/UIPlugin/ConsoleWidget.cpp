@@ -1,4 +1,4 @@
-#include "ConsoleWidget.h"
+﻿#include "ConsoleWidget.h"
 #include <LogModel.h>
 #include <QAFContext.h>
 #include <QStandardItemModel>

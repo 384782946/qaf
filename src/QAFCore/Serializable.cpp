@@ -1,4 +1,4 @@
-#include "Serializable.h"
+﻿#include "Serializable.h"
 #include <QDataStream>
 
 QDataStream&  operator << (QDataStream& stream, const Serializable& srl)

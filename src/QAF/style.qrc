@@ -1,4 +1,4 @@
-<RCC>
+﻿<RCC>
   <qresource prefix="qss_icons">
     <file>rc/up_arrow_disabled.png</file>
     <file>rc/Hmovetoolbar.png</file>

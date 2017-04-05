@@ -1,4 +1,4 @@
-#include "PropertyEditerWidget.h"
+﻿#include "PropertyEditerWidget.h"
 #include <QVBoxLayout>
 
 PropertyEditerWidget::PropertyEditerWidget(QWidget *parent)

@@ -1,4 +1,4 @@
-#ifndef NETWORK_GLOBAL_H
+﻿#ifndef NETWORK_GLOBAL_H
 #define NETWORK_GLOBAL_H
 
 #include <QtCore/qglobal.h>

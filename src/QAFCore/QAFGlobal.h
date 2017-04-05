@@ -1,4 +1,4 @@
-#ifndef QAFGLOBAL_H
+﻿#ifndef QAFGLOBAL_H
 #define QAFGLOBAL_H
 
 #include <QString>

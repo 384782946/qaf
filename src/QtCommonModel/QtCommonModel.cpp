@@ -1,4 +1,4 @@
-#include "QtCommonModel.h"
+﻿#include "QtCommonModel.h"
 #include "ModelItem.h"
 
 QtCommonModel::QtCommonModel(QObject *parent)

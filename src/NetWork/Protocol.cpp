@@ -1,4 +1,4 @@
-#include "Protocol.h"
+﻿#include "Protocol.h"
 
 Request::Request()
 	:mRequestType(RT_NORMAL)

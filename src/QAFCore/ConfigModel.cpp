@@ -1,4 +1,4 @@
-#include "ConfigModel.h"
+﻿#include "ConfigModel.h"
 #include "QAFContext.h"
 
 #include <QDomDocument>

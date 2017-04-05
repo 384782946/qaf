@@ -1,4 +1,4 @@
-#ifndef QTAWESOMEANIMATION_H
+﻿#ifndef QTAWESOMEANIMATION_H
 #define QTAWESOMEANIMATION_H
 
 #include <QObject>

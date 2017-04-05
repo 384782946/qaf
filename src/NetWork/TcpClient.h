@@ -1,4 +1,4 @@
-#ifndef TCPCLIENT_H
+﻿#ifndef TCPCLIENT_H
 #define TCPCLIENT_H
 
 #include <QObject>

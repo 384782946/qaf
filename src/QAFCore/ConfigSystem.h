@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * \file ConfigSystem.h
  * \date 2016/01/16 14:32
  *

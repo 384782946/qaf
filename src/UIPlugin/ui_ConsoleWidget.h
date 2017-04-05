@@ -1,4 +1,4 @@
-/********************************************************************************
+﻿/********************************************************************************
 ** Form generated from reading UI file 'ConsoleWidget.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.7.0

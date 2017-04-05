@@ -1,4 +1,4 @@
-#include "LogModel.h"
+﻿#include "LogModel.h"
 #include "QAFGlobal.h"
 #include <QtGui/QColor>
 

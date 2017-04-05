@@ -1,4 +1,4 @@
-#ifndef TEST_NETWORK_H
+﻿#ifndef TEST_NETWORK_H
 #define TEST_NETWORK_H
 
 #include <QObject>

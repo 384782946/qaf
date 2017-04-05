@@ -1,4 +1,4 @@
-#ifndef QTCUSTOMWIDGETS_GLOBAL_H
+﻿#ifndef QTCUSTOMWIDGETS_GLOBAL_H
 #define QTCUSTOMWIDGETS_GLOBAL_H
 
 #include <QtCore/qglobal.h>

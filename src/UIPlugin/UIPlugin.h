@@ -1,4 +1,4 @@
-#ifndef TESTPLUGIN_H
+﻿#ifndef TESTPLUGIN_H
 #define TESTPLUGIN_H
 
 #include "uiplugin_global.h"

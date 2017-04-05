@@ -1,4 +1,4 @@
-#ifndef CONFIGDIALOG_H
+﻿#ifndef CONFIGDIALOG_H
 #define CONFIGDIALOG_H
 
 #include "ui_ConfigDialog.h"

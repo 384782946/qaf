@@ -1,4 +1,4 @@
-#ifndef OBJECTPTR_H
+﻿#ifndef OBJECTPTR_H
 #define OBJECTPTR_H
 
 #include "ObjectProxy.h"

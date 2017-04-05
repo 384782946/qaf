@@ -1,4 +1,4 @@
-#ifndef UDPSERVER_H
+﻿#ifndef UDPSERVER_H
 #define UDPSERVER_H
 
 #include <QThread>

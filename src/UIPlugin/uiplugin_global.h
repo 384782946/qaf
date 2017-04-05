@@ -1,4 +1,4 @@
-#ifndef UIPLUGIN_GLOBAL_H
+﻿#ifndef UIPLUGIN_GLOBAL_H
 #define UIPLUGIN_GLOBAL_H
 
 #include <QtCore/qglobal.h>

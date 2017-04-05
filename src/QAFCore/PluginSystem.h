@@ -1,4 +1,4 @@
-#ifndef PLUGINSYSTEM_H
+﻿#ifndef PLUGINSYSTEM_H
 #define PLUGINSYSTEM_H
 
 #include "AbstractSystem.h"

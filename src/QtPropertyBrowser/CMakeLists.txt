@@ -1,4 +1,4 @@
-
+﻿
 
 SET(KIT_SRCS
   qtbuttonpropertybrowser.cpp

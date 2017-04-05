@@ -1,4 +1,4 @@
-#include "AbstractObject.h"
+﻿#include "AbstractObject.h"
 #include <QDataStream>
 
 namespace QAF

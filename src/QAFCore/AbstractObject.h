@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * \file AbstractObject.h
  * \date 2016/07/22
  *

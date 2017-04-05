@@ -1,4 +1,4 @@
-#ifndef QTCOMMONMODEL_GLOBAL_H
+﻿#ifndef QTCOMMONMODEL_GLOBAL_H
 #define QTCOMMONMODEL_GLOBAL_H
 
 #include <QtCore/qglobal.h>

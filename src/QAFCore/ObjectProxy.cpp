@@ -1,4 +1,4 @@
-#include "ObjectProxy.h"
+﻿#include "ObjectProxy.h"
 #include "ObjectSystem.h"
 
 namespace QAF

@@ -1,4 +1,4 @@
-<RCC>
+﻿<RCC>
     <qresource prefix="/QAF">
         <file>Resources/folder.png</file>
         <file>Resources/gear.png</file>

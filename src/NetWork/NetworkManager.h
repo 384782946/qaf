@@ -1,4 +1,4 @@
-#ifndef NETWORKMANAGER_H
+﻿#ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
 #include "network_global.h"

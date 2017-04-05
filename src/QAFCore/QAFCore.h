@@ -1,4 +1,4 @@
-#ifndef QAFCORE_H
+﻿#ifndef QAFCORE_H
 #define QAFCORE_H
 
 #include <QMap>

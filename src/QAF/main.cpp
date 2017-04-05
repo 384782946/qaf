@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	QApplication::addLibraryPath("");
 	QAFApplication app(argc, argv);
 
-    //QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
+    QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
 
     //Log4Qt::BasicConfigurator::configure();
     //Log4Qt::Logger* rootLogger = Log4Qt::Logger::rootLogger();

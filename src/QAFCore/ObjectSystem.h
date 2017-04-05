@@ -1,4 +1,4 @@
-#ifndef OBJECTSYSTEM_H
+﻿#ifndef OBJECTSYSTEM_H
 #define OBJECTSYSTEM_H
 
 #include "AbstractObject.h"

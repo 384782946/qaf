@@ -1,4 +1,4 @@
-#ifndef QTROWTABLEMODEL_H
+﻿#ifndef QTROWTABLEMODEL_H
 #define QTROWTABLEMODEL_H
 
 #include <QAbstractTableModel>

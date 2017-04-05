@@ -1,4 +1,4 @@
-#ifndef SERIALIZABLE_H
+﻿#ifndef SERIALIZABLE_H
 #define SERIALIZABLE_H
 
 #include "qafcore_global.h"
