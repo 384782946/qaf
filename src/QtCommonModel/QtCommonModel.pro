@@ -14,11 +14,7 @@ DEFINES += QT_DLL QTCOMMONMODEL_LIB
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
     unix:TARGET=$$join(TARGET,,,_debug)
-}
-
-CONFIG(release,release|debug){
-
+    else:TARGET=$$join(TARGET,,,d)
 }
 include(QtCommonModel.pri)

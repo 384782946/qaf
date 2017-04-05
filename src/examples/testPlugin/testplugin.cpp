@@ -53,7 +53,7 @@ testPlugin::~testPlugin()
 
 void testPlugin::install(const QMap<QString, QString>&)
 {
-
+    Q_UNUSED(params)
 }
 
 void testPlugin::uninstall()

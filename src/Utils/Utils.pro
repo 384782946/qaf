@@ -11,11 +11,8 @@ DEFINES += QT_DLL UTILS_LIB
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
     unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
 }
 
-CONFIG(release,release|debug){
-
-}
 include(Utils.pri)

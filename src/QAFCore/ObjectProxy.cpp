@@ -5,11 +5,13 @@ namespace QAF
 {
 
 	ObjectProxy::ObjectProxy(ObjectId id, ObjectSystem* os)
-		:mObjectSystem(os)
-		, mObjectId(id)
+        :mObjectId(0),
+        mObjectSystem(nullptr)
 	{
 		if (id != 0 && os)
 		{
+            mObjectId  = id;
+            mObjectSystem = os;
 			mObjectSystem->addObjectProxy(this);
 		}
 	}

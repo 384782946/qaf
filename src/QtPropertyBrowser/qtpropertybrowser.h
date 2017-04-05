@@ -60,6 +60,7 @@ QT_BEGIN_NAMESPACE
 #    define QT_QTPROPERTYBROWSER_EXPORT __declspec(dllexport)
 #  endif
 #else
+#undef QT_QTPROPERTYBROWSER_EXPORT
 #define QT_QTPROPERTYBROWSER_EXPORT
 #endif
 

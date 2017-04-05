@@ -24,9 +24,10 @@ namespace QAF
 	{
 		AbstractSystem::install();
 
-		Q_ASSERT_X(loadConfig(QAFContext::wellKnownPath(DT_CONFIG) + "/run.xml"),
-			"ConfigSystem::install",
-			"run configuration cann't be loaded.");
+        QString configPath = QAFContext::wellKnownPath(DT_CONFIG) + "/run.xml";
+        if(!loadConfig(configPath)){
+            qDebug()<<"ConfigSystem::install:"<<"run configuration cann't be loaded.";
+        }
 	}
 
 	void ConfigSystem::uninstall()
@@ -77,6 +78,7 @@ namespace QAF
 
 	bool ConfigSystem::loadConfig(const QString& path)
 	{
+        qDebug()<<"ConfigSystem::loadConfig"<<path;
 		QFileInfo fInfo(path);
 		if (!fInfo.exists())
 			return false;

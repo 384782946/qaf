@@ -31,6 +31,8 @@ class RootItem:public ModelItem{
     ModelItemPtr parent() const{
         return ModelItemPtr();
     }
+
+    virtual QVariant data(int, int) const{return QVariant();}
 };
 
 class QTCOMMONMODEL_EXPORT QtCommonModel : public QAbstractItemModel
@@ -62,7 +64,7 @@ protected:
 
 private:
 	QStringList mHeaders;
-    QSharedPointer<RootItem> mRootItem;
+    ModelItemPtr mRootItem;
     mutable QHash<void*,ModelItemPtr> mModelHash;
 };
 

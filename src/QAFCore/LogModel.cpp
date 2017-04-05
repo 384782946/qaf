@@ -15,7 +15,7 @@ namespace QAF
 
 	}
 
-	QVariant LogItem::data(int index, int role)
+    QVariant LogItem::data(int index, int role) const
 	{
 		if (role == Qt::DisplayRole || role == Qt::EditRole){
 

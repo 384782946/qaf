@@ -9,7 +9,6 @@ DBManager::DBManager(const QString& dbType,QObject *parent)
     : QObject(parent)
 {
     mDB = QSqlDatabase::addDatabase(dbType);
-    //Q_ASSERT_X(mDB != nullptr,"DBManager", "create sqldatabase fail!");
 }
 
 DBManager::~DBManager()

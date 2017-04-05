@@ -35,7 +35,7 @@ namespace QAF
 		ConfigItem() :mType(CT_NODE){}
 
         virtual QString className() const {return "ConfigItem";}
-		virtual QVariant data(int index, int role = Qt::DisplayRole);
+        virtual QVariant data(int index, int role = Qt::DisplayRole) const;
 		virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
 		virtual int itemFlags(int);
 

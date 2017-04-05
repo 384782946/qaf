@@ -14,10 +14,12 @@ HEADERS += ./Handler.h \
     ./UDPClient.h \
     ./UDPServer.h \
     ./TCPClient.h \
-    ./TCPServer.h
+    ./TCPServer.h \
+    ./NetworkManager.h
 SOURCES += ./Package.cpp \
     ./Protocol.cpp \
     ./UDPClient.cpp \
     ./UDPServer.cpp \
     ./TCPClient.cpp \
-    ./TCPServer.cpp
+    ./TCPServer.cpp \
+    ./NetworkManager.cpp

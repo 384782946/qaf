@@ -80,8 +80,10 @@ void Test_Network::testTcpClient()
 	datas["url"] = "/index";
 	request.setData(datas);
 
-	client.request(QHostAddress::LocalHost, 5001, request);
-	client.waitForDone();
+    QBENCHMARK{
+        client.request(QHostAddress::LocalHost, 5001, request);
+        client.waitForDone();
+    }
 
 	qDebug() << "Receive datas from:" << client.response()->datas();
 }

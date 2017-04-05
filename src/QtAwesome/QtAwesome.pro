@@ -15,8 +15,8 @@ INCLUDEPATH += $$PWD \
 #LIBS += -l$(NOINHERIT)
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
     unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
 }
 
 CONFIG(release,release|debug){

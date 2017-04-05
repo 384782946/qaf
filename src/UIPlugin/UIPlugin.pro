@@ -19,16 +19,14 @@ LIBS += -L"$$PWD/../../output/lib"
 DEPENDPATH += $$PWD
 
 CONFIG(debug,debug|release){
+    unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
     win32{
-        TARGET=$$join(TARGET,,,d)
-
         LIBS += -lQAFCored \
             -lQtPropertyBrowserd
     }
 
     unix{
-        TARGET=$$join(TARGET,,,_debug)
-
         LIBS += -lQAFCore_debug \
             -lQtPropertyBrowser_debug
     }

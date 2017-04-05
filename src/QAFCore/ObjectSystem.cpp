@@ -1,5 +1,7 @@
 #include "ObjectSystem.h"
 
+#include <QMutexLocker>
+
 namespace QAF
 {
 
@@ -54,6 +56,7 @@ namespace QAF
 
 	ObjectId ObjectSystem::makeId()
 	{
+        QMutexLocker locker(&mMutex);
 		ObjectId ret = 0;
 		if (mMinValidId < mMaxValidId)
 		{
@@ -74,6 +77,7 @@ namespace QAF
 
 	void ObjectSystem::releaseId(ObjectId id)
 	{
+        QMutexLocker locker(&mMutex);
 		if (mMaxValidId == id + 1)
 			mMaxValidId = id;
 
@@ -90,8 +94,7 @@ namespace QAF
 	{
 		if (hasObject(id))
 		{
-			//通知所有物体被销毁
-            //AbstractObject* ao = mObjects.value(id)->mObject;
+            //通知所有对象引用者，对象已销毁
 			foreach(ObjectProxy* op, mObjects.value(id)->mProxys)
 			{
 				if (op)
@@ -101,7 +104,7 @@ namespace QAF
 			}
 
 			releaseId(id);
-			return mObjects.remove(id);
+            return mObjects.remove(id) != 0;
 		}
 		else
 		{

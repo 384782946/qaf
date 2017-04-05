@@ -53,9 +53,9 @@ void QAFApplication::initialize()
 	}
 	else
 	{
-		f.open(QFile::ReadOnly | QFile::Text);
-		QTextStream ts(&f);
-		qApp->setStyleSheet(ts.readAll());
+        //f.open(QFile::ReadOnly | QFile::Text);
+        //QTextStream ts(&f);
+        //qApp->setStyleSheet(ts.readAll());
 	}
 
 	//install translator

@@ -10,8 +10,8 @@ CONFIG += debug_and_release
 DEFINES += QT_DLL DBMANAGER_LIB QT_SQL_LIB
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
     unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
 }
 
 CONFIG(release,release|debug){

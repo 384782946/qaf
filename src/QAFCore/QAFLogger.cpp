@@ -26,7 +26,6 @@ namespace QAF
 {
 	void Logger::messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 	{
-#pragma message("Note:you can define WITHOUT_LOG to disable log.")
 #ifndef WITHOUT_LOG
 
 		QMutexLocker locker(&gMutex);
@@ -106,7 +105,8 @@ namespace QAF
 
 		free(symbol);
 #else
-		//current os do not support back trace. 
+        Q_UNUSED(traceNum)
+        printf("current os do not support back trace.\r\n");
 #endif
 	}
 }

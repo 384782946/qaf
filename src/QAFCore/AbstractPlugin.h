@@ -28,7 +28,8 @@ namespace QAF
 		AbstractPlugin(){}
 		virtual ~AbstractPlugin(){}
 
-        virtual void install(const QMap<QString,QString>&){
+        virtual void install(const QMap<QString,QString>& params){
+            Q_UNUSED(params)
 			mIsInstalled = true; 
 		}
 
@@ -44,7 +45,7 @@ namespace QAF
 			mIsInstalled = installed;
 		}
 
-// 		PluginType getType(){
+// 		inline PluginType getType(){
 // 			return mFactory?mFactory->getType():PT_NONE;
 // 		}
 

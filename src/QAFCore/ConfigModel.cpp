@@ -10,7 +10,7 @@
 
 namespace QAF{
 
-	QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/)
+    QVariant ConfigItem::data(int index, int role /*= Qt::DisplayRole*/) const
 	{
 		if (role == Qt::DisplayRole || role == Qt::EditRole){
 
@@ -160,6 +160,7 @@ namespace QAF{
 
 	ConfigModel* ConfigModel::loadConfig(const QString& path)
 	{
+        qDebug()<<"load cofig from"<<path;
 		QFile file(path);
 		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             return NULL;
@@ -286,7 +287,10 @@ namespace QAF{
     ConfigItemPtr ConfigModel::query(const QString path) const
 	{
 		int numOfTag = path.count("<");
-        Q_ASSERT_X(numOfTag <= 1, "config query", "error syntax:only one attribute is allowed in path.");
+        if(numOfTag > 1){
+            qDebug() <<"ConfigModel::query:"<<"error syntax:only one attribute is allowed in path.";
+            return ConfigItemPtr();
+        }
 
 		QStringList keys = path.trimmed().split('/');
 		if (keys.size() == 0)

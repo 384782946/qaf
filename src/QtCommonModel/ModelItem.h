@@ -24,7 +24,7 @@ public:
 
     //method for qtcommonmodel
     virtual QString className() const = 0;
-    virtual QVariant data(int index, int role = Qt::DisplayRole) const;
+    virtual QVariant data(int index, int role = Qt::DisplayRole) const = 0;
 	virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
     virtual int itemFlags(int index) const;
     virtual QList<QAction*> actions() const;

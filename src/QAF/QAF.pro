@@ -18,18 +18,18 @@ INCLUDEPATH += $$PWD \
 LIBS += -L"$$PWD/../../output/lib"
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += $$PWD
+win32:RC_FILE = QAF.rc
 
 CONFIG(debug,debug|release){
-    win32{
-        TARGET=$$join(TARGET,,,d)
+    unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
 
+    win32{
         LIBS += -lQAFCored \
             -lQtAwesomed
     }
 
     unix{
-        TARGET=$$join(TARGET,,,_debug)
-
         LIBS += -lQAFCore_debug \
             -lQtAwesome_debug \
             -lQtCommonModel_debug
@@ -42,13 +42,3 @@ CONFIG(release,release|debug){
         -lQtCommonModel
 }
 include(QAF.pri)
-win32:RC_FILE = QAF.rc
-
-FORMS += \
-    settingsdialog.ui
-
-HEADERS += \
-    SettingsDialog.h
-
-SOURCES += \
-    SettingsDialog.cpp

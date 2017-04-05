@@ -33,14 +33,14 @@ QModelIndex	QtCommonModel::parent(const QModelIndex & index) const
 
 int QtCommonModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
 {
-	if (!parent.isValid() && parent.column() > 0)
-		return 0;
+    if (!parent.isValid())
+        return mRootItem->childCount();
 
     ModelItemPtr item = itemForIndex(parent);
 	if (item)
 		return item->childCount();
 	else
-		return mRootItem->childCount();
+        return 0;
 }
 
 int QtCommonModel::columnCount(const QModelIndex & parent /*= QModelIndex() */) const
@@ -167,7 +167,7 @@ void QtCommonModel::removeItem(ModelItemPtr item, ModelItemPtr parent)
 
 ModelItemPtr QtCommonModel::getRootItem() const
 {
-    return qSharedPointerCast<ModelItem>(mRootItem);
+    return mRootItem;
 }
 
 QModelIndex QtCommonModel::indexForItem(ModelItemPtr item) const

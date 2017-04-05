@@ -1,0 +1,6 @@
+2017-03-20 15:43:10	Type:Debug	File:	Line:0	Function:
+	"正在加载核心模块：QAF::ConfigSystem"
+2017-03-20 15:43:10	Type:Debug	File:	Line:0	Function:
+	"正在加载核心模块：QAF::ObjectSystem"
+2017-03-20 15:43:10	Type:Debug	File:	Line:0	Function:
+	"正在加载扩展模块：QAF::PluginSystem"

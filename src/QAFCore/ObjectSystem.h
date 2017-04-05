@@ -6,6 +6,7 @@
 #include "AbstractSystem.h"
 
 #include <QHash>
+#include <QMutex>
 
 namespace QAF
 {
@@ -84,10 +85,11 @@ namespace QAF
 			}
 		};
 
+        //竞争性资源
 		QHash<ObjectId, ObjectInfo*> mObjects;
-
 		ObjectId mMinValidId;
 		ObjectId mMaxValidId;
+        QMutex mMutex;
 	};
 }
 

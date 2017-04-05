@@ -16,18 +16,16 @@ INCLUDEPATH += $$PWD \
 LIBS += -L"$$PWD/../../../output/lib"
 DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
-    win32{
-        TARGET=$$join(TARGET,,,d)
+    unix:TARGET=$$join(TARGET,,,_debug)
+    else:TARGET=$$join(TARGET,,,d)
 
+    win32{
         LIBS += -lNetWorkd
     }
 
     unix{
-        TARGET=$$join(TARGET,,,_debug)
-
         LIBS += -lNetWork_debug
     }
-
 }
 
 CONFIG(release,release|debug){
