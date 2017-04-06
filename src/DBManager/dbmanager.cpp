@@ -14,7 +14,6 @@ DBManager::DBManager(const QString& dbType,QObject *parent)
 DBManager::~DBManager()
 {
    close();
-   QSqlDatabase::removeDatabase(mDB.connectionName());
 }
 
 bool DBManager::isOpened() const
@@ -40,11 +39,13 @@ void DBManager::close()
 {
     if (mDB.isOpen())
     {
+        QString connectName = mDB.connectionName();
         mDB.close();
+        QSqlDatabase::removeDatabase(connectName);
     }
 }
 
-bool DBManager::execSql( const QString& sql )
+bool DBManager::execSql( const QString& sql,const QString& callName)
 {
 	if (!isOpened()) 
 		return false;
@@ -52,7 +53,7 @@ bool DBManager::execSql( const QString& sql )
     if(query.exec(sql)){
         return true;
     }else{
-        qDebug()<<"DBManager execSql error:"<<query.lastError().text()<<query.lastQuery();
+        qDebug()<<callName << " : " <<query.lastError().text()<<query.lastQuery();
         return false;
     }
 }
@@ -96,7 +97,7 @@ bool DBManager::remove( const QString& table,const QString& _where )
 		return false;
 
     QString sql = QString("DELETE FROM %1 WHERE %2").arg(table).arg(_where);
-    return execSql(sql);
+    return execSql(sql,Q_FUNC_INFO);
 }
 
 int DBManager::insert( const QString& table,const QMap<QString,QVariant>& values )
@@ -199,7 +200,7 @@ QList<QList<QVariant> > DBManager::query(const QString &table, const QString &_w
             rets.append(row);
         }
     }else{
-        qDebug()<<"DBManager query"<<query.lastError().text()<<query.lastQuery();
+        qDebug()<<"DBManager query:"<<query.lastError().text()<<query.lastQuery();
     }
     return rets;
 }
@@ -207,7 +208,7 @@ QList<QList<QVariant> > DBManager::query(const QString &table, const QString &_w
 bool DBManager::dropTable(const QString& table)
 {
     QString sql = QString("DROP TABLE %1").arg(table);
-    return execSql(sql);
+    return execSql(sql,Q_FUNC_INFO);
 }
 
 bool DBManager::deleteAll(const QString& table)

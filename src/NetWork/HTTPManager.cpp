@@ -1,4 +1,4 @@
-﻿#include "NetworkManager.h"
+﻿#include "HTTPManager.h"
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QDebug>
@@ -7,7 +7,7 @@
 #include <QFile>
 #include <QFileInfo>
 
-NetworkManager::NetworkManager(QObject *parent)
+HTTPManager::HTTPManager(QObject *parent)
     : QObject(parent)
 {
     mNetworkAccess = new QNetworkAccessManager(this);
@@ -16,12 +16,12 @@ NetworkManager::NetworkManager(QObject *parent)
         this, SLOT(replyFinished(QNetworkReply*)));
 }
 
-NetworkManager::~NetworkManager()
+HTTPManager::~HTTPManager()
 {
 
 }
 
-void NetworkManager::replyFinished( QNetworkReply* reply)
+void HTTPManager::replyFinished( QNetworkReply* reply)
 {
     int key = findRequest(reply);
     HTTPRequest request = getRequest(key);
@@ -37,10 +37,8 @@ void NetworkManager::replyFinished( QNetworkReply* reply)
 			QByteArray bytes = reply->readAll();
 			emit replyArrived(key,bytes);
 		}
-    }
-    else
-    {
-        emit replyError(key,NF_REQUEST_ERROR);
+    }else{
+        emit replyError(key,reply->error(),reply->errorString());
 
         QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
         qDebug("found error ...code:%d %d\n",statusCode.toInt(),reply->error());
@@ -51,12 +49,16 @@ void NetworkManager::replyFinished( QNetworkReply* reply)
     reply->deleteLater();
 }
 
-void NetworkManager::on_downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+void HTTPManager::on_downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	emit downloadProgress(1,bytesReceived,bytesTotal);
+    QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
+    if(reply){
+        int key = findRequest(reply);
+        emit downloadProgress(key,bytesReceived,bytesTotal);
+    }
 }
 
-void NetworkManager::on_readyRead()
+void HTTPManager::on_readyRead()
 {
 	QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
 	if(reply){
@@ -68,10 +70,11 @@ void NetworkManager::on_readyRead()
 	}
 }
 
-QString NetworkManager::saveFileName(const QUrl& url)
+QString HTTPManager::saveFileName(const QUrl& url)
 {
 	QString path = url.path();
-	QString basename = QFileInfo(path).fileName();
+    QFileInfo fi = QFileInfo(path);
+    QString basename = fi.fileName();
 
 	if(basename.isEmpty()){
 		basename = "temp_download";
@@ -91,17 +94,17 @@ QString NetworkManager::saveFileName(const QUrl& url)
 	return basename;
 }
 
-void NetworkManager::addRequest(int unique,HTTPRequest request)
+void HTTPManager::addRequest(int unique,HTTPRequest request)
 {
 	mRequests.insert(unique,request);
 }
 
-HTTPRequest NetworkManager::getRequest(int unique)
+HTTPRequest HTTPManager::getRequest(int unique)
 {
 	return mRequests.value(unique);
 }
 
-int NetworkManager::findRequest(QNetworkReply* reply)
+int HTTPManager::findRequest(QNetworkReply* reply)
 {
     foreach(int unique,mRequests.keys()){
         HTTPRequest request = mRequests.value(unique);
@@ -113,7 +116,7 @@ int NetworkManager::findRequest(QNetworkReply* reply)
 	return -1;
 }
 
-void NetworkManager::removeRequest(int unique)
+void HTTPManager::removeRequest(int unique)
 {
 	if(mRequests.contains(unique)){
         HTTPRequest request = mRequests.value(unique);
@@ -121,7 +124,7 @@ void NetworkManager::removeRequest(int unique)
 	}
 }
 
-void NetworkManager::doPost(int unique, const QUrl& url,const QMap<QString,QString>& data )
+void HTTPManager::doPost(int unique, const QUrl& url,const QMap<QString,QString>& data )
 {
     QNetworkRequest request;
 
@@ -141,9 +144,7 @@ void NetworkManager::doPost(int unique, const QUrl& url,const QMap<QString,QStri
 //     request.setRawHeader("Cache-Control","no-cache");
 
     QByteArray postData;
-
     QStringList keys = data.keys();
-
     foreach(QString key,keys)
     {
         postData.append(QString("%1=%2&").arg(key).arg(data.value(key)));
@@ -158,7 +159,7 @@ void NetworkManager::doPost(int unique, const QUrl& url,const QMap<QString,QStri
     addRequest(unique,myrequest);
 }
 
-void NetworkManager::doGet(int unique, const QUrl& url )
+void HTTPManager::doGet(int unique, const QUrl& url )
 {
     QNetworkRequest request;
     request.setUrl(url);
@@ -171,14 +172,20 @@ void NetworkManager::doGet(int unique, const QUrl& url )
 	addRequest(unique,myrequest);
 }
 
-void NetworkManager::doUploadFile( int unique,const QUrl& url,QString filePath )
+void HTTPManager::doUploadFile( int unique,const QUrl& url,QString filePath )
 {
-    QFileInfo fileInfo(filePath);
-    if(!fileInfo.exists() || !fileInfo.isFile())
+    QFile *file = new QFile(filePath);
+    if(!file->open(QIODevice::ReadOnly))
     {
-        emit replyError(unique,NF_FILE_NOT_EXIST);
+        emit replyError(unique,NF_FILE_CANNOT_READ,"upload:file can not be opened.");
         return;
     }
+//    QFileInfo fileInfo(filePath);
+//    if(!fileInfo.exists() || !fileInfo.isFile())
+//    {
+//        emit replyError(unique,NF_FILE_NOT_EXIST,"upload:file can not be opened.");
+//        return;
+//    }
 
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -189,12 +196,6 @@ void NetworkManager::doUploadFile( int unique,const QUrl& url,QString filePath )
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
     imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\""+filePath+"\"")); //注意这里的filename必须正确设定，否则会出现没有上传文件的错误
-    QFile *file = new QFile(filePath);
-    if(!file->open(QIODevice::ReadOnly))
-    {
-        emit replyError(unique,NF_FILE_CANNOT_READ);
-        return;
-    }
 
     imagePart.setBodyDevice(file);
     file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
@@ -216,12 +217,13 @@ void NetworkManager::doUploadFile( int unique,const QUrl& url,QString filePath )
 	addRequest(unique,myrequest);
 }
 
-void NetworkManager::doDownloadFile(int unique,const QUrl& url,QString savePath)
+void HTTPManager::doDownloadFile(int unique,const QUrl& url,QString savePath)
 {
 	QString fileName = saveFileName(url);
 	QFile* file = new QFile(fileName);
 	if (!file->open(QIODevice::WriteOnly)) {
 		file->deleteLater();
+        emit replyError(unique,NF_FILE_CANNOT_READ,"download:file can not be opened.");
 		qDebug()<<"error open file:"<<fileName;
 		return;
 	}

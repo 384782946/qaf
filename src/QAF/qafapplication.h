@@ -3,6 +3,8 @@
 
 #include <QApplication>
 
+class QSplashScreen;
+
 class QAFApplication : public QApplication
 {
 public:
@@ -19,8 +21,8 @@ protected:
 	void initialize();
 
 private:
-	QSplashScreen* mSplashScreen = nullptr;
-	QWidget* mMainWindow = nullptr;
+    QSplashScreen* mSplashScreen;
+    QWidget* mMainWindow;
 };
 
 #endif // QAFAPPLICATION_H

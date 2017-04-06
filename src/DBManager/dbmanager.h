@@ -20,7 +20,7 @@ public:
 
 	bool open(const QString& dbName,const QString& user, const QString& psw, const QString& address,int port);
 
-    bool execSql(const QString& sql);
+    bool execSql(const QString& sql,const QString& callName);
 
     bool update(const QString& table,const QMap<QString,QVariant>& values,const QString& _where = "");
 

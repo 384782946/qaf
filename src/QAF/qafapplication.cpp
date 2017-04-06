@@ -1,15 +1,19 @@
-﻿#include "stdafx.h"
-#include "qafapplication.h"
+﻿#include "qafapplication.h"
 #include <QtWidgets/QSplashScreen>
+#include <QSharedMemory>
+#include <QFile>
 #include <QTranslator>
+#include <QTimer>
+
 #include <QAFContext.h>
 #include <QAFContext.h>
 #include <QtAwesome.h>
-
 #include "mainwindow.h"
 
 QAFApplication::QAFApplication(int & argc, char ** argv)
-	:QApplication(argc,argv)
+    :QApplication(argc,argv),
+     mSplashScreen(NULL),
+     mMainWindow(NULL)
 {
 	
 }
@@ -46,17 +50,17 @@ void QAFApplication::initialize()
 	setApplicationVersion(QAF_VERSION_STR);
 
 	//install qss
-	QFile f(":qdarkstyle/style.qss");
-	if (!f.exists())
-	{
-		printf("Unable to set stylesheet, file not found\n");
-	}
-	else
-	{
-        //f.open(QFile::ReadOnly | QFile::Text);
-        //QTextStream ts(&f);
-        //qApp->setStyleSheet(ts.readAll());
-	}
+//	QFile f(":qdarkstyle/style.qss");
+//	if (!f.exists())
+//	{
+//		printf("Unable to set stylesheet, file not found\n");
+//	}
+//	else
+//	{
+//        f.open(QFile::ReadOnly | QFile::Text);
+//        QTextStream ts(&f);
+//        qApp->setStyleSheet(ts.readAll());
+//	}
 
 	//install translator
 	QString lang = QLocale::system().name().section('_', 0, 0);
@@ -79,16 +83,21 @@ void QAFApplication::initialize()
 
 int QAFApplication::run()
 {
+    int ret = -1;
+
 	initialize();
 
 	QAF::QAFContext::getSingleton()->construct();
 
-	int ret = 0;
-	mMainWindow->showMaximized();
-	mSplashScreen->finish(mMainWindow);
-	mSplashScreen->deleteLater();
-	mSplashScreen = nullptr;
-	ret = exec();
+    //延迟启动,保证1秒的启动画面
+    QTimer::singleShot(1000,[=](){
+        mMainWindow->showMaximized();
+        mSplashScreen->finish(mMainWindow);
+        mSplashScreen->deleteLater();
+        mSplashScreen = nullptr;
+    });
+
+    ret = exec();
 	mMainWindow->deleteLater();
 	mMainWindow = nullptr;
 

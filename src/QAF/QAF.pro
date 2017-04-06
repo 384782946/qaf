@@ -16,7 +16,6 @@ INCLUDEPATH += $$PWD \
     $$PWD/../../include
 
 LIBS += -L"$$PWD/../../output/lib"
-PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += $$PWD
 win32:RC_FILE = QAF.rc
 

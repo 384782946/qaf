@@ -22,6 +22,7 @@ enum HTTPRequestType{
 struct HTTPRequest{
     int unique;
     int type;
+    //for download
     QFile* file;
     QNetworkReply* reply;
 
@@ -33,7 +34,7 @@ struct HTTPRequest{
     }
 };
 
-class NETWORK_EXPORT NetworkManager : public QObject
+class NETWORK_EXPORT HTTPManager : public QObject
 {
     Q_OBJECT
 
@@ -41,13 +42,13 @@ public:
     enum NetworkFlag
     {
         NF_SUCCESS = 0,
-        NF_FILE_NOT_EXIST,
+        NF_FILE_NOT_EXIST = 1000,
         NF_FILE_CANNOT_READ,
         NF_REQUEST_ERROR,
     };
 
-    NetworkManager(QObject *parent);
-    ~NetworkManager();
+    HTTPManager(QObject *parent);
+    ~HTTPManager();
 
     void doGet(int unique,const QUrl& url);
 
@@ -59,7 +60,7 @@ public:
 
 signals:
     void replyArrived(int,const QByteArray&);
-    void replyError(int,int);
+    void replyError(int,int,const QString&);
 	void downloadProgress(int unique,qint64 currentValue,qint64 maxValue);
 
 protected slots:

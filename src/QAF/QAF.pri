@@ -5,16 +5,14 @@
 # Remove it when you are finished editing this file.
 #message("You are running qmake on a generated .pro file. This may not work!")
 
-HEADERS += ./stdafx.h \
-    ./mainwindow.h \
+HEADERS += ./mainwindow.h \
     ./qafapplication.h \
     ./SettingsDialog.h
 
 SOURCES += ./main.cpp \
     ./mainwindow.cpp \
     ./qafapplication.cpp \
-    ./SettingsDialog.cpp \
-    ./stdafx.cpp
+    ./SettingsDialog.cpp
 
 FORMS += ./mainwindow.ui \
     ./settingsdialog.ui

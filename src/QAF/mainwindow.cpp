@@ -1,7 +1,7 @@
-﻿#include "stdafx.h"
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include <QAFGlobal.h>
 #include <QAFContext.h>
+#include <QtWidgets>
 #include "qafapplication.h"
 #include <QDebug>
 

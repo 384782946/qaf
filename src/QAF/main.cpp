@@ -1,7 +1,7 @@
-﻿#include "stdafx.h"
-#include "qafapplication.h"
+﻿#include "qafapplication.h"
 
 #include <QMessageBox>
+#include <QTextCodec>
 
 //#include <log4qt/logger.h>
 //#include <log4qt/basicconfigurator.h>
