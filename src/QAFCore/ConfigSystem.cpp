@@ -23,11 +23,6 @@ namespace QAF
 	void ConfigSystem::install()
 	{
 		AbstractSystem::install();
-
-        QString configPath = QAFContext::wellKnownPath(DT_CONFIG) + "/run.xml";
-        if(!loadConfig(configPath)){
-            qDebug()<<"ConfigSystem::install:"<<"run configuration cann't be loaded.";
-        }
 	}
 
 	void ConfigSystem::uninstall()
@@ -94,5 +89,4 @@ namespace QAF
 		
 		return false;
 	}
-
 }

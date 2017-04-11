@@ -3,7 +3,7 @@
 
 QtCommonModel::QtCommonModel(QObject *parent)
 	: QAbstractItemModel(parent)
-    , mRootItem(QSharedPointer<RootItem>(new RootItem()))
+    , mRootItem(QSharedPointer<RootItem>::create())
 {
 
 }

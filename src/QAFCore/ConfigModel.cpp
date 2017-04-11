@@ -187,7 +187,7 @@ namespace QAF{
             if (elm.isNull()||!elm.isElement())
                 continue;
 
-            ConfigItemPtr configItem = ConfigItemPtr(new ConfigItem());
+            ConfigItemPtr configItem = ConfigItemPtr::create();
             if (configItem)
             {
                 configItem->setType(CT_NODE);

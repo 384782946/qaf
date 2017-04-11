@@ -1,12 +1,16 @@
 ﻿#include "qafapplication.h"
+
 #include <QtWidgets/QSplashScreen>
 #include <QSharedMemory>
 #include <QFile>
 #include <QTranslator>
 #include <QTimer>
+#include <QTextStream>
 
 #include <QAFContext.h>
 #include <QAFContext.h>
+#include <ConfigSystem.h>
+
 #include <QtAwesome.h>
 #include "mainwindow.h"
 
@@ -35,12 +39,11 @@ void QAFApplication::splashMessage(QString msg)
 
 void QAFApplication::initialize()
 {
-
 	QtAwesome::getSingleton()->initFontAwesome();
-	QVariantMap options;
-	//options.insert("color-active", QColor(205,0,0 ) );
-	//options.insert("anim", qVariantFromValue(new QtAwesomeAnimation(beerButton, 10, 2)));
-	QIcon icon = QtAwesome::getSingleton()->icon(fa::locationarrow, options);
+    QVariantMap options;
+    options.insert("color", QColor(50,205,50));
+    //options.insert("anim", qVariantFromValue(new QtAwesomeAnimation(NULL, 10, 2)));
+    QIcon icon = QtAwesome::getSingleton()->icon(fa::inbox, options);
 	setWindowIcon(icon);
 	
 	//set propertys of application
@@ -86,6 +89,17 @@ int QAFApplication::run()
     int ret = -1;
 
 	initialize();
+
+    using namespace QAF;
+
+    QString configPath = QAFContext::wellKnownPath(QAF::DT_CONFIG);
+    QAFContext* qafContext = QAFContext::getSingleton();
+    ConfigSystem* configSys = static_cast<ConfigSystem*>(qafContext->getSystem(QAF::ST_CONFIG));
+    if(configSys){
+        if(!configSys->loadConfig(configPath+"/run.xml")){
+
+        }
+    }
 
 	QAF::QAFContext::getSingleton()->construct();
 

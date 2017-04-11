@@ -80,7 +80,7 @@ namespace QAF
 		if (logModel)
 		{
 			QString timeStr = QDateTime::currentDateTime().toString("yy/MM/dd hh:mm:ss");
-            logModel->addItem(LogItemPtr(new QAF::LogItem(type, timeStr, msg)));
+            logModel->addItem(LogItemPtr::create(type, timeStr, msg));
 		}
 #endif
 	}
@@ -100,7 +100,7 @@ namespace QAF
 		{
 			SymFromAddr(process, (DWORD64)(stack[i]), 0, symbol);
 
-			printf("%i: %s - 0x%0X\n", frames - i - 1, symbol->Name, symbol->Address);
+            printf("%i: %s - 0x%0X\n", frames - i - 1, symbol->Name, symbol->Address);
 		}
 
 		free(symbol);

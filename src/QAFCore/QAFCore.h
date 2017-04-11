@@ -30,6 +30,7 @@ namespace QAF
 
 		void addSystem(AbstractSystem*);
 		void removeSystem(SystemType);
+        void removeSystem(AbstractSystem*);
 		AbstractSystem* getSystem(SystemType type) const;
 		ConfigSystem* getConfigSystem() const;
 		ObjectSystem* getObjectSystem(int sysId = ST_OBJECT) const;

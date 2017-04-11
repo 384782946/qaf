@@ -14,7 +14,12 @@ namespace QAF
 		:mUIInterface(nullptr)
 		, mLogModel(new QAF::LogModel())
 	{
-		mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
+        mLogModel->setHeaders(QStringList() << LStr("类型") << LStr("时间") << LStr("内容"));
+
+        //创建系统
+        addSystem(new ObjectSystem(ST_OBJECT,this));
+        addSystem(new ConfigSystem(ST_CONFIG,this));
+        addSystem(new PluginSystem(ST_PLUGIN,this));
 	}
 
 	QAFCore::~QAFCore()
@@ -29,20 +34,9 @@ namespace QAF
 		foreach(int key, mSystems.keys()){
 			AbstractSystem* system = mSystems.value(key, nullptr);
 			if (system){
-				QString msg;
-				if (key > ST_NONE && key < ST_CORE){
-                    msg = QString("%1%2").arg(LStr("正在卸载核心模块：")).arg(system->name());
-				}
-				else if (key > ST_CORE){
-                    msg = QString("%1%2").arg(LStr("正在卸载扩展模块：")).arg(system->name());
-				}
-
-				qDebug() << msg;
-				system->uninstall();
+                removeSystem(system);
 			}
 		}
-
-		qDeleteAll(mSystems);
 
 		//取消消息处理
 		qInstallMessageHandler(0);
@@ -64,9 +58,6 @@ namespace QAF
 
 	void QAFCore::initCore()
 	{
-		addSystem(new ObjectSystem(ST_OBJECT,this));
-		addSystem(new ConfigSystem(ST_CONFIG,this));
-
 		foreach(int key, mSystems.keys()){
 			if (key > ST_NONE && key < ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
@@ -74,7 +65,9 @@ namespace QAF
                     QString msg = QString("%1%2").arg(LStr("正在加载核心模块：")).arg(system->name());
 					qDebug() << msg;
 					
-					system->install();
+                    if(!system->isInstalled()){
+                        system->install();
+                    }
 				}
 			}
 		}
@@ -82,8 +75,6 @@ namespace QAF
 
 	void QAFCore::initExtent()
 	{
-		addSystem(new PluginSystem(ST_PLUGIN,this));
-
 		foreach(int key, mSystems.keys()){
 			if (key > ST_CORE){
 				AbstractSystem* system = mSystems.value(key, nullptr);
@@ -106,21 +97,41 @@ namespace QAF
 		if (!mSystems.contains(id))
 		{
 			mSystems.insert(id, as);
+            //已丢弃，安装操作留给用户，以便用户在安装前进行一些自定义操作
+            //if(!as->isInstalled()){
+            //    as->install();
+            //}
 		}
 	}
 
 	void QAFCore::removeSystem(SystemType type)
 	{
-		if (mSystems.contains(type))
-		{
-			AbstractSystem* as = mSystems.take(type);
-			if (as)
-			{
-				as->uninstall();
-				delete as;
-			}
-		}
-	}
+        removeSystem(getSystem(type));
+    }
+
+    void QAFCore::removeSystem(AbstractSystem * sys)
+    {
+        if(sys == NULL)
+            return;
+
+        int key = mSystems.key(sys,-1);
+        if (key != -1 && mSystems.contains(key))
+        {
+            QString msg;
+            if (key > ST_NONE && key < ST_CORE){
+                msg = QString("%1%2").arg(LStr("正在卸载核心模块：")).arg(sys->name());
+            }
+            else if (key > ST_CORE){
+                msg = QString("%1%2").arg(LStr("正在卸载扩展模块：")).arg(sys->name());
+            }
+
+            qDebug() << msg;
+
+            mSystems.remove(key);
+            sys->uninstall();
+            sys->deleteLater();
+        }
+    }
 
 	AbstractSystem* QAFCore::getSystem(SystemType type) const
 	{
