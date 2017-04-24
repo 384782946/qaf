@@ -1,4 +1,4 @@
-﻿#include "TCPServer.h"
+#include "TCPServer.h"
 
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -93,8 +93,8 @@ void TCPServer::handle(ClientEntity* entity)
 					entity->Socket->write(entity->WriteBuffer.mid(entity->WriteLength,len));
 				}
 			}
-			else{ //无返回值
-			}
+            //else{ //无返回值
+            //}
 
 			watcher->deleteLater();
 		});
@@ -107,6 +107,7 @@ void TCPServer::handle(ClientEntity* entity)
 
 QSharedPointer<Package> TCPServer::doHandle(const ReqeustContext& context, QSharedPointer<Package> package)
 {
+    Q_UNUSED(context)
 	QSharedPointer<Request> request = qSharedPointerCast<Request>(package);
 	if (request->reqestType() == RT_WITHOUT_RESPONSE)
 	{
@@ -212,7 +213,8 @@ void TCPReceiver::on_disconnected()
 
 void TCPReceiver::on_error(QAbstractSocket::SocketError socketError)
 {
+    Q_UNUSED(socketError)
 	QTcpSocket* clientSocket = (QTcpSocket*)sender();
     clientSocket->disconnectFromHost();
-	qDebug() << "TCPServer:" << clientSocket->errorString();
+    qDebug() << "TCPServer:" << clientSocket->errorString();
 }
