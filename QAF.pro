@@ -17,5 +17,6 @@ SUBDIRS += $$PWD/src/NetWork/NetWork.pro \
     $$PWD/src/QAF/QAF.pro \
     $$PWD/src/UIPlugin/UIPlugin.pro \
     $$PWD/src/tests/testNetWork/testNetWork.pro \
-    $$PWD/src/examples/testPlugin/testPlugin.pro
+    $$PWD/src/examples/testPlugin/testPlugin.pro \
+    $$PWD/src/tests/testQAFCore/testQAFCore.pro
 

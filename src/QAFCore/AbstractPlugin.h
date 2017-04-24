@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * \file AbstractPlugin.h
  * \date 2016/01/16
  *
@@ -58,10 +58,10 @@ namespace QAF
 		bool mIsInstalled = false;
 	};
 
-	class PluginContext
-	{
+//	class PluginContext
+//	{
 
-	};
+//	};
 
 	class AbstractPluginFactory
 	{

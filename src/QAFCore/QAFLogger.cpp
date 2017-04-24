@@ -1,4 +1,4 @@
-﻿#include "QAFLogger.h"
+#include "QAFLogger.h"
 
 #include <QDir>
 #include <stdio.h>
@@ -52,7 +52,7 @@ namespace QAF
 		gLogStream << stamp << msg <<"\n";
 		gLogStream.flush();
 		
-		QByteArray localMsg = msg.toLocal8Bit();
+        QByteArray localMsg = msg.toLocal8Bit();
 		switch (type) {
 		case QtDebugMsg:
 		fprintf(stdout, "Debug: %s\n", localMsg.constData());

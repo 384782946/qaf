@@ -1,4 +1,4 @@
-﻿#include "ObjectSystem.h"
+#include "ObjectSystem.h"
 
 #include <QMutexLocker>
 
@@ -27,7 +27,7 @@ namespace QAF
 	{
 		AbstractSystem::uninstall();
 
-		foreach(ObjectInfo* info, mObjects)
+        foreach(QSharedPointer<ObjectInfo> info, mObjects)
 		{
 			if (info)
 			{
@@ -41,8 +41,6 @@ namespace QAF
 				}
 
 				delete info->mObject;
-				delete info;
-				info = nullptr;
 			}
 		}
 
@@ -72,8 +70,43 @@ namespace QAF
 			mMinValidId = mMaxValidId;
 		}
 
-		return ret;
-	}
+        return ret;
+    }
+
+    QList<ObjectId> ObjectSystem::makeArrayId(int count)
+    {
+        if(count > 100000){
+            throw std::logic_error("ObjectSystem::makeArrayId:can not to make too much id once time");
+        }
+
+        QMutexLocker locker(&mMutex);
+        QList<ObjectId> rets;
+        for(int i=0;i<count;++i){
+            ObjectId id = 0;
+            while (mMinValidId < mMaxValidId && hasObject(mMinValidId)) //确保id唯一
+            {
+                mMinValidId++;
+            }
+
+            if (mMinValidId < mMaxValidId)
+            {
+                id = mMinValidId;
+            }
+            else
+            {
+                id = mMaxValidId++;
+                mMinValidId = mMaxValidId;
+            }
+
+            rets.append(id);
+        }
+
+        if(rets.size() != count){
+            throw std::logic_error("ObjectSystem::makeArrayId:fail to make enough id");
+        }
+
+        return rets;
+    }
 
 	void ObjectSystem::releaseId(ObjectId id)
 	{
@@ -85,7 +118,7 @@ namespace QAF
 			mMinValidId = id;
 	}
 
-	bool ObjectSystem::hasObject(ObjectId id)
+    bool ObjectSystem::hasObject(ObjectId id) const
 	{
 		return id != INVALID_OBJECT_ID && mObjects.contains(id);
 	}
@@ -109,8 +142,13 @@ namespace QAF
 		else
 		{
 			return false;
-		}
-	}
+        }
+    }
+
+    QList<ObjectId> ObjectSystem::objects() const
+    {
+        return mObjects.keys();
+    }
 
 	AbstractObject* ObjectSystem::query(ObjectId id)
 	{
@@ -143,7 +181,7 @@ namespace QAF
 	{
 		if (mObjects.contains(before) && !mObjects.contains(after) && after != INVALID_OBJECT_ID)
 		{
-			ObjectInfo* info = mObjects.value(before);
+            QSharedPointer<ObjectInfo> info = mObjects.value(before);
 			if (info)
 			{
 				info->mObject->mObjectId = before;
@@ -161,7 +199,7 @@ namespace QAF
 		return true;
 	}
 
-	int ObjectSystem::objectCount()
+    int ObjectSystem::objectCount() const
 	{
 		return mObjects.size();
 	}

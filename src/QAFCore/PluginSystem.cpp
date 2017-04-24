@@ -78,9 +78,9 @@ namespace QAF
                     qDebug()<<"start load plugin:" << pluginConfig.mPlugin;
 #ifdef QT_DEBUG
 #ifdef Q_OS_UNIX
-					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "d", this);
-#else
                     QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "_debug", this);
+#else
+                    QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin + "d", this);
 #endif
 #else
 					QLibrary* library = new QLibrary(pluginPath + "/" + pluginConfig.mPlugin, this);
@@ -92,7 +92,7 @@ namespace QAF
 							AbstractPluginFactory* apf = avg();
 							if (apf){
 								mFactorys << apf;
-								qDebug() << LStr("正在加载插件:") << apf->getAuthor()
+                                qDebug() << LStr("正在加载插件:") << apf->getAuthor()
 									<< apf->getDesc()
 									<< apf->getType()
 									<< apf->getVersion();

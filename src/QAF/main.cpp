@@ -1,4 +1,4 @@
-﻿#include "qafapplication.h"
+#include "qafapplication.h"
 
 #include <QMessageBox>
 #include <QTextCodec>
