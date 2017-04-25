@@ -7,17 +7,12 @@ TARGET = NetWork
 DESTDIR = $$PWD/../../output/lib
 QT += core network
 CONFIG += debug_and_release
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB
 INCLUDEPATH += . \
     $$PWD/../Utils
 
 DEPENDPATH += $$PWD
-CONFIG(debug,debug|release){
-    win32:TARGET=$$join(TARGET,,,d)
-    unix:TARGET=$$join(TARGET,,,_debug)
-}
 
-CONFIG(release,release|debug){
-
-}
 include(NetWork.pri)

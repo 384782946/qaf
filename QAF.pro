@@ -7,16 +7,35 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 TEMPLATE = subdirs
-SUBDIRS += $$PWD/src/NetWork/NetWork.pro \
-    $$PWD/src/DBManager/DBManager.pro \
-    $$PWD/src/QtAwesome/QtAwesome.pro \
-    $$PWD/src/QtCommonModel/QtCommonModel.pro \
-    $$PWD/src/QtPropertyBrowser/qtpropertybrowser.pro \
-    $$PWD/src/Utils/Utils.pro \
-    $$PWD/src/QAFCore/QAFCore.pro \
-    $$PWD/src/QAF/QAF.pro \
-    $$PWD/src/UIPlugin/UIPlugin.pro \
-    $$PWD/src/tests/testNetWork/testNetWork.pro \
-    $$PWD/src/examples/testPlugin/testPlugin.pro \
-    $$PWD/src/tests/testQAFCore/testQAFCore.pro
+SUBDIRS += NetWork DBManager QtAwesome QtCommonModel \
+           qtpropertybrowser QAFCore QAF UIPlugin \
+           testNetWork testPlugin testQAFCore
 
+NetWork.subdir = $$PWD/src/NetWork
+
+DBManager.subdir = $$PWD/src/DBManager
+
+QtAwesome.subdir = $$PWD/src/QtAwesome
+
+QtCommonModel.subdir = $$PWD/src/QtCommonModel
+
+qtpropertybrowser.subdir = $$PWD/src/QtPropertyBrowser
+
+QAFCore.subdir = $$PWD/src/QAFCore
+QAFCore.depends = QtCommonModel
+
+QAF.subdir = $$PWD/src/QAF
+QAF.depends = QAFCore
+
+UIPlugin.subdir = $$PWD/src/UIPlugin
+UIPlugin.depends = QAFCore qtpropertybrowser
+
+//测试代码
+testNetWork.subdir = $$PWD/src/tests/testNetWork
+testNetWork.depends = NetWork
+
+testPlugin.subdir = $$PWD/src/examples/testPlugin
+testPlugin.depends = QAFCore
+
+testQAFCore.subdir = $$PWD/src/tests/testQAFCore
+testQAFCore.depends = QAFCore

@@ -10,7 +10,7 @@ QT       += testlib
 QT       -= gui
 
 TARGET = testqafcoretest
-CONFIG   += debug_and_release console
+CONFIG   += console
 CONFIG   -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -37,19 +37,6 @@ INCLUDEPATH += $$PWD \
     $$PWD/../../QAFCore \
     $$PWD/../../Utils
 
-LIBS += -L"$$PWD/../../../output/lib"
-
-CONFIG(debug,debug|release){
-    unix{
-        TARGET=$$join(TARGET,,,_debug)
-        LIBS += -lQtCommonModel_debug
-    }
-    else{
-        TARGET=$$join(TARGET,,,d)
-        LIBS += -lQAFCored
-    }
-}
-
-CONFIG(release,release|debug){
-    LIBS += -lQAFCore
-}
+include($$PWD/../../Common.pri)
+LIBS += -L"$$PWD/../../../output/lib" \
+        -l$$qtLibraryName(QAFCore)

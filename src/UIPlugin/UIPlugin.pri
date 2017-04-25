@@ -7,15 +7,18 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./UIPlugin.h \
-    ./uiplugin_global.h \
-    ./PropertyEditerWidget.h \
-    ./ConsoleWidget.h \
-    ./ConfigDialog.h
-SOURCES += ./ConfigDialog.cpp \
-    ./ConsoleWidget.cpp \
-    ./PropertyEditerWidget.cpp \
-    ./UIPlugin.cpp
-FORMS += ./ConfigDialog.ui \
-    ./ConsoleWidget.ui
-RESOURCES += UIPlugin.qrc
+HEADERS += $$PWD/UIPlugin.h \
+    $$PWD/uiplugin_global.h \
+    $$PWD/PropertyEditerWidget.h \
+    $$PWD/ConsoleWidget.h \
+    $$PWD/ConfigDialog.h
+
+SOURCES += $$PWD/ConfigDialog.cpp \
+    $$PWD/ConsoleWidget.cpp \
+    $$PWD/PropertyEditerWidget.cpp \
+    $$PWD/UIPlugin.cpp
+
+FORMS += $$PWD/ConfigDialog.ui \
+    $$PWD/ConsoleWidget.ui
+
+RESOURCES += $$PWD/UIPlugin.qrc

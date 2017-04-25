@@ -7,16 +7,9 @@ TARGET = DBManager
 DESTDIR = $$PWD/../../output/lib
 QT += core sql
 CONFIG += debug_and_release
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DEFINES += QT_DLL DBMANAGER_LIB QT_SQL_LIB
 DEPENDPATH += $$PWD
-CONFIG(debug,debug|release){
-    unix:TARGET=$$join(TARGET,,,_debug)
-    else:TARGET=$$join(TARGET,,,d)
-}
 
-CONFIG(release,release|debug){
-
-}
 include(DBManager.pri)
-
-message($$ConfigureName)

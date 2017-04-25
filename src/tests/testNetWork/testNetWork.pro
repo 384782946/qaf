@@ -8,27 +8,17 @@ win32:DESTDIR = $$PWD/../../../output/bin/win32
 unix:DESTDIR = $$PWD/../../../output/bin/unix
 QT += core network testlib
 CONFIG += debug_and_release console
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DEFINES += QT_DLL QT_TESTLIB_LIB
 INCLUDEPATH += $$PWD \
     $$PWD/../../NetWork \
     $$PWD/../../Utils
 
-LIBS += -L"$$PWD/../../../output/lib"
 DEPENDPATH += $$PWD
-CONFIG(debug,debug|release){
-    unix:TARGET=$$join(TARGET,,,_debug)
-    else:TARGET=$$join(TARGET,,,d)
 
-    win32{
-        LIBS += -lNetWorkd
-    }
+include($$PWD/../../Common.pri)
+LIBS += -L"$$PWD/../../../output/lib" \
+    -l$$qtLibraryName(NetWork)
 
-    unix{
-        LIBS += -lNetWork_debug
-    }
-}
-
-CONFIG(release,release|debug){
-    LIBS += -lNetWork
-}
 include(testNetWork.pri)

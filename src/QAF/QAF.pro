@@ -8,6 +8,8 @@ win32:DESTDIR = $$PWD/../../output/bin/win32
 unix:DESTDIR = $$PWD/../../output/bin/unix
 QT += core widgets gui
 CONFIG += debug_and_release console
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DEFINES += QT_DLL QT_WIDGETS_LIB
 INCLUDEPATH += $$PWD \
     $$PWD/../QAFCore \
@@ -15,29 +17,13 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../../include
 
-LIBS += -L"$$PWD/../../output/lib"
 DEPENDPATH += $$PWD
 win32:RC_FILE = QAF.rc
 
-CONFIG(debug,debug|release){
-    unix:TARGET=$$join(TARGET,,,_debug)
-    else:TARGET=$$join(TARGET,,,d)
+include($$PWD/../Common.pri)
+LIBS += -L"$$PWD/../../output/lib" \
+    -l$$qtLibraryName(QAFCore) \
+    -l$$qtLibraryName(QtAwesome) \
+    -l$$qtLibraryName(QtCommonModel)
 
-    win32{
-        LIBS += -lQAFCored \
-            -lQtAwesomed
-    }
-
-    unix{
-        LIBS += -lQAFCore_debug \
-            -lQtAwesome_debug \
-            -lQtCommonModel_debug
-    }
-}
-
-CONFIG(release,release|debug){
-    LIBS += -lQAFCore \
-        -lQtAwesome \
-        -lQtCommonModel
-}
 include(QAF.pri)

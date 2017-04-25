@@ -3,15 +3,12 @@ TEMPLATE = lib
 QT += core widgets gui
 TARGET = QtPropertyBrowser
 DEFINES += QT_QTPROPERTYBROWSER_EXPORT
+CONFIG += debug_and_release
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DESTDIR = $$PWD/../../output/lib
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
-
-CONFIG(debug,debug|release){
-    unix:TARGET=$$join(TARGET,,,_debug)
-    else:TARGET=$$join(TARGET,,,d)
-}
-
 
 SOURCES += $$PWD/qtpropertybrowser.cpp \
         $$PWD/qtpropertymanager.cpp \

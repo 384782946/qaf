@@ -7,9 +7,10 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./BaseException.h \
-    ./Singleton.h \
-    ./utils_global.h \
-    ./TypeTraits.h \
-    ./Ensure.h
-SOURCES += ./Utils.cpp
+HEADERS +=  $$PWD/BaseException.h \
+    $$PWD/Singleton.h \
+    $$PWD/utils_global.h \
+    $$PWD/TypeTraits.h \
+    $$PWD/Ensure.h
+	
+SOURCES += $$PWD/Utils.cpp

@@ -7,6 +7,8 @@ TARGET = QtAwesome
 DESTDIR = $$PWD/../../output/lib
 QT += core widgets gui
 CONFIG += debug_and_release
+TARGET = $$qtLibraryTarget($$TARGET)
+
 DEFINES += QT_DLL QTAWESONME_LIB
 INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
@@ -14,12 +16,5 @@ INCLUDEPATH += $$PWD \
 
 #LIBS += -l$(NOINHERIT)
 DEPENDPATH += $$PWD
-CONFIG(debug,debug|release){
-    unix:TARGET=$$join(TARGET,,,_debug)
-    else:TARGET=$$join(TARGET,,,d)
-}
 
-CONFIG(release,release|debug){
-
-}
 include(QtAwesome.pri)
