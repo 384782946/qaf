@@ -4,21 +4,20 @@
 
 TEMPLATE = lib
 TARGET = testPlugin
-win32:DESTDIR = $$PWD/../../../output/bin/win32/plugin
-unix:DESTDIR = $$PWD/../../../output/bin/unix/plugin
 QT += core widgets gui
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL TESTPLUGIN_LIB QT_WIDGETS_LIB
 INCLUDEPATH += $$PWD \
     $$PWD/../../QAFCore \
     $$PWD/../../Utils
 
-include($$PWD/../../Common.pri)
-LIBS += -L"$$PWD/../../../output/lib" \
-        -l$$qtLibraryName(QAFCore)
-
 DEPENDPATH += $$PWD
+
+QAF_LIBS += QAFCore
+
+include($$PWD/../../Common.pri)
+DESTDIR = $$PWD/../../../output/bin/$$PLATFORM/plugin
+LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"
 
 include(testPlugin.pri)

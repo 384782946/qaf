@@ -8,10 +8,12 @@ TARGET = QtCommonModel
 DESTDIR = $$PWD/../../output/lib
 QT += core
 CONFIG += debug_and_release c++11
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL QTCOMMONMODEL_LIB
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
+
+include($$PWD/../Common.pri)
+DESTDIR = $$_PRO_FILE_PWD_/../../output/lib/$$PLATFORM
 
 include(QtCommonModel.pri)

@@ -4,11 +4,8 @@
 
 TEMPLATE = app
 TARGET = testNetWork
-win32:DESTDIR = $$PWD/../../../output/bin/win32
-unix:DESTDIR = $$PWD/../../../output/bin/unix
 QT += core network testlib
 CONFIG += debug_and_release console
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL QT_TESTLIB_LIB
 INCLUDEPATH += $$PWD \
@@ -17,8 +14,10 @@ INCLUDEPATH += $$PWD \
 
 DEPENDPATH += $$PWD
 
+QAF_LIBS += NetWork
+
 include($$PWD/../../Common.pri)
-LIBS += -L"$$PWD/../../../output/lib" \
-    -l$$qtLibraryName(NetWork)
+DESTDIR = $$PWD/../../../output/bin/$$PLATFORM
+LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"
 
 include(testNetWork.pri)

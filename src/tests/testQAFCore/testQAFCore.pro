@@ -10,7 +10,7 @@ QT       += testlib
 QT       -= gui
 
 TARGET = testqafcoretest
-CONFIG   += console
+CONFIG   += console debug_and_release
 CONFIG   -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -30,13 +30,13 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 DEPENDPATH += $$PWD
 
-win32:DESTDIR = $$PWD/../../../output/bin/win32
-unix:DESTDIR = $$PWD/../../../output/bin/unix
-
 INCLUDEPATH += $$PWD \
     $$PWD/../../QAFCore \
     $$PWD/../../Utils
 
+
+QAF_LIBS += QAFCore
+
 include($$PWD/../../Common.pri)
-LIBS += -L"$$PWD/../../../output/lib" \
-        -l$$qtLibraryName(QAFCore)
+DESTDIR = $$PWD/../../../output/bin/$$PLATFORM
+LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"

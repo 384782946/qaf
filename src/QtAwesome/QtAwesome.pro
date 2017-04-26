@@ -7,14 +7,15 @@ TARGET = QtAwesome
 DESTDIR = $$PWD/../../output/lib
 QT += core widgets gui
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
+
+include($$PWD/../Common.pri)
+DESTDIR = $$_PRO_FILE_PWD_/../../output/lib/$$PLATFORM
 
 DEFINES += QT_DLL QTAWESONME_LIB
 INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../../include \
 
-#LIBS += -l$(NOINHERIT)
 DEPENDPATH += $$PWD
 
 include(QtAwesome.pri)

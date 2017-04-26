@@ -4,10 +4,13 @@
 
 TEMPLATE = lib
 TARGET = NetWork
-DESTDIR = $$PWD/../../output/lib
+
 QT += core network
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
+
+include($$PWD/../Common.pri)
+
+DESTDIR = $$PWD/../../output/lib/$$PLATFORM
 
 DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB
 INCLUDEPATH += . \

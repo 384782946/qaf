@@ -4,11 +4,8 @@
 
 TEMPLATE = lib
 TARGET = UIPlugin
-win32:DESTDIR = $$PWD/../../output/bin/win32/plugin
-unix:DESTDIR = $$PWD/../../output/bin/unix/plugin
 QT += core widgets gui
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL QT_WIDGETS_LIB UIPLUGIN_LIB
 INCLUDEPATH += $$PWD \
@@ -19,9 +16,10 @@ INCLUDEPATH += $$PWD \
 
 DEPENDPATH += $$PWD
 
+QAF_LIBS += QAFCore QtPropertyBrowser
+
 include($$PWD/../Common.pri)
-LIBS += -L"$$PWD/../../output/lib" \
-    -l$$qtLibraryName(QAFCore) \
-    -l$$qtLibraryName(QtPropertyBrowser)
+DESTDIR = $$PWD/../../output/bin/$$PLATFORM/plugin
+LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
 
 include(UIPlugin.pri)

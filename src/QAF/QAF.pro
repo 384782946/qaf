@@ -4,11 +4,9 @@
 
 TEMPLATE = app
 TARGET = QAF
-win32:DESTDIR = $$PWD/../../output/bin/win32
-unix:DESTDIR = $$PWD/../../output/bin/unix
+
 QT += core widgets gui
 CONFIG += debug_and_release console
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL QT_WIDGETS_LIB
 INCLUDEPATH += $$PWD \
@@ -20,10 +18,11 @@ INCLUDEPATH += $$PWD \
 DEPENDPATH += $$PWD
 win32:RC_FILE = QAF.rc
 
+
+QAF_LIBS += QAFCore QtAwesome QtCommonModel
+
 include($$PWD/../Common.pri)
-LIBS += -L"$$PWD/../../output/lib" \
-    -l$$qtLibraryName(QAFCore) \
-    -l$$qtLibraryName(QtAwesome) \
-    -l$$qtLibraryName(QtCommonModel)
+LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
+DESTDIR = $$PWD/../../output/bin/$$PLATFORM
 
 include(QAF.pri)

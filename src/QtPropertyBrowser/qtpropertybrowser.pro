@@ -4,11 +4,13 @@ QT += core widgets gui
 TARGET = QtPropertyBrowser
 DEFINES += QT_QTPROPERTYBROWSER_EXPORT
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DESTDIR = $$PWD/../../output/lib
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
+
+include($$PWD/../Common.pri)
+DESTDIR = $$_PRO_FILE_PWD_/../../output/lib/$$PLATFORM
 
 SOURCES += $$PWD/qtpropertybrowser.cpp \
         $$PWD/qtpropertymanager.cpp \

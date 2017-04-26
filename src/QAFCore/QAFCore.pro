@@ -4,10 +4,9 @@
 
 TEMPLATE = lib
 TARGET = QAFCore
-DESTDIR = $$_PRO_FILE_PWD_/../../output/lib
+
 QT += core xml widgets gui
 CONFIG += debug_and_release
-TARGET = $$qtLibraryTarget($$TARGET)
 
 DEFINES += QT_DLL QAFCORE_LIB QT_WIDGETS_LIB QT_XML_LIB
 INCLUDEPATH += $$PWD \
@@ -16,9 +15,11 @@ INCLUDEPATH += $$PWD \
 
 DEPENDPATH += $$PWD
 
+QAF_LIBS += QtCommonModel
+
 include($$PWD/../Common.pri)
-LIBS += -L"$$PWD/../../output/lib" \
-        -l$$qtLibraryName(QtCommonModel)
+DESTDIR = $$_PRO_FILE_PWD_/../../output/lib/$$PLATFORM
+LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
 
 include(QAFCore.pri)
 include($$_PRO_FILE_PWD_/../Utils/Utils.pri)
