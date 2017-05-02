@@ -8,14 +8,9 @@ TARGET = NetWork
 QT += core network
 CONFIG += debug_and_release
 
-include($$PWD/../Common.pri)
-
-DESTDIR = $$PWD/../../output/lib/$$PLATFORM
-
 DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB
 INCLUDEPATH += . \
     $$PWD/../Utils
 
-DEPENDPATH += $$PWD
-
+include($$PWD/../Common.pri)
 include(NetWork.pri)

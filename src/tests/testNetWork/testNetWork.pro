@@ -12,12 +12,7 @@ INCLUDEPATH += $$PWD \
     $$PWD/../../NetWork \
     $$PWD/../../Utils
 
-DEPENDPATH += $$PWD
-
 QAF_LIBS += NetWork
 
 include($$PWD/../../Common.pri)
-DESTDIR = $$PWD/../../../output/bin/$$PLATFORM
-LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"
-
 include(testNetWork.pri)

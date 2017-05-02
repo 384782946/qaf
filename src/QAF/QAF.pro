@@ -4,7 +4,6 @@
 
 TEMPLATE = app
 TARGET = QAF
-
 QT += core widgets gui
 CONFIG += debug_and_release console
 
@@ -15,14 +14,10 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../../include
 
-DEPENDPATH += $$PWD
 win32:RC_FILE = QAF.rc
 
 
 QAF_LIBS += QAFCore QtAwesome QtCommonModel
 
 include($$PWD/../Common.pri)
-LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
-DESTDIR = $$PWD/../../output/bin/$$PLATFORM
-
 include(QAF.pri)

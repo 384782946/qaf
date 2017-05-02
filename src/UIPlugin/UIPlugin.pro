@@ -14,12 +14,9 @@ INCLUDEPATH += $$PWD \
     $$PWD/../QAFCore \
     $$PWD/../QtCommonModel
 
-DEPENDPATH += $$PWD
-
 QAF_LIBS += QAFCore QtPropertyBrowser
 
 include($$PWD/../Common.pri)
-DESTDIR = $$PWD/../../output/bin/$$PLATFORM/plugin
-LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
-
 include(UIPlugin.pri)
+
+DESTDIR = $$PROJECT_BINDIR/plugin

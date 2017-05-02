@@ -4,7 +4,6 @@
 
 TEMPLATE = lib
 TARGET = QAFCore
-
 QT += core xml widgets gui
 CONFIG += debug_and_release
 
@@ -13,13 +12,8 @@ INCLUDEPATH += $$PWD \
     $$PWD/../Utils \
     $$PWD/../QtCommonModel
 
-DEPENDPATH += $$PWD
-
 QAF_LIBS += QtCommonModel
 
 include($$PWD/../Common.pri)
-DESTDIR = $$_PRO_FILE_PWD_/../../output/lib/$$PLATFORM
-LIBS += -L"$$PWD/../../output/lib/$$PLATFORM"
-
 include(QAFCore.pri)
 include($$_PRO_FILE_PWD_/../Utils/Utils.pri)

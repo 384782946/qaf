@@ -17,7 +17,6 @@ DEPENDPATH += $$PWD
 QAF_LIBS += QAFCore
 
 include($$PWD/../../Common.pri)
-DESTDIR = $$PWD/../../../output/bin/$$PLATFORM/plugin
-LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"
-
 include(testPlugin.pri)
+
+DESTDIR = $$PROJECT_BINDIR/plugin

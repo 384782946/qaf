@@ -8,12 +8,6 @@ QT += core sql
 CONFIG += debug_and_release
 
 DEFINES += QT_DLL DBMANAGER_LIB QT_SQL_LIB
-DEPENDPATH += $$PWD
 
 include($$PWD/../Common.pri)
-DESTDIR = $$PWD/../../output/lib/$$PLATFORM
-
-#deploy.commands =
-#QMAKE_EXTRA_TARGETS += deploy
-
 include(DBManager.pri)

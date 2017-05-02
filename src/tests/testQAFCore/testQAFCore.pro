@@ -38,5 +38,3 @@ INCLUDEPATH += $$PWD \
 QAF_LIBS += QAFCore
 
 include($$PWD/../../Common.pri)
-DESTDIR = $$PWD/../../../output/bin/$$PLATFORM
-LIBS += -L"$$PWD/../../../output/lib/$$PLATFORM"
