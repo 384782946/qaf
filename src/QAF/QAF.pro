@@ -8,6 +8,7 @@ DESTDIR = ../../bin/Debug
 QT += core widgets gui
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_WIDGETS_LIB
+
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
@@ -21,13 +22,13 @@ DEPENDPATH += .
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)
     LIBS += -lQAFCored \
-        -llog4qtd \
+        #-llog4qtd \
         -lQtAwesomed
 }
 
 CONFIG(release,release|debug){
     LIBS += -lQAFCore \
-        -llog4qt \
+        #-llog4qt \
         -lQtAwesome
 }
 include(QAF.pri)
