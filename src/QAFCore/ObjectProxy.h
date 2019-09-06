@@ -30,8 +30,8 @@ namespace QAF
 			return mObjectSystem;
 		}
 		
-	protected:
-		AbstractObject* ptr() const;
+    protected:
+        AbstractObject* ptr() const;
 
 	protected:
 		ObjectId mObjectId;

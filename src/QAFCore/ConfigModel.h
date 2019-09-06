@@ -5,9 +5,9 @@
  * \author zxj
  * Contact: user@company.com
  *
- * \brief 
+ * \brief
  *
- * 配置项模型，基于AbstractTreeModel实现
+ * ??????????????AbstractTreeModel???
  *
  * \note
 */
@@ -23,125 +23,125 @@
 
 namespace QAF
 {
-	class QAFCORE_EXPORT ConfigItem :public ModelItem
-	{
-		friend class ConfigModel;
-		friend class ConfigIterator;
+    class QAFCORE_EXPORT ConfigItem :public ModelItem
+    {
+        friend class ConfigModel;
+        friend class ConfigIterator;
 
-	public:
-		ConfigItem() :mType(CT_NODE){}
+    public:
+        ConfigItem() :mType(CT_NODE){}
 
-		virtual QVariant data(int index, int role = Qt::DisplayRole);
-		virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
-		virtual int itemFlags(int);
+        virtual QVariant data(int index, int role = Qt::DisplayRole);
+        virtual bool setData(const QVariant &value, int index, int role = Qt::DisplayRole);
+        virtual int itemFlags(int);
 
-		ConfigItem* getChildByName(const QString& name);
-		ConfigItem* child(int);
+        ConfigItem* getChildByName(const QString& name);
+        ConfigItem* child(int);
 
-		void setName(QString name){ mName = name; }
-		QString getName() const{ return mName; }
+        void setName(QString name){ mName = name; }
+        QString getName() const{ return mName; }
 
-		void setValue(QString value){ mValue = value; }
-		QString getValue() const{ return mValue; }
+        void setValue(QString value){ mValue = value; }
+        QString getValue() const{ return mValue; }
 
-		void setType(ConfigType type){ mType = type; }
-		ConfigType getType() const{ return mType; }
+        void setType(ConfigType type){ mType = type; }
+        ConfigType getType() const{ return mType; }
 
-		QString typeToString(ConfigType ct);
-		ConfigType stringToType(QString st);
+        QString typeToString(ConfigType ct);
+        ConfigType stringToType(QString st);
 
-		QString getPath() const;
+        QString getPath() const;
 
-	protected:
-		void setPath(QString path);
+    protected:
+        void setPath(QString path);
 
-	private:
-		ConfigType mType;
-		QString mName;
-		QString mValue;
-		QString mPath;
-	};
+    private:
+        ConfigType mType;
+        QString mName;
+        QString mValue;
+        QString mPath;
+    };
 
-	class QAFCORE_EXPORT ConfigIterator
-	{
-	public:
-		ConfigIterator() :ptr(nullptr){}
-		ConfigIterator(ConfigItem* item) :ptr(item){}
-		ConfigIterator(const ConfigIterator& other) :ptr(other.ptr){}
+    class QAFCORE_EXPORT ConfigIterator
+    {
+    public:
+        ConfigIterator() :ptr(nullptr){}
+        ConfigIterator(ConfigItem* item) :ptr(item){}
+        ConfigIterator(const ConfigIterator& other) :ptr(other.ptr){}
 
-		QString getPath();
+        QString getPath();
 
-		bool isValid() const { return ptr != nullptr; }
-		
-		QString& operator*();
-		
-		ConfigIterator& operator++()
-		{
-			return move(1);
-		}
+        bool isValid() const { return ptr != nullptr; }
 
-		ConfigIterator& operator--()
-		{
-			return move(-1);
-		}
+        QString& operator*();
 
-		ConfigIterator& operator+(int step)
-		{
-			return move(step);
-		}
+        ConfigIterator& operator++()
+        {
+            return move(1);
+        }
 
-		ConfigIterator& operator-(int step)
-		{
-			return move(-step);
-		}
+        ConfigIterator& operator--()
+        {
+            return move(-1);
+        }
 
-	protected:
-		ConfigIterator& move(int step);
+        ConfigIterator& operator+(int step)
+        {
+            return move(step);
+        }
 
-	private:
-		ConfigItem* ptr;
-	};
+        ConfigIterator& operator-(int step)
+        {
+            return move(-step);
+        }
 
-	class QAFCORE_EXPORT ConfigModel : public QtCommonModel
-	{
-		Q_OBJECT
-	public:
-		ConfigModel(QObject *parent = nullptr);
-		~ConfigModel();
+    protected:
+        ConfigIterator& move(int step);
 
-		static ConfigModel* loadConfig(const QString& path);
+    private:
+        ConfigItem* ptr;
+    };
 
-		bool saveConfig();
-		bool isModified() const { return mIsModified; }
-		QString getPath() const{ return mConfigFilePath; }
-		QString getValue(const QString& path) const;
-		//ConfigIterator getChild(const QString& parent_path);
-		ConfigItem* getItem(const QString& path);
-		bool isExist(const QString& path) const;
-		bool setConfigValue(const QString& path, const QString& value);
-		void update(ConfigItem* item);
+    class QAFCORE_EXPORT ConfigModel : public QtCommonModel
+    {
+        Q_OBJECT
+    public:
+        ConfigModel(QObject *parent = nullptr);
+        ~ConfigModel();
 
-	signals:
-		void valueChanged(QString path);
+        static ConfigModel* loadConfig(const QString& path);
 
-	protected:
-		ConfigItem* query(const QString path) const;
+        bool saveConfig();
+        bool isModified() const { return mIsModified; }
+        QString getPath() const{ return mConfigFilePath; }
+        QString getValue(const QString& path) const;
+        //ConfigIterator getChild(const QString& parent_path);
+        ConfigItem* getItem(const QString& path);
+        bool isExist(const QString& path) const;
+        bool setConfigValue(const QString& path, const QString& value);
+        void update(ConfigItem* item);
 
-	private:
-		QString mConfigFilePath;
-		bool mIsModified;
-	};
+    signals:
+        void valueChanged(QString path);
 
-	class QAFCORE_EXPORT ConfigProxyModel : public QSortFilterProxyModel
-	{
-	public:
-		ConfigProxyModel(QObject *parent)
-			:QSortFilterProxyModel(parent){}
-		~ConfigProxyModel(){}
+    protected:
+        ConfigItem* query(const QString path) const;
 
-	protected:
-		virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
-	};
+    private:
+        QString mConfigFilePath;
+        bool mIsModified;
+    };
+
+    class QAFCORE_EXPORT ConfigProxyModel : public QSortFilterProxyModel
+    {
+    public:
+        ConfigProxyModel(QObject *parent)
+            :QSortFilterProxyModel(parent){}
+        ~ConfigProxyModel(){}
+
+    protected:
+        virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+    };
 }
 
 #endif // CONFIGMODEL_H

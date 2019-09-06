@@ -29,7 +29,7 @@ public:
 
     bool add(const QString& table,const QMap<QString,QVariant>& values);
 
-    QList<QList<QVariant>> query(const QString& table,/*[Output]*/QStringList& columns=QStringList(),const QString& _where = "");
+    QList<QList<QVariant>> query(const QString& table,/*[Output]*/QStringList& columns,const QString& _where = "");
 
     void close();
 

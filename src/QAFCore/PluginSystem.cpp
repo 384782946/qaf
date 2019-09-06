@@ -6,6 +6,7 @@
 
 #include "QAFContext.h"
 #include "AbstractPlugin.h"
+#include "ObjectPtr.h"
 #include "QAFCore.h"
 #include "ConfigModel.h"
 #include "ConfigSystem.h"
@@ -83,10 +84,10 @@ namespace QAF
 								
 								if (apf->isAutoLoad()){
 									ObjectPtr<AbstractPlugin> apPtr = apf->create();
-									if (apPtr.isValid() && !apPtr->isInstalled()){
-										apPtr->install(pluginConfig.mConfigs);
-										apPtr->setInstalled(true);
-									}
+                                    if (apPtr.isValid() && !apPtr->isInstalled()){
+                                        apPtr->install(pluginConfig.mConfigs);
+                                        apPtr->setInstalled(true);
+                                    }
 								}
 							}else{
 								library->unload();

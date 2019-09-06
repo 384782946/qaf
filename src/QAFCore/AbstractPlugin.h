@@ -26,13 +26,14 @@ namespace QAF
 	{
 	public:
 		AbstractPlugin(){}
-		virtual ~AbstractPlugin(){}
+        virtual ~AbstractPlugin();
 
-		virtual void install(const QMap<QString,QString>& params) = 0{ 
+        virtual void install(const QMap<QString,QString>& params) /*= 0*/{
+            Q_UNUSED(params)
 			mIsInstalled = true; 
 		}
 
-		virtual void uninstall() = 0{
+        virtual void uninstall() /*= 0*/{
 			mIsInstalled = false;
 		}
 
@@ -65,13 +66,25 @@ namespace QAF
 	class AbstractPluginFactory
 	{
 	public:
+        virtual ~AbstractPluginFactory();
 		virtual ObjectPtr<AbstractPlugin> create() = 0;
 		virtual PluginType getType() = 0;
 		virtual QString getVersion() = 0;
 		virtual QString getDesc() = 0;
 		virtual QString getAuthor() = 0;
-		virtual bool isAutoLoad() = 0;
-	};
+        virtual bool isAutoLoad() = 0;
+    };
+
+    AbstractPlugin::~AbstractPlugin()
+    {
+
+    }
+
+    AbstractPluginFactory::~AbstractPluginFactory()
+    {
+
+    }
+
 }
 
 #endif //ABSTRACTPLUGIN_H

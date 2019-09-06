@@ -89,7 +89,7 @@ Qt::ItemFlags QtCommonModel::flags(const QModelIndex &index) const
 
 	ModelItem* item = itemForIndex(index);
 	if (item)
-		return item->itemFlags(index.column());
+        return (Qt::ItemFlags)(item->itemFlags(index.column()));
 	else
 		return Qt::NoItemFlags;
 }

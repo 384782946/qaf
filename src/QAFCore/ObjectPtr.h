@@ -21,7 +21,7 @@ namespace QAF
 		ObjectPtr(const ObjectPtr<U>& other)
 			: ObjectProxy(INVALID_OBJECT_ID,nullptr)
 		{
-			AbstractObject* ao = (AbstractObject*)other.data();
+            AbstractObject* ao = (AbstractObject*)(other.data());
 			T* uPtr = dynamic_cast<T*>(ao);
 			if (uPtr){
 				setObjectId(other.objectId());
@@ -43,7 +43,7 @@ namespace QAF
 			return *t;
 		}
 
-		inline T* operator->() const
+        T* operator->() const
 		{
 			return static_cast<T*>(ptr());
 		}

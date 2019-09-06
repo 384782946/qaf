@@ -12,4 +12,4 @@ HEADERS += ./BaseException.h \
     ./utils_global.h \
     ./utils.h \
     ./Ensure.h
-SOURCES += ./Utils.cpp
+#SOURCES += ./Utils.cpp

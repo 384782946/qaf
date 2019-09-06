@@ -33,9 +33,9 @@ namespace QAF
 		{
 		}
 
-		virtual void install() = 0{ setInstalled(true); }
+        virtual void install() /*= 0*/ { setInstalled(true); }
 
-		virtual void uninstall() = 0{ setInstalled(false); }
+        virtual void uninstall() /*= 0*/ { setInstalled(false); }
 
 		inline QString name() const{ return this->metaObject()->className(); }
 

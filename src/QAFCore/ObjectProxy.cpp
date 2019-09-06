@@ -69,7 +69,7 @@ namespace QAF
 		return *this;
 	}
 
-	inline AbstractObject* ObjectProxy::ptr() const
+    AbstractObject* ObjectProxy::ptr() const
 	{
 		return mObjectSystem->query(mObjectId);
 	}

@@ -45,7 +45,7 @@ public:
 		throw exp; 
 	}
 
-	virtual const char* what() const
+    virtual const char* what() const noexcept
 	{	
 		std::ostringstream os;
 		os << "Exception:" << type() 
