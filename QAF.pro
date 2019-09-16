@@ -14,7 +14,7 @@ SUBDIRS += src/NetWork/NetWork.pro \
     src/DBManager/DBManager.pro \
     src/QtAwesome/QtAwesome.pro \
     src/QtCommonModel/QtCommonModel.pro \
-    src/Utils/Utils.pro \
+    #src/Utils/Utils.pro \
     src/QAFCore/QAFCore.pro \
     src/QAF/QAF.pro \
     src/UIPlugin/UIPlugin.pro \

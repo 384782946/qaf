@@ -4,15 +4,16 @@
 
 TEMPLATE = app
 TARGET = testNetWork
-DESTDIR = ../../../bin/Debug
+DESTDIR = $$PWD/../../../bin/Debug
 QT += core network testlib
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_TESTLIB_LIB
-INCLUDEPATH += . \
-    ./../../NetWork \
-    ./../../Utils
-LIBS += -L"./../../../lib"
-DEPENDPATH += .
+INCLUDEPATH += $$PWD \
+    $$PWD/../../NetWork \
+    $$PWD/../../Utils
+
+LIBS += -L$$PWD/../../../lib
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)
     LIBS += -lNetWorkd

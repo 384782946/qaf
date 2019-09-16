@@ -4,15 +4,15 @@
 
 TEMPLATE = lib
 TARGET = testPlugin
-DESTDIR = ../../../bin/Debug/plugin
+DESTDIR = $$PWD/../../../bin/Debug/plugin
 QT += core widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL TESTPLUGIN_LIB QT_WIDGETS_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./../../QAFCore \
-    ./../../Utils
-LIBS += -L"./../../../lib"
+INCLUDEPATH += $$PWD \
+    $$PWD/../../QAFCore \
+    $$PWD/../../Utils
+
+LIBS += -L$$PWD/../../../lib
 DEPENDPATH += .
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)

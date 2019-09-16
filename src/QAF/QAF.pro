@@ -4,21 +4,21 @@
 
 TEMPLATE = app
 TARGET = QAF
-DESTDIR = ../../bin/Debug
+DESTDIR = $$PWD/../../bin/Debug
 QT += core widgets gui
 CONFIG += debug_and_release console
 DEFINES += QT_DLL QT_WIDGETS_LIB
 
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../QAFCore \
-    ./../QtAwesome \
-    ./../Utils \
-    ./../../include
-LIBS += -L"./../../lib"
+INCLUDEPATH += $$PWD \
+    $$PWD/../QAFCore \
+    $$PWD/../QtAwesome \
+    $$PWD/../Utils \
+    $$PWD/../../include
+
+LIBS += -L"$$PWD/../../lib"
 PRECOMPILED_HEADER = stdafx.h
-DEPENDPATH += .
+DEPENDPATH += $$PWD
+
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)
     LIBS += -lQAFCored \

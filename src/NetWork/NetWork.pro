@@ -4,14 +4,15 @@
 
 TEMPLATE = lib
 TARGET = NetWork
-DESTDIR = ../../lib
+DESTDIR = $$PWD/../../lib
 QT += core network
 CONFIG += debug_and_release
 DEFINES += QT_DLL NETWORK_LIB QT_NETWORK_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./../Utils
-DEPENDPATH += .
+INCLUDEPATH += $$PWD \
+    $$PWD/../Utils
+
+DEPENDPATH += $$PWD
+
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)
 }

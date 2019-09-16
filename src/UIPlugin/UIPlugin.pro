@@ -4,17 +4,19 @@
 
 TEMPLATE = lib
 TARGET = UIPlugin
-DESTDIR = ../../bin/Debug/plugin
+DESTDIR = $$PWD/../../bin/Debug/plugin
 QT += core widgets gui
 CONFIG += debug_and_release
 DEFINES += QT_DLL QT_WIDGETS_LIB UIPLUGIN_LIB
-INCLUDEPATH += . \
-    ./../../include \
-    ./../Utils \
-    ./../QAFCore \
-    ./../QtCommonModel \
-LIBS += -L"./../../lib"
-DEPENDPATH += .
+INCLUDEPATH += $$PWD \
+    $$PWD/../../include \
+    $$PWD/../Utils \
+    $$PWD/../QAFCore \
+    $$PWD/../QtCommonModel
+
+LIBS += -L$$PWD/../../lib
+
+DEPENDPATH += $$PWD
 CONFIG(debug,debug|release){
     TARGET=$$join(TARGET,,,d)
     LIBS += -lQAFCored \
