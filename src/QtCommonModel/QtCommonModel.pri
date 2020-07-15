@@ -7,9 +7,10 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./ModelItem.h \
-    ./QtCommonModel.h \
-    ./qtcommonmodel_global.h \
-    ./QtRowTableModel.h
-SOURCES += ./ModelItem.cpp \
-    ./QtCommonModel.cpp
+HEADERS += $$PWD/ModelItem.h \
+    $$PWD/QtCommonModel.h \
+    $$PWD/qtcommonmodel_global.h \
+    $$PWD/QtRowTableModel.h
+
+SOURCES += $$PWD/ModelItem.cpp \
+    $$PWD/QtCommonModel.cpp

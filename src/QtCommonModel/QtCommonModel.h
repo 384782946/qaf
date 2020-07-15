@@ -26,7 +26,7 @@ class ModelItem;
 class QTCOMMONMODEL_EXPORT QtCommonModel : public QAbstractItemModel
 {
 public:
-	QtCommonModel(QObject *parent = nullptr);
+    QtCommonModel(QObject *parent = Q_NULLPTR);
 	virtual ~QtCommonModel();
 
 	virtual int	rowCount(const QModelIndex & parent = QModelIndex()) const;
@@ -38,17 +38,17 @@ public:
 	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
-	void setHeaders(QStringList headers);
-	void addItem(ModelItem* item, ModelItem* parent = nullptr);
-	void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = nullptr);
-	void removeItem(ModelItem* item, ModelItem* parent = nullptr);
+    void setHeaders(const QStringList& headers);
+    void addItem(ModelItem* item, ModelItem* parent = Q_NULLPTR);
+    void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = Q_NULLPTR);
+    void removeItem(ModelItem* item);
 
 	QModelIndex indexForItem(ModelItem* item) const;
 	ModelItem* itemForIndex(const QModelIndex& index) const;
 	ModelItem* getRootItem() const;
 private:
 	QStringList mHeaders;
-	ModelItem* mRootItem = nullptr;
+    ModelItem* mRootItem;
 };
 
 #endif // ABSTRACTTREEMODEL_H

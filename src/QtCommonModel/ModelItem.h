@@ -1,14 +1,15 @@
-#pragma once
+﻿#ifndef MODELITEM_H
+#define MODELITEM_H
 
 #include <QList>
 #include <QVariant>
 #include "qtcommonmodel_global.h"
 
-
 class QAction;
 
 class QTCOMMONMODEL_EXPORT ModelItem
 {
+    friend class QtCommonModel;
 public:
 	ModelItem();
 	virtual ~ModelItem();
@@ -20,9 +21,6 @@ public:
 	virtual QList<QAction*> actions();
 
 	ModelItem* parent();
-	void addChild(ModelItem*);
-	void insertChild(ModelItem* befor, ModelItem* item);
-	void removeChild(ModelItem*);
 	int childCount();
 	int indexOf(ModelItem*);
 	ModelItem* child(int);
@@ -30,8 +28,15 @@ public:
 	void setStatus(int);
 	int status();
 
+protected: //item之间的关系需要通过model来维护
+    void addChild(ModelItem*);
+    void insertChild(ModelItem* befor, ModelItem* item);
+    void removeChild(ModelItem*);
+
 private:
 	QList<ModelItem*> mChildren;
 	ModelItem* mParent;
 	int mStatus;
 };
+
+#endif //MODELITEM_H

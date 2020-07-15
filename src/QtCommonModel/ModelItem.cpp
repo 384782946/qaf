@@ -1,7 +1,7 @@
-#include "ModelItem.h"
+﻿#include "ModelItem.h"
 
 ModelItem::ModelItem()
-	:mParent(0)
+    :mParent(Q_NULLPTR)
 	, mStatus(0)
 {
 

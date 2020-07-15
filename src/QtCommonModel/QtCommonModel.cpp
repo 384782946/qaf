@@ -1,4 +1,4 @@
-#include "QtCommonModel.h"
+﻿#include "QtCommonModel.h"
 #include "ModelItem.h"
 
 QtCommonModel::QtCommonModel(QObject *parent)
@@ -11,24 +11,7 @@ QtCommonModel::QtCommonModel(QObject *parent)
 QtCommonModel::~QtCommonModel()
 {
 	delete mRootItem;
-}
-
-QModelIndex	QtCommonModel::parent(const QModelIndex & index) const
-{
-	ModelItem* item = itemForIndex(index);
-	if (!item)
-		return QModelIndex();
-
-	ModelItem* parent = item->parent();
-	if (!parent)
-		return QModelIndex();
-
-	ModelItem* grandparent = parent->parent();
-	if (!grandparent)
-		return QModelIndex();
-
-	int row = grandparent->indexOf(parent);
-	return createIndex(row, 0, parent);
+    mRootItem = Q_NULLPTR;
 }
 
 int QtCommonModel::rowCount(const QModelIndex & parent /*= QModelIndex() */) const
@@ -82,6 +65,27 @@ QModelIndex	QtCommonModel::index(int row, int column, const QModelIndex & parent
 		return createIndex(row, column, childItem);
 }
 
+QModelIndex	QtCommonModel::parent(const QModelIndex & index) const
+{
+    if (!index.isValid())
+        return QModelIndex();
+
+    ModelItem* item = itemForIndex(index);
+    if (!item)
+        return QModelIndex();
+
+    ModelItem* parent = item->parent();
+    if (!parent)
+        return QModelIndex();
+
+    ModelItem* grandparent = parent->parent();
+    if (!grandparent)
+        return QModelIndex();
+
+    int row = grandparent->indexOf(parent);
+    return createIndex(row, 0, parent);
+}
+
 Qt::ItemFlags QtCommonModel::flags(const QModelIndex &index) const
 {
 	if (!index.isValid())
@@ -107,10 +111,10 @@ ModelItem* QtCommonModel::itemForIndex(const QModelIndex& index) const
 	if (index.isValid())
 		return static_cast<ModelItem*>(index.internalPointer());
 	else
-		return nullptr;
+        return mRootItem;
 }
 
-void QtCommonModel::setHeaders(QStringList headers)
+void QtCommonModel::setHeaders(const QStringList& headers)
 {
 	mHeaders = headers;
 }
@@ -150,16 +154,18 @@ void QtCommonModel::insertItem(ModelItem* item, ModelItem* befor, ModelItem* par
 	endInsertRows();
 }
 
-void QtCommonModel::removeItem(ModelItem* item, ModelItem* parent)
+void QtCommonModel::removeItem(ModelItem* item)
 {
 	if (item == nullptr)
 		return;
 
 	QModelIndex index = indexForItem(item);
-	beginRemoveRows(index, 0, 0);
-	if (parent)
-		parent->removeChild(item);
-	else
+    QModelIndex parentIndex = index.parent();
+    beginRemoveRows(parentIndex, index.row(), index.row());
+    if (parentIndex.isValid()){
+        ModelItem* parent = itemForIndex(parentIndex);
+        if(parent) parent->removeChild(item);
+    }else
 		mRootItem->removeChild(item);
 	endRemoveRows();
 }
