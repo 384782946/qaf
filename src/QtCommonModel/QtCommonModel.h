@@ -43,9 +43,16 @@ public:
     void insertItem(ModelItem* item, ModelItem* befor, ModelItem* parent = Q_NULLPTR);
     void removeItem(ModelItem* item);
 
+    //ÅúÁ¿²Ù×÷
+    void addItems(QList<ModelItem*> items, ModelItem* parent = Q_NULLPTR);
+    void clearChildren(ModelItem* parent);
+
 	QModelIndex indexForItem(ModelItem* item) const;
 	ModelItem* itemForIndex(const QModelIndex& index) const;
 	ModelItem* getRootItem() const;
+
+    void notifyDataChange(const QModelIndex & index, int role = Qt::DisplayRole);
+
 private:
 	QStringList mHeaders;
     ModelItem* mRootItem;

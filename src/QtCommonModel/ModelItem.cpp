@@ -10,6 +10,7 @@ ModelItem::ModelItem()
 ModelItem::~ModelItem(void)
 {
 	qDeleteAll(mChildren);
+    mChildren.clear();
 }
 
 ModelItem* ModelItem::parent()
@@ -106,7 +107,13 @@ void ModelItem::removeChild(ModelItem* item)
 	if (item){
 		mChildren.removeOne(item);
 		item->mParent = nullptr;
-	}
+    }
+}
+
+void ModelItem::clearChildren()
+{
+    qDeleteAll(mChildren);
+    mChildren.clear();
 }
 
 int ModelItem::itemFlags(int)

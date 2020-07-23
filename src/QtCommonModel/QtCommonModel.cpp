@@ -167,12 +167,46 @@ void QtCommonModel::removeItem(ModelItem* item)
         if(parent) parent->removeChild(item);
     }else
 		mRootItem->removeChild(item);
-	endRemoveRows();
+    endRemoveRows();
+}
+
+void QtCommonModel::addItems(QList<ModelItem*> items, ModelItem *parent)
+{
+    if (items.size() == 0)
+        return;
+
+    if (parent == nullptr)
+        parent = getRootItem();
+
+    QModelIndex parentIndex = indexForItem(parent);
+    int index = parent->childCount();
+
+    beginInsertRows(parentIndex, index, index + items.size() - 1);
+    foreach(auto item,items) {
+        parent->addChild(item);
+    }
+    endInsertRows();
+}
+
+void QtCommonModel::clearChildren(ModelItem *parent)
+{
+    if (parent == nullptr)
+        return;
+
+    QModelIndex parentIndex =  this->indexForItem(parent);
+    beginRemoveRows(parentIndex, 0, parent->childCount()-1);
+    parent->clearChildren();
+    endRemoveRows();
 }
 
 ModelItem* QtCommonModel::getRootItem() const
 {
-	return mRootItem;
+    return mRootItem;
+}
+
+void QtCommonModel::notifyDataChange(const QModelIndex &index, int role)
+{
+    emit this->dataChanged(index,index);
 }
 
 QModelIndex QtCommonModel::indexForItem(ModelItem* item) const

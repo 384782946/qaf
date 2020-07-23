@@ -32,6 +32,7 @@ protected: //item之间的关系需要通过model来维护
     void addChild(ModelItem*);
     void insertChild(ModelItem* befor, ModelItem* item);
     void removeChild(ModelItem*);
+    void clearChildren();
 
 private:
 	QList<ModelItem*> mChildren;
