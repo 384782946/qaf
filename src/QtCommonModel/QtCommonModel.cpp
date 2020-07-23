@@ -193,8 +193,11 @@ void QtCommonModel::clearChildren(ModelItem *parent)
     if (parent == nullptr)
         return;
 
+    if(parent->childCount() <= 0)
+        return;
+
     QModelIndex parentIndex =  this->indexForItem(parent);
-    beginRemoveRows(parentIndex, 0, parent->childCount()-1);
+    beginRemoveRows(parentIndex, 0, parent->childCount());
     parent->clearChildren();
     endRemoveRows();
 }
